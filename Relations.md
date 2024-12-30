@@ -1,0 +1,108 @@
+# Spatial Relations
+
+Spatial relations are described by spatial predicates - keywords that indicate the type of relationship each spatial object has with another. Spatial relations are expressed as semantic triples:
+
+> _subject_ - __predicate__ - _object_
+
+The spatial objects in the visual samples are represented as boxes (bounding box of the object) and their label indicates their front side. 
+
+## Topology
+
+To enable the derivation of topology relations, call `deduce(topology)` at the beginning of the pipeline or set `deduce.topology = true` of the spatial reasoner.
+
+### Proximity
+
+| Predicate | Relation  | Specification | Visual Sample |
+| --- | ---- | ---- | -------- | 
+| `near` | subj is __near__ by obj | <ul><li>center of subject is not inside / not in `.i` sector</li><li>center distance < nearby condition of adjustment</li><li>delta = center distance</li></ul> |  ![near](images/near.png) |
+| `far` | subj is __far__ from obj | <ul><li>center distance > nearby condition of adjustment</li><li>delta = center distance</li></ul> |  |
+
+### Directionality
+
+| Predicate | Relation  | Specification | Visual Sample |
+| --- | ---- | ---- | -------- | 
+| `left` | subj is __left__ of obj | <ul><li>center of subject is in `.l` sector</li><li>may overlap</li><li>no distance condition</li><li>valid in OCS</li><li>delta = center distance</li></ul>  | ![left](images/left.png) |
+| `right` | subj is __right__ of obj | <ul><li>center of subject is in `.r` sector</li><li>may overlap</li><li>no distance condition</li><li>valid in OCS</li><li>delta = center distance</li></ul> | ![right](images/right.png) |
+| `ahead` | subj is __ahead__ of obj | <ul><li>center of subject is in `.a` sector</li><li>may overlap</li><li>no distance condition</li><li>valid in OCS</li><li>delta = center distance</li></ul> |  ![ahead](images/ahead.png) |
+| `behind` | subj is __behind__ obj | <ul><li>center of subject is in `.b` sector</li><li>may overlap</li><li>no distance condition</li><li>valid in OCS</li><li>delta = center distance</li></ul> | ![behind](images/behind.png) |
+| `above`<br>`over` | subj is __above__ obj<br>subj is __over__ obj |<ul><li>center of subject is in `.o` sector</li><li>may overlap</li><li>no distance condition</li><li>valid in WCS, OCS, ECS</li><li>delta = center distance</li></ul> |  ![above](images/above.png) |
+| `below`<br>`under` | subj is __below__ obj<br>subj is __under__ obj | <ul><li>center of subject is in `.u` sector</li><li>may overlap</li><li>no distance condition</li><li>valid in WCS, OCS, ECS</li><li>delta = center distance</li></ul> | ![below](images/below.png) |
+
+### Adjacency
+
+| Predicate | Relation  | Specification | Visual Sample |
+| --- | ---- | ---- | -------- | 
+| `leftside` | subj is at __leftside__ of obj | <ul><li>center of subject is in `.l` sector</li><li>is near</li><li>is not overlapping</li><li>valid in OCS</li><li>delta = min distance</li></ul> |  ![leftside](images/leftside.png) |
+| `rightside` | subj is at __rightside__ of obj | <ul><li>center of subject is in `.r` sector</li><li>is near</li><li>is not overlapping</li><li>valid in OCS</li><li>delta = min distance</li></ul> | ![rightside](images/rightside.png) |
+| `frontside` | subj is at __frontside__ of obj | <ul><li>center of subject is in `.a` sector</li><li>is near</li><li>is not overlapping</li><li>valid in OCS</li><li>delta = min distance</li></ul>  | ![frontside](images/frontside.png) |
+| `backside` | subj is at __backside__ of obj | <ul><li>center of subject is in `.b` sector</li><li>is near</li><li>is not overlapping</li><li>valid in OCS</li><li>delta = min distance</li></ul> | ![backside](images/backside.png) |
+| `upperside` | subj is at __upperside__ of obj | <ul><li>center of subject is in `.o` sector</li><li>is near</li><li>is not overlapping</li><li>valid in WCS, OCS, ECS</li><li>delta = min distance</li></ul>  | ![upperside](images/upperside.png) |
+| `lowerside` | subj is at __lowerside__ of obj | <ul><li>center of subject is in `.u` sector</li><li>is near</li><li>is not overlapping</li><li>valid in WCS, OCS, ECS</li><li>delta = min distance</li></ul> | ![lowerside](images/lowerside.png) |
+| `ontop` | subj is __ontop__ of obj | <ul><li>center of subject is in `.o` sector</li><li>is near</li><li>is not overlapping</li><li>min distance < max gap</li><li>valid in WCS, OCS, ECS</li><li>delta = min distance</li></ul>  | ![ontop](images/ontop.png) |
+| `beneath` | subj is __beneath__ obj | <ul><li>center of subject is in `.u` sector</li><li>is near</li><li>is not overlapping</li><li>min distance < max gap</li><li>valid in WCS, OCS, ECS</li><li>delta = min distance</li></ul> | ![beneath](images/beneath.png) |
+
+### Orientations
+
+| Predicate | Relation  | Specification | Visual Sample |
+| --- | ---- | ---- | -------- | 
+| `aligned` | subj is __aligned__ with obj | <ul><li>same angle orientation</li><li>angle diff < max angle</li><li>valid in WCS, OCS, ECS</li><li>delta = central distance</li></ul>  | ![aligned](images/aligned.png) |
+| `frontaligned` | subj is __front aligned__ with obj | <ul><li>same angle orientation</li><li>angle diff < max angle</li><li>aligned front side</li><li>min distance < max gap</li><li>valid in OCS</li><li>delta = min distance</li></ul> | ![frontaligned](images/frontaligned.png) |
+| `backaligned` | subj is __back aligned__ with obj | <ul><li>same angle orientation</li><li>angle diff < max angle</li><li>aligned back side</li><li>min distance < max gap</li><li>valid in OCS</li><li>delta = min distance</li></ul> | ![frontaligned](images/backaligned.png) |
+| `rightaligned` | subj is __right aligned__ with obj | <ul><li>same angle orientation</li><li>angle diff < max angle</li><li>aligned right side</li><li>min distance < max gap</li><li>valid in OCS</li><li>delta = min distance</li></ul> | ![rightaligned](images/rightaligned.png) |
+| `leftaligned` | subj is __left aligned__ with obj | <ul><li>same angle orientation</li><li>angle diff < max angle</li><li>aligned left side</li><li>min distance < max gap</li><li>valid in WCS, OCS, ECS</li><li>delta = min distance</li></ul> | ![leftaligned](images/leftaligned.png) |
+| `orthogonal` | subj is __orthogonal__ to obj | <ul><li>is perpendicular</li><li>angle diff < max angle ±90°</li><li>valid in OCS</li></ul> |  ![orthogonal](images/orthogonal.png) |
+| `opposite` | subj is __opposite__ to obj | <ul><li>are facing each other</li><li>angle diff < max angle ±180°</li><li>valid in OCS</li><li>delta = center distance</li></ul> | ![opposite](images/opposite.png) |
+
+
+### Arrangements
+
+.disjoint, .inside, .containing, .overlapping, .crossing, .touching, .meeting, .beside, .fitting, .exceeding
+
+## Connectivity
+
+To enable the derivation of conectivity relations, call `deduce(conectivity)` at the beginning of the pipeline or set `deduce.conectivity = true` of the spatial reasoner.
+ 
+| Predicate | Relation  | Specification | Visual Sample |
+| --- | ---- | ---- | -------- | 
+| `on` | subj is __on__ obj | <ul><li>is near</li><li>is on top</li><li>min distance < max gap</li><li>valid in WCS, OCS, ECS</li><li>delta = min distance</li></ul>  | ![on](images/on.png) |
+| `at` | subj is __at__ obj | <ul><li>is beside</li><li>is meeting</li><li>min distance < max gap</li><li>valid in WCS, OCS, ECS</li><li>delta = min distance</li></ul> | ![at](images/at.png) |
+| `by` | subj is __by__ obj | <ul><li>is touching</li><li>min distance < max gap</li><li>valid in WCS, OCS, ECS</li><li>delta = min distance</li></ul> |  ![by](images/by.png) |
+| `in` | subj is __in__ obj | <ul><li>is inside</li><li>valid in WCS, OCS, ECS</li></ul> | ![in](images/in.png) |
+
+## Visibility
+
+To enable the derivation of visibility relations, call `deduce(visibility)` at the beginning of the pipeline or set `deduce.visibility = true` of the spatial reasoner.
+ 
+| Predicate | Relation  | Specification | Visual Sample |
+| --- | ---- | ---- | -------- | 
+| `infront` | subj is __in front__ of obj | <ul><li>is in front</li><li>valid in ECS</li><li>delta = center distance</li></ul>  | ![on](images/infront.png) |
+| `atrear` | subj is __at rear__ of obj | <ul><li>is at rear</li><li>valid in ECS</li><li>delta = center distance</li></ul> | ![at](images/atrear.png) |
+| `seenright` | subj is __seen right__ of obj | <ul><li>is seen right</li><li>valid in ECS</li><li>delta = center distance</li></ul> |  ![by](images/seenright.png) |
+| `seenleft` | subj is __seen left__ of obj | <ul><li>is seen left</li><li>valid in ECS</li><li>delta = center distance</li></ul> | ![in](images/seenleft.png) |
+| `elevenoclock` | subj is at __eleven'o'clock__ | <ul><li>is seen at eleven'o'clock by ego</li><li>valid in ECS</li><li>delta = center distance</li</ul> | ![in](images/elevenoclock.png) |
+| `twooclock` | subj is at __two'o'clock__ | <ul><li>is seen at two'o'clock by ego</li><li>valid in ECS</li><li>delta = center distance</li</ul> | ![in](images/twooclock.png) |
+| `eightoclock`<br>`nineoclock`<br>`tenoclock`<br>`twelveoclock`<br>`oneoclock`<br>`threeoclock`<br>`fouroclock` | dito | <ul><li>dito</li></ul> |  |
+
+## Sectoriality
+
+To enable the derivation of sectoriality relations, call `deduce(sectoriality)` at the beginning of the pipeline or set `deduce.sectoriality = true` of the spatial reasoner.
+
+| Predicate | Relation  | Specification | Visual Sample |
+| --- | ---- | ---- | -------- | 
+| `o` | subj is in sector __o__ of obj | <ul><li>center of subj is in sector `o` </li><li>is over</li><li>valid in OCS</li><li>delta = center distance</li></ul>  | ![on](images/in_o.png) |
+| `br` | subj is in sector __br__ of obj | <ul><li>center of subj is in sector `br` </li><li>is behind right</li><li>valid in OCS</li><li>delta = center distance</li></ul>  | ![on](images/in_br.png) |
+| `bru` | subj is in sector __bru__ of obj | <ul><li>center of subj is in sector `bru` </li><li>is behind right under</li><li>valid in OCS</li><li>delta = center distance</li></ul>  | ![on](images/in_bru.png) |
+
+## Comparability
+
+To enable the derivation of comparability relations, call `deduce(comparability)` at the beginning of the pipeline or set `deduce.comparability = true` of the spatial reasoner.
+
+The geographic direction in WCS include: `smaller, bigger, shorter, longer, taller, thinner, wider`. A sample geographic relations: 
+
+## Geography
+
+To enable the derivation of geography relations, call `deduce(geography)` at the beginning of the pipeline or set `deduce.geography = true` of the spatial reasoner.
+
+The geographic direction in WCS include: `north, south, east, west, northwest, northeast, southwest, southeast`. A sample geographic relations: 
+
+> subj is __north__ of obj
