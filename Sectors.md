@@ -15,7 +15,7 @@ of the bounding box (bbox). The 3x3x3 BBox sector matrix leads to 27 object-rela
 | --- | ---- | ---- | -------- | 
 | `o` | __over__ | <ul><li>over bbox</li></ul>  | ![on](images/o_u.png) |
 | `u` | __under__ | <ul><li>under bbox</li></ul> |  |
-| `l` | __left__ | <ul><li>left ofbbox</li></ul>  | ![on](images/l_r_a_b.png) |
+| `l` | __left__ | <ul><li>left ofbbox</li></ul>  | ![lr](images/l_r_a_b.png) |
 | `r` | __right__ | <ul><li>right of bbox</li></ul> |  |
 | `a` | __ahead__ | <ul><li>ahead of bbox</li></ul> |  |
 | `b` | __behind__ | <ul><li>behind bbox</li></ul> |  |

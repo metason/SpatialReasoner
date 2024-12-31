@@ -16,10 +16,10 @@
   * portable inference language
   * independent of left-handed or right-handed 3D coordinate system
 * __Cross-platform__: library available in various programming languages
-  * [__SRswift__](https://github.com/metason/SRswift) repository in Swift for iOS, macOS and visionOS
-  * [__SRpy__](https://github.com/metason/SRpy) repository in Python (work in progress)
-  * __SRmono__ / SRdotnet / SRunity / SRcsharp? repository in C# for Unity (work in progress)
-  * __SRjs__ repository in JavaScript (not yet)
+  * [__SRswift__](https://github.com/metason/SRswift) repository in __Swift__ for iOS, macOS and visionOS
+  * [__SRpy__](https://github.com/metason/SRpy) repository in __Python__ (work in progress)
+  * __SRmono__ / SRdotnet / SRunity / SRcsharp? repository in __C#__ for Unity (work in progress)
+  * __SRjs__ repository in __JavaScript__ (not yet)
 
 ## Usage
 
@@ -64,7 +64,7 @@ tbd
 
 ## Motivation
 
-This library deals with representing and reasoning about the topology of spatial 3D objects using derived attributes and deduced relations, such as the adjacency between or the topological arrangement of spatial objects. Spatial reasoning is the ability to conceptualize the three-dimensional relationships of objects in space and to evaluate spatial conditions in a specific indoor or outdoor context. Reasoning in the Spatial Reasoner library is executed as a succession of inference operations in a pipeline which takes spatial attributes of and spatial relations between objects into consideration. 
+This library deals with representing and reasoning about the topology of spatial 3D objects using derived attributes and deduced relations, such as the adjacency between or the topological arrangement of spatial objects. Spatial reasoning is the ability to conceptualize the three-dimensional relationships of objects in space and to evaluate spatial conditions in an indoor or outdoor context. Reasoning in the Spatial Reasoner library is executed as a succession of inference operations in a pipeline which takes spatial attributes of and spatial relations between objects into consideration. 
 
 Spatial fuzziness affects information retrieval in space. Object detection in state-of-the-art computer vision, machine learning, and Augmented Reality toolkits results in detected objects that vary their locations and do change and improve over time their orientations and boundaries in space. The object description is usually fuzzy and imprecise, yet some non-trivial conclusion can anyhow be deduced. The geometric confidence typically improves over time. Additionally by taking spatial domain knowledge into account, semantic interpretation and therefore overall confidence can be improved. It is the goal of the Spatial Reasoner library to improve object detection with domain knowledge using spatial semantic and three-dimensional conditions.
 
@@ -114,17 +114,58 @@ Log files are used for debug purposes and are saved per default in the Downloads
 - `log()` or `log(selected relations)`
   - Log as markdown file
   - Overview list of spatial objects
+  - Inference pipeline
   - Spatial relations graph (all or selection)
-  - Contact graph
-  - List of relations
+  - Connectivity graph (in case connectivity relations are activated)
+  - List of deduced relations
 - `log(3D)`
-  - Scene of fact base as USDZ file
+  - Scene of fact base as 3D file (USDZ format in SRswift, GLTF else)
   - Spatial objects rendered in 3D for visualization
 - `log(base)`
   - Fact base as JSON file
   - Array of spatial objects with their atrributes
   - Calculated variables with their values
   - Chain of results from processed pipeline
+
+Example of a spatial relation graph:
+```mermaid
+graph LR;
+    subj
+    obj
+    ego
+    obj -- left --> subj
+    obj -- seenright --> subj
+    ego -- left --> subj
+    subj -- right --> obj
+    subj -- seenleft --> obj
+    subj -- right --> ego
+    obj -- right --> ego
+```
+
+Example list of deduced spatial relations:
+* obj is near to subj (near 𝛥:1.05  𝜶:0.0°)
+* obj is left of subj (left 𝛥:0.04  𝜶:0.0°)
+* obj is seen right of subj (seenright 𝛥:0.94  𝜶:0.0°)
+* ego is near to subj (near 𝛥:3.14  𝜶:153.0°)
+* ...
+
+Example of a connectivity graph:
+```mermaid
+graph TD;
+    wall2 <-- by --> wall1
+    wall2 <-- by --> wall3
+    wall3 <-- by --> wall4
+    wall4 <-- by --> wall1
+    door -- in --> wall1
+    window -- in --> wall2
+    picture -- at --> wall4
+    wall1 -- on --> floor
+    wall2 -- on --> floor
+    wall3 -- on --> floor
+    wall4 -- on --> floor
+    door -- on --> floor
+    table -- on --> floor
+```
 
 ## Setup Operation deduce()
 
@@ -147,6 +188,9 @@ The interpretation of spatial predicates and their corresponding relations are o
 - __Egocentric Coordinate System (ECS)__: spatial relations are encoded relative to the position and view direction of an observer
 - __Geodetic Coordinate System (GCS)__: spatial relations are encoded relative to earth's projected latitude (north/south) and longitude (east/west)
 
+## Spatial Object
+
+
 ## Spatial Adjustment
 
 The spatial reasoner can be adjusted to fit the actual context, environment and dominant object size.
@@ -159,14 +203,14 @@ class SpatialAdjustment {
     var maxgap:Float = 0.05 // max distance of deviation in all directions in meters
     var maxangle:Float = 0.05 * .pi // max delta of yaw orientation in radiants in both directions
     // Sector size
-    var sectorSchema:SectorSchema = .wide
+    var sectorSchema:SectorSchema = .nearby
     var sectorFactor:Float = 1.0 // sectorFactor is multiplying the result of claculation schema
     var sectorLimit:Float = 2.5 // sectorLimit is maximal length
     var fixSectorLenght:Float = 0.25
     var wideSectorLenght:Float = 10.0
     // Vicinity
     var nearbyFactor:Float = 1.0 // nearbyFactor is multiplying radius sum of object and subject (relative to size) as max distance
-    var nearbyLimit:Float = 2.0 // nearbyLimit is maximal absolute distance
+    var nearbyLimit:Float = 2.5 // nearbyLimit is maximal absolute distance
     // Proportions
     var longRatio:Float = 4.0 // one dimension is factor larger than both others
     var thinRatio:Float = 10.0 // one dimension is 1/factor smaller than both others
@@ -197,10 +241,9 @@ Example of different spatial adjustments and calculation scheme:
 ![adjustable sector size](images/sectors.png)
 left image: `.fized`, middle image: `.dimension`, right image: `.nearby`
 
+![on](images/o_u.png) ![lr](images/l_r_a_b.png) ![lo_lu_ro_ru](images/lo_lu_ro_ru.png) ![alo_aro_blo_bro](images/alo_aro_blo_bro.png)
+
 See detailed description of all [BBox sectors](Sectors.md).
-
-
-## Spatial Object
 
 
 ## Spatial Relations
@@ -208,4 +251,42 @@ See detailed description of all [BBox sectors](Sectors.md).
 - Spatial relation: subject - predicate - object
 - Spatial predicates
 
+![ontop](images/ontop.png) ![leftside](images/leftside.png) ![orthogonal](images/orthogonal.png) ![seenleft](images/seenleft.png) 
+
 See detailed description of all [spatial relations](Relations.md).
+
+## Use Cases
+
+### Spatial Queries
+
+Select a spatial object by its identifiier, e.g.:
+```
+filter(id = 'id1234')
+```
+
+Select spatial objects by their attributes only, e.g.:
+```
+filter(footprint > 0.5 && supertype == 'furniture')
+| sort(length)
+```
+
+Select spatial objects by their attributes and their arrangement, e.g.:
+```
+filter(height < 0.6 && height > 0.25 && width < 1.3 && length > 1.8)
+| select(beside ? type == 'wall')
+```
+
+### Object Classification
+
+Classify spatial objects by their attributes only, e.g.:
+```
+filter(height < 0.6 && height > 0.25 && width > 1.5 && length > 1.8)
+| map(type = 'double bed'; supertype = 'furniture'; confidence = 0.5)
+```
+
+Classify spatial objects by their attributes and their arrangement, e.g.:
+```
+filter(height > 1.5 && width > 1.0 && depth > 0.4)
+| select(beside ? type == 'wall')
+| map(type = 'cabinet'; supertype = 'furniture'; confidence = 0.75)
+```

@@ -47,7 +47,7 @@ To enable the derivation of topology relations, call `deduce(topology)` at the b
 | --- | ---- | ---- | -------- | 
 | `aligned` | subj is __aligned__ with obj | <ul><li>same angle orientation</li><li>angle diff < max angle</li><li>valid in WCS, OCS, ECS</li><li>delta = central distance</li></ul>  | ![aligned](images/aligned.png) |
 | `frontaligned` | subj is __front aligned__ with obj | <ul><li>same angle orientation</li><li>angle diff < max angle</li><li>aligned front side</li><li>min distance < max gap</li><li>valid in OCS</li><li>delta = min distance</li></ul> | ![frontaligned](images/frontaligned.png) |
-| `backaligned` | subj is __back aligned__ with obj | <ul><li>same angle orientation</li><li>angle diff < max angle</li><li>aligned back side</li><li>min distance < max gap</li><li>valid in OCS</li><li>delta = min distance</li></ul> | ![frontaligned](images/backaligned.png) |
+| `backaligned` | subj is __back aligned__ with obj | <ul><li>same angle orientation</li><li>angle diff < max angle</li><li>aligned back side</li><li>min distance < max gap</li><li>valid in OCS</li><li>delta = min distance</li></ul> | ![backaligned](images/backaligned.png) |
 | `rightaligned` | subj is __right aligned__ with obj | <ul><li>same angle orientation</li><li>angle diff < max angle</li><li>aligned right side</li><li>min distance < max gap</li><li>valid in OCS</li><li>delta = min distance</li></ul> | ![rightaligned](images/rightaligned.png) |
 | `leftaligned` | subj is __left aligned__ with obj | <ul><li>same angle orientation</li><li>angle diff < max angle</li><li>aligned left side</li><li>min distance < max gap</li><li>valid in WCS, OCS, ECS</li><li>delta = min distance</li></ul> | ![leftaligned](images/leftaligned.png) |
 | `orthogonal` | subj is __orthogonal__ to obj | <ul><li>is perpendicular</li><li>angle diff < max angle ±90°</li><li>valid in OCS</li></ul> |  ![orthogonal](images/orthogonal.png) |
@@ -75,12 +75,12 @@ To enable the derivation of visibility relations, call `deduce(visibility)` at t
  
 | Predicate | Relation  | Specification | Visual Sample |
 | --- | ---- | ---- | -------- | 
-| `infront` | subj is __in front__ of obj | <ul><li>is in front</li><li>valid in ECS</li><li>delta = center distance</li></ul>  | ![on](images/infront.png) |
-| `atrear` | subj is __at rear__ of obj | <ul><li>is at rear</li><li>valid in ECS</li><li>delta = center distance</li></ul> | ![at](images/atrear.png) |
-| `seenright` | subj is __seen right__ of obj | <ul><li>is seen right</li><li>valid in ECS</li><li>delta = center distance</li></ul> |  ![by](images/seenright.png) |
-| `seenleft` | subj is __seen left__ of obj | <ul><li>is seen left</li><li>valid in ECS</li><li>delta = center distance</li></ul> | ![in](images/seenleft.png) |
-| `elevenoclock` | subj is at __eleven'o'clock__ | <ul><li>is seen at eleven'o'clock by ego</li><li>valid in ECS</li><li>delta = center distance</li</ul> | ![in](images/elevenoclock.png) |
-| `twooclock` | subj is at __two'o'clock__ | <ul><li>is seen at two'o'clock by ego</li><li>valid in ECS</li><li>delta = center distance</li</ul> | ![in](images/twooclock.png) |
+| `infront` | subj is __in front__ of obj | <ul><li>is in front</li><li>valid in ECS</li><li>delta = center distance</li></ul>  | ![infront](images/infront.png) |
+| `atrear` | subj is __at rear__ of obj | <ul><li>is at rear</li><li>valid in ECS</li><li>delta = center distance</li></ul> | ![atrear](images/atrear.png) |
+| `seenright` | subj is __seen right__ of obj | <ul><li>is seen right</li><li>valid in ECS</li><li>delta = center distance</li></ul> |  ![seenright](images/seenright.png) |
+| `seenleft` | subj is __seen left__ of obj | <ul><li>is seen left</li><li>valid in ECS</li><li>delta = center distance</li></ul> | ![seenleft](images/seenleft.png) |
+| `elevenoclock` | subj is at __eleven'o'clock__ | <ul><li>is seen at eleven'o'clock by ego</li><li>valid in ECS</li><li>delta = center distance</li</ul> | ![elevenoclock](images/elevenoclock.png) |
+| `twooclock` | subj is at __two'o'clock__ | <ul><li>is seen at two'o'clock by ego</li><li>valid in ECS</li><li>delta = center distance</li</ul> | ![twooclock](images/twooclock.png) |
 | `eightoclock`<br>`nineoclock`<br>`tenoclock`<br>`twelveoclock`<br>`oneoclock`<br>`threeoclock`<br>`fouroclock` | dito | <ul><li>dito</li></ul> |  |
 
 ## Sectoriality
@@ -89,9 +89,9 @@ To enable the derivation of sectoriality relations, call `deduce(sectoriality)` 
 
 | Predicate | Relation  | Specification | Visual Sample |
 | --- | ---- | ---- | -------- | 
-| `o` | subj is in sector __o__ of obj | <ul><li>center of subj is in sector `o` </li><li>is over</li><li>valid in OCS</li><li>delta = center distance</li></ul>  | ![on](images/in_o.png) |
-| `br` | subj is in sector __br__ of obj | <ul><li>center of subj is in sector `br` </li><li>is behind right</li><li>valid in OCS</li><li>delta = center distance</li></ul>  | ![on](images/in_br.png) |
-| `bru` | subj is in sector __bru__ of obj | <ul><li>center of subj is in sector `bru` </li><li>is behind right under</li><li>valid in OCS</li><li>delta = center distance</li></ul>  | ![on](images/in_bru.png) |
+| `o` | subj is in sector __o__ of obj | <ul><li>center of subj is in sector `o` </li><li>is over</li><li>valid in OCS</li><li>delta = center distance</li></ul>  | ![in_o](images/in_o.png) |
+| `br` | subj is in sector __br__ of obj | <ul><li>center of subj is in sector `br` </li><li>is behind right</li><li>valid in OCS</li><li>delta = center distance</li></ul>  | ![in_br](images/in_br.png) |
+| `bru` | subj is in sector __bru__ of obj | <ul><li>center of subj is in sector `bru` </li><li>is behind right under</li><li>valid in OCS</li><li>delta = center distance</li></ul>  | ![in_bru](images/in_bru.png) |
 
 ## Comparability
 
