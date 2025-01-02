@@ -104,7 +104,7 @@ The filter, pick, and select operations do change the list of output objects to 
 | __map__  | `map(`_attribute assignment_`)` | `map(weight = volume * 140.0)` |
 | __calc__  | `calc(`_variable assignment_`)` | `calc(cnt = objects.@count); calc(maxvol = objects.volume@max; median = objects.volume@median)` |
 | __produce__  | `produce(`_connectivity relations_` : `_type wxdxh_`) | `produce(in : room); produce(wall by wall on floor : corner 0.2x0.2x0.2)` |
-|
+
 
 
 ## Logging Operation log()
