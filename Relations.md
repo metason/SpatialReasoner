@@ -38,7 +38,7 @@ To enable the derivation of topology relations, call `deduce(topology)` at the b
 | `rightside` | subj is at __rightside__ of obj | <ul><li>center of subject is in `.r` sector</li><li>is near</li><li>is not overlapping</li><li>valid in OCS</li><li>delta = min distance</li></ul> | ![rightside](images/rightside.png) |
 | `frontside` | subj is at __frontside__ of obj | <ul><li>center of subject is in `.a` sector</li><li>is near</li><li>is not overlapping</li><li>valid in OCS</li><li>delta = min distance</li></ul>  | ![frontside](images/frontside.png) |
 | `backside` | subj is at __backside__ of obj | <ul><li>center of subject is in `.b` sector</li><li>is near</li><li>is not overlapping</li><li>valid in OCS</li><li>delta = min distance</li></ul> | ![backside](images/backside.png) |
-| `beside` | subj is __beside__ obj | <ul><li>is near</li><li>is not above or not below</li><li>is not overlapping</li><li>valid in OCS</li><li>delta = center distance</li></ul> | ![beside](images/beside.png) |
+| `beside` | subj is __beside__ obj | <ul><li>is near</li><li>is not above or not below</li><li>is not overlapping</li><li>valid in WCS, OCS, ECS</li><li>delta = center distance</li></ul> | ![beside](images/beside.png) |
 | `upperside` | subj is at __upperside__ of obj | <ul><li>center of subject is in `.o` sector</li><li>is near</li><li>is not overlapping</li><li>valid in WCS, OCS, ECS</li><li>delta = min distance</li></ul>  | ![upperside](images/upperside.png) |
 | `lowerside` | subj is at __lowerside__ of obj | <ul><li>center of subject is in `.u` sector</li><li>is near</li><li>is not overlapping</li><li>valid in WCS, OCS, ECS</li><li>delta = min distance</li></ul> | ![lowerside](images/lowerside.png) |
 | `ontop` | subj is __ontop__ of obj | <ul><li>center of subject is in `.o` sector</li><li>is near</li><li>is not overlapping</li><li>min distance < max gap</li><li>valid in WCS, OCS, ECS</li><li>delta = min distance</li></ul>  | ![ontop](images/ontop.png) |
@@ -49,11 +49,11 @@ To enable the derivation of topology relations, call `deduce(topology)` at the b
 
 | Predicate | Relation  | Specification | Visual Sample |
 | --- | ---- | ---- | -------- | 
-| `aligned` | subj is __aligned__ with obj | <ul><li>same angle orientation</li><li>angle diff < max angle</li><li>valid in WCS, OCS, ECS</li><li>delta = central distance</li></ul>  | ![aligned](images/aligned.png) |
+| `aligned` | subj is __aligned__ with obj | <ul><li>same angle orientation</li><li>angle diff < max angle</li><li>valid in OCS</li><li>delta = central distance</li></ul>  | ![aligned](images/aligned.png) |
 | `frontaligned` | subj is __front aligned__ with obj | <ul><li>same angle orientation</li><li>angle diff < max angle</li><li>aligned front side</li><li>min distance < max gap</li><li>valid in OCS</li><li>delta = min distance</li></ul> | ![frontaligned](images/frontaligned.png) |
 | `backaligned` | subj is __back aligned__ with obj | <ul><li>same angle orientation</li><li>angle diff < max angle</li><li>aligned back side</li><li>min distance < max gap</li><li>valid in OCS</li><li>delta = min distance</li></ul> | ![backaligned](images/backaligned.png) |
 | `rightaligned` | subj is __right aligned__ with obj | <ul><li>same angle orientation</li><li>angle diff < max angle</li><li>aligned right side</li><li>min distance < max gap</li><li>valid in OCS</li><li>delta = min distance</li></ul> | ![rightaligned](images/rightaligned.png) |
-| `leftaligned` | subj is __left aligned__ with obj | <ul><li>same angle orientation</li><li>angle diff < max angle</li><li>aligned left side</li><li>min distance < max gap</li><li>valid in WCS, OCS, ECS</li><li>delta = min distance</li></ul> | ![leftaligned](images/leftaligned.png) |
+| `leftaligned` | subj is __left aligned__ with obj | <ul><li>same angle orientation</li><li>angle diff < max angle</li><li>aligned left side</li><li>min distance < max gap</li><li>valid in OCS</li><li>delta = min distance</li></ul> | ![leftaligned](images/leftaligned.png) |
 | `orthogonal` | subj is __orthogonal__ to obj | <ul><li>is perpendicular</li><li>angle diff < max angle ±90°</li><li>valid in OCS</li></ul> |  ![orthogonal](images/orthogonal.png) |
 | `opposite` | subj is __opposite__ to obj | <ul><li>are facing each other</li><li>angle diff < max angle ±180°</li><li>valid in OCS</li><li>delta = center distance</li></ul> | ![opposite](images/opposite.png) |
 

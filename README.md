@@ -169,17 +169,19 @@ graph TD;
 ## Setup Operation deduce()
 
 Specify the relation categories to be deduced by the spatial reasoner.
-Call `deduce(...)` at the beginning of the inference pipeline, e.g., `deduce(topology)` or `deduce(topology connectivity comparability)`.
+Call `deduce(...)` at the beginning of the inference pipeline, e.g., `deduce(visibility)` or `deduce(topology connectivity comparability)`.
+When `deduce(...)` is not called, only the topology category is setup by default.
 
 Spatial relation categories that can be set in `deduce(...)` are:
 - topology
 - connectivity (= contacts)
 - sectoriality (= sectors)
 - comparability
+- similarity
 - visibility
 - geography
 
-See the [spatial relation categories](Relations.md) and their list of spatial predicates.
+See the [spatial relation categories](Relations.md) and the corresponding grouping of spatial predicates.
 
 
 ## Spatial Reference Systems
