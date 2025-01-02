@@ -16,10 +16,10 @@
   * portable inference language
   * independent of left-handed or right-handed 3D coordinate system
 * __Cross-platform__: library available in various programming languages
-  * [__SRswift__](https://github.com/metason/SRswift) repository in __Swift__ for iOS, macOS and visionOS
-  * [__SRpy__](https://github.com/metason/SRpy) repository in __Python__ (work in progress)
-  * __SRmono__ / SRdotnet / SRunity / SRcsharp? repository in __C#__ for Unity (work in progress)
-  * __SRjs__ repository in __JavaScript__ (not yet)
+  * [__SRswift__](https://github.com/metason/SRswift) library in __Swift__ for iOS, macOS and visionOS
+  * [__SRpy__](https://github.com/metason/SRpy) library in __Python__ (work in progress)
+  * __SRmono__ / SRdotnet / SRunity / SRcsharp? library in __C#__ for Unity (work in progress)
+  * __SRjs__ library in __JavaScript__ (not yet planned)
 
 ## Usage
 
@@ -35,7 +35,7 @@ The main process of the Spatial Reasoner library consists of the following seque
 
 ```swift
 // map detected or created 3D entities to SpatialObject instances
-let obj1 = SpatialObject(id: "1", position: .init(x: -1.5, y: 0, z: 0), width: 0.1, height: 1.0, depth: 0.1)
+let obj1 = SpatialObject(id: "1", position: .init(x: -1.5, y: 1.2, z: 0), width: 0.1, height: 1.0, depth: 0.1)
 let obj2 = SpatialObject(id: "2", position: .init(x: 0, y: 0, z: 0), width: 0.8, height: 1.0, depth: 0.6)
 let obj3 = SpatialObject(id: "3", position: .init(x: 0, y: 0, z: 1.6), width: 0.8, height: 0.8, depth: 0.8)
 obj3.angle = .pi/2.0

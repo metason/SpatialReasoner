@@ -15,8 +15,8 @@ To enable the derivation of topology relations, call `deduce(topology)` at the b
 | Predicate | Relation  | Specification | Visual Sample |
 | --- | ---- | ---- | -------- | 
 | `near` | subj is __near__ by obj | <ul><li>center of subject is not inside / not in `.i` sector</li><li>center distance < nearby condition of adjustment</li><li>delta = center distance</li></ul> |  ![near](images/near.png) |
-| `far` | subj is __far__ from obj | <ul><li>center distance > nearby condition of adjustment</li><li>delta = center distance</li></ul> |  |
-
+| `far` | subj is __far__ from obj | <ul><li>is far, not near</li><li>center distance > nearby condition of adjustment</li><li>delta = center distance</li></ul> | ![near](images/far.png) |
+|
 ### Directionality
 
 | Predicate | Relation  | Specification | Visual Sample |
@@ -27,7 +27,7 @@ To enable the derivation of topology relations, call `deduce(topology)` at the b
 | `behind` | subj is __behind__ obj | <ul><li>center of subject is in `.b` sector</li><li>may overlap</li><li>no distance condition</li><li>valid in OCS</li><li>delta = center distance</li></ul> | ![behind](images/behind.png) |
 | `above`<br>`over` | subj is __above__ obj<br>subj is __over__ obj |<ul><li>center of subject is in `.o` sector</li><li>may overlap</li><li>no distance condition</li><li>valid in WCS, OCS, ECS</li><li>delta = center distance</li></ul> |  ![above](images/above.png) |
 | `below`<br>`under` | subj is __below__ obj<br>subj is __under__ obj | <ul><li>center of subject is in `.u` sector</li><li>may overlap</li><li>no distance condition</li><li>valid in WCS, OCS, ECS</li><li>delta = center distance</li></ul> | ![below](images/below.png) |
-
+|
 ### Adjacency
 
 | Predicate | Relation  | Specification | Visual Sample |
@@ -36,10 +36,12 @@ To enable the derivation of topology relations, call `deduce(topology)` at the b
 | `rightside` | subj is at __rightside__ of obj | <ul><li>center of subject is in `.r` sector</li><li>is near</li><li>is not overlapping</li><li>valid in OCS</li><li>delta = min distance</li></ul> | ![rightside](images/rightside.png) |
 | `frontside` | subj is at __frontside__ of obj | <ul><li>center of subject is in `.a` sector</li><li>is near</li><li>is not overlapping</li><li>valid in OCS</li><li>delta = min distance</li></ul>  | ![frontside](images/frontside.png) |
 | `backside` | subj is at __backside__ of obj | <ul><li>center of subject is in `.b` sector</li><li>is near</li><li>is not overlapping</li><li>valid in OCS</li><li>delta = min distance</li></ul> | ![backside](images/backside.png) |
+| `beside` | subj is __beside__ obj | <ul><li>is near</li><li>is not above or not below</li><li>is not overlapping</li><li>valid in OCS</li><li>delta = center distance</li></ul> | ![beside](images/beside.png) |
 | `upperside` | subj is at __upperside__ of obj | <ul><li>center of subject is in `.o` sector</li><li>is near</li><li>is not overlapping</li><li>valid in WCS, OCS, ECS</li><li>delta = min distance</li></ul>  | ![upperside](images/upperside.png) |
 | `lowerside` | subj is at __lowerside__ of obj | <ul><li>center of subject is in `.u` sector</li><li>is near</li><li>is not overlapping</li><li>valid in WCS, OCS, ECS</li><li>delta = min distance</li></ul> | ![lowerside](images/lowerside.png) |
 | `ontop` | subj is __ontop__ of obj | <ul><li>center of subject is in `.o` sector</li><li>is near</li><li>is not overlapping</li><li>min distance < max gap</li><li>valid in WCS, OCS, ECS</li><li>delta = min distance</li></ul>  | ![ontop](images/ontop.png) |
 | `beneath` | subj is __beneath__ obj | <ul><li>center of subject is in `.u` sector</li><li>is near</li><li>is not overlapping</li><li>min distance < max gap</li><li>valid in WCS, OCS, ECS</li><li>delta = min distance</li></ul> | ![beneath](images/beneath.png) |
+|
 
 ### Orientations
 
@@ -52,11 +54,21 @@ To enable the derivation of topology relations, call `deduce(topology)` at the b
 | `leftaligned` | subj is __left aligned__ with obj | <ul><li>same angle orientation</li><li>angle diff < max angle</li><li>aligned left side</li><li>min distance < max gap</li><li>valid in WCS, OCS, ECS</li><li>delta = min distance</li></ul> | ![leftaligned](images/leftaligned.png) |
 | `orthogonal` | subj is __orthogonal__ to obj | <ul><li>is perpendicular</li><li>angle diff < max angle ±90°</li><li>valid in OCS</li></ul> |  ![orthogonal](images/orthogonal.png) |
 | `opposite` | subj is __opposite__ to obj | <ul><li>are facing each other</li><li>angle diff < max angle ±180°</li><li>valid in OCS</li><li>delta = center distance</li></ul> | ![opposite](images/opposite.png) |
-
+|
 
 ### Arrangements
 
-.disjoint, .inside, .containing, .overlapping, .crossing, .touching, .meeting, .beside, .fitting, .exceeding
+| Predicate | Relation  | Specification | Visual Sample |
+| --- | ---- | ---- | -------- | 
+| `disjoint` | subj is __disjoint__ from obj | <ul><li>no overlap</li><li>valid in WCS, OCS, ECS</li><li>delta = center distance</li></ul>  | ![disjoint](images/ahead.png) |
+| `inside` | subj is __inside__ obj | <ul><li>is inside</li><li>valid in WCS, OCS, ECS</li><li>delta = center distance</li></ul> | ![inside](images/inside.png) |
+| `containing` | subj is __containing__ obj | <ul><li>is containing</li><li>valid in WCS, OCS, ECS</li><li>delta = center distance</li></ul> | ![containing](images/containing.png) |
+| `overlapping` | subj is __overlapping__ with obj | <ul><li>is overlapping but not crossing</li><li>valid in WCS, OCS, ECS</li><li>delta = center distance</li></ul> | ![overlapping](images/left.png) |
+| `crossing` | subj is __crossing__ obj | <ul><li>is crossing</li><li>valid in WCS, OCS, ECS</li><li>delta = center distance</li></ul> | ![crossing](images/crossing.png) |
+| `touching` | subj is __touching__ obj | <ul><li>is touching with an edge or corner only</li><li>min distance < max gap</li><li>valid in WCS, OCS, ECS</li><li>delta = min distance</li></ul> |  ![touching](images/touching.png) |
+| `meeting` | subj is __meeting__ obj | <ul><li>is touching with a face</li><li>angle diff < max angle ±90°</li><li>min distance < max gap</li><li>valid in WCS, OCS, ECS</li><li>delta = min distance</li></ul> | ![meeting](images/meeting.png) |
+|
+
 
 ## Connectivity
 
@@ -68,6 +80,7 @@ To enable the derivation of conectivity relations, call `deduce(conectivity)` at
 | `at` | subj is __at__ obj | <ul><li>is beside</li><li>is meeting</li><li>min distance < max gap</li><li>valid in WCS, OCS, ECS</li><li>delta = min distance</li></ul> | ![at](images/at.png) |
 | `by` | subj is __by__ obj | <ul><li>is touching</li><li>min distance < max gap</li><li>valid in WCS, OCS, ECS</li><li>delta = min distance</li></ul> |  ![by](images/by.png) |
 | `in` | subj is __in__ obj | <ul><li>is inside</li><li>valid in WCS, OCS, ECS</li></ul> | ![in](images/in.png) |
+|
 
 ## Visibility
 
@@ -81,7 +94,8 @@ To enable the derivation of visibility relations, call `deduce(visibility)` at t
 | `seenleft` | subj is __seen left__ of obj | <ul><li>is seen left</li><li>valid in ECS</li><li>delta = center distance</li></ul> | ![seenleft](images/seenleft.png) |
 | `elevenoclock` | subj is at __eleven'o'clock__ | <ul><li>is seen at eleven'o'clock by ego</li><li>valid in ECS</li><li>delta = center distance</li</ul> | ![elevenoclock](images/elevenoclock.png) |
 | `twooclock` | subj is at __two'o'clock__ | <ul><li>is seen at two'o'clock by ego</li><li>valid in ECS</li><li>delta = center distance</li</ul> | ![twooclock](images/twooclock.png) |
-| `eightoclock`<br>`nineoclock`<br>`tenoclock`<br>`twelveoclock`<br>`oneoclock`<br>`threeoclock`<br>`fouroclock` | dito | <ul><li>dito</li></ul> |  |
+| `eightoclock`<br>`nineoclock`<br>`tenoclock`<br>`twelveoclock`<br>`oneoclock`<br>`threeoclock`<br>`fouroclock` | dito | <ul><li>dito</li></ul> |
+|
 
 ## Sectoriality
 
@@ -92,12 +106,24 @@ To enable the derivation of sectoriality relations, call `deduce(sectoriality)` 
 | `o` | subj is in sector __o__ of obj | <ul><li>center of subj is in sector `o` </li><li>is over</li><li>valid in OCS</li><li>delta = center distance</li></ul>  | ![in_o](images/in_o.png) |
 | `br` | subj is in sector __br__ of obj | <ul><li>center of subj is in sector `br` </li><li>is behind right</li><li>valid in OCS</li><li>delta = center distance</li></ul>  | ![in_br](images/in_br.png) |
 | `bru` | subj is in sector __bru__ of obj | <ul><li>center of subj is in sector `bru` </li><li>is behind right under</li><li>valid in OCS</li><li>delta = center distance</li></ul>  | ![in_bru](images/in_bru.png) |
+|
 
 ## Comparability
 
 To enable the derivation of comparability relations, call `deduce(comparability)` at the beginning of the pipeline or set `deduce.comparability = true` of the spatial reasoner.
 
-The geographic direction in WCS include: `smaller, bigger, shorter, longer, taller, thinner, wider`. A sample geographic relations: 
+| Predicate | Relation  | Specification |
+| --- | ---- | ---- |
+| `shorter` | subj is __shorter__ than obj | <ul><li>length is shorter</li><li>valid in WCS, OCS, ECS</li><li>delta = height difference</li></ul> | 
+| `longer` | subj is __longer__ than obj | <ul><li>length is larger</li><li>valid in WCS, OCS, ECS</li><li>delta = length difference</li></ul> | 
+| `taller` | subj is __taller__ than obj | <ul><li>height is larger</li><li>valid in WCS, OCS, ECS</li><li>delta = length difference</li></ul> | 
+| `thinner` | subj is __thinner__ than obj | <ul><li>obj is long</li><li>footprint is smaller</li><li>valid in WCS, OCS, ECS</li><li>delta = footprint difference</li></ul> | 
+| `wider` | subj is __wider__ than obj | <ul><li>obj is long</li><li>footprint is larger</li><li>valid in WCS, OCS, ECS</li><li>delta = footprint difference</li></ul> | 
+| `smaller` | subj is __smaller__ than obj | <ul><li>bbox volume is smaller</li><li>valid in WCS, OCS, ECS</li><li>delta = volume difference</li></ul> | 
+| `bigger` | subj is __bigger__ than obj | <ul><li>bbox volume is bigger</li><li>valid in WCS, OCS, ECS</li><li>delta = volume difference</li></ul> | 
+| `fitting` | subj is __fitting__ into obj | <ul><li>is fitting within</li><li>valid in WCS, OCS, ECS</li><li>delta = volume difference</li></ul> | 
+| `exceeding` | subj is __exceeding__ obj | <ul><li>is not fitting within</li><li>valid in WCS, OCS, ECS</li><li>delta = volume difference</li></ul> | 
+|
 
 ## Geography
 
