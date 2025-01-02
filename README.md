@@ -103,8 +103,8 @@ The filter, pick, and select operations do change the list of output objects to 
 | __sort__  | `sort(`_relation attribute_`)` | `sort(near.delta); sort(frontside.angle); sort(near.delta <);` |
 | __map__  | `map(`_attribute assignment_`)` | `map(weight = volume * 140.0)` |
 | __calc__  | `calc(`_variable assignment_`)` | `calc(cnt = objects.@count); calc(maxvol = objects.volume@max; median = objects.volume@median)` |
-| __produce__  | `produce(`_relation conditions_` : `_type wxdxh_`) | `produce(container : room); produce(wall by wall on floor : corner 0.2x0.2x0.2)` |
-
+| __produce__  | `produce(`_connectivity relations_` : `_type wxdxh_`) | `produce(in : room); produce(wall by wall on floor : corner 0.2x0.2x0.2)` |
+|
 
 
 ## Logging Operation log()
@@ -163,19 +163,24 @@ graph TD;
     wall2 -- on --> floor
     wall3 -- on --> floor
     wall4 -- on --> floor
-    door -- on --> floor
     table -- on --> floor
 ```
 
 ## Setup Operation deduce()
 
-Spatial predicate categories of relations:
+Specify the relation categories to be deduced by the spatial reasoner.
+Call `deduce(...)` at the beginning of the inference pipeline, e.g., `deduce(topology)` or `deduce(topology connectivity comparability)`.
+
+Spatial relation categories that can be set in `deduce(...)` are:
 - topology
 - connectivity (= contacts)
 - sectoriality (= sectors)
 - comparability
 - visibility
 - geography
+
+See the [spatial relation categories](Relations.md) and their list of spatial predicates.
+
 
 ## Spatial Reference Systems
 
@@ -190,6 +195,7 @@ The interpretation of spatial predicates and their corresponding relations are o
 
 ## Spatial Object
 
+tbd
 
 ## Spatial Adjustment
 
@@ -287,6 +293,6 @@ filter(height < 0.6 && height > 0.25 && width > 1.5 && length > 1.8)
 Classify spatial objects by their attributes and their arrangement, e.g.:
 ```
 filter(height > 1.5 && width > 1.0 && depth > 0.4)
-| select(beside ? type == 'wall')
+| select(backside ? type == 'wall')
 | map(type = 'cabinet'; supertype = 'furniture'; confidence = 0.75)
 ```
