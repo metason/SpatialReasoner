@@ -126,10 +126,38 @@ To enable the derivation of comparability relations, call `deduce(comparability)
 | `exceeding` | subj is __exceeding__ obj | <ul><li>is not fitting within</li><li>valid in WCS, OCS, ECS</li><li>delta = volume difference</li></ul> | 
 
 
+## Similarity
+
+To enable the derivation of similarity relations, call `deduce(similarity)` at the beginning of the pipeline or set `deduce.similarity = true` of the spatial reasoner.
+
+., ., ., ., ., ., ., .
+
+| Predicate | Relation  | Specification |
+| --- | ---- | ---- |
+| `sameheight` | subj has __sameheight__ as obj | <ul><li>height difference < max gap</li><li>valid in WCS, OCS, ECS</li><li>delta = height difference</li></ul> | 
+| `samewidth` | subj has __samewidth__ as obj | <ul><li>width difference < max gap</li><li>valid in WCS, OCS, ECS</li><li>delta = width difference</li></ul> | 
+| `samedepth` | subj has __samedepth__ as obj | <ul><li>depth difference < max gap</li><li>valid in WCS, OCS, ECS</li><li>delta = depth difference</li></ul> | 
+| `samelength` | subj has __samelength__ as obj | <ul><li>lenght difference < max gap</li><li>valid in WCS, OCS, ECS</li><li>delta = length difference</li></ul> | 
+| `sameperimeter` | subj has __sameperimeter__ as obj | <ul><li>perimeter difference < 4*(max gap)</li><li>valid in WCS, OCS, ECS</li><li>delta = perimeter difference</li></ul> | 
+| `samefront` | subj has __samefront__ as obj | <ul><li>front area difference < (max gap)<sup>2</sup></li><li>valid in WCS, OCS, ECS</li><li>delta = front area difference</li></ul> | 
+| `sameside` | subj has __sameside__ as obj | <ul><li>side area difference < (max gap)<sup>2</sup></li><li>valid in WCS, OCS, ECS</li><li>delta = side area difference</li></ul> | 
+| `samefootprint` | subj has __samefootprint__ as obj | <ul><li>base area difference < (max gap)<sup>2</sup></li><li>valid in WCS, OCS, ECS</li><li>delta = base area difference</li></ul> | 
+| `samesurface` | subj has __samesurface__ as obj | <ul><li>surface difference < 3*(max gap)<sup>2</sup></li><li>valid in WCS, OCS, ECS</li><li>delta = volume difference</li></ul> | 
+| `samevolume` | subj has __samevolume__ as obj | <ul><li>volume difference < (max gap)<sup>3</sup></li><li>valid in WCS, OCS, ECS</li><li>delta = volume difference</li></ul> | 
+| `samecuboid` | subj has __samecuboid__ as obj | <ul><li>`samewidth AND samedepth AND sameheight`</li><li>valid in WCS, OCS, ECS</li><li>delta = volume difference</li></ul> | 
+| `congruent` | subj is __congruent__ with obj | <ul><li>`samewidth AND samedepth AND sameheight`</li><li>same orientation/ same angle</li><li>valid in WCS, OCS, ECS</li><li>delta = volume difference</li></ul> | 
+| `sameposition` | subj has __sameposition__ as obj | <ul><li>position difference < max gap</li><li>valid in WCS, OCS, ECS</li><li>delta = position difference</li></ul> | 
+| `samecenter` | subj has __samecenter__ as obj | <ul><li>center difference < max gap</li><li>valid in WCS, OCS, ECS</li><li>delta = center difference</li></ul> | 
+| `sameshape` | subj has __sameshape__ as obj | <ul><li>same shape attribute</li><li>valid in WCS, OCS, ECS</li><li>delta = volume difference</li></ul> | 
+
 ## Geography
 
 To enable the derivation of geography relations, call `deduce(geography)` at the beginning of the pipeline or set `deduce.geography = true` of the spatial reasoner.
 
 The geographic direction in WCS include: `north, south, east, west, northwest, northeast, southwest, southeast`. A sample geographic relations: 
 
-> subj is __north__ of obj
+| Predicate | Relation  | Specification |
+| --- | ---- | ---- |
+| `north` | subj is __north__ of obj | <ul><li>center is in north direction ±22.5°</li><li>valid in WCS</li></ul> | 
+| `northeast`<br>`east`<br>`southeast`<br>`south`<br>`southwest`<br>`west`<br>`northwest` | dito | <ul><li>dito</li></ul> |
+

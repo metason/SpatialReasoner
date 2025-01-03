@@ -71,15 +71,16 @@ Spatial fuzziness affects information retrieval in space. Object detection in st
 ## Syntax of Spatial Inference Pipeline
 
 The spatial inference pipeline is defined as text specification. The pipeline is a linear sequence of inference operations which cover:
+- __deduce__: optional setup to specify relation categories to be deduced
 - __filter__: filter objects by matching spatial attributes
 - __pick__: pick objects along their spatial relations
 - __select__: select objects having spatial relations with others
-- __log__: log the current status of the processing pipeline
-- __deduce__: optional setup to specify relation categories to be deduced
-- __sort__: sort objects by metric attributes of spatial objects
-- __calc__: calculate global variables in fact base
+- __sort__: sort objects by metric attributes or by spatial relations
+- __slice__: choose a subsection of spatial objects from the input  
 - __map__: calculate values of (new) object attributes
+- __calc__: calculate global variables in fact base
 - __produce__: create new spatial objects relative to relations and add to fact base
+- __log__: log the current status of the inference pipeline
 
 The inference operations within the pipeline are separated by "|". An inference operation follows the principle of _input - process - output_. Input and output data are list of spatial objects. The data flows from left to right along the pipeline so that the output of the former becomes the input of the next operation. The pipeline starts with all spatial objects of the fact base as input to the first operation.
 
@@ -90,24 +91,42 @@ filter(volume > 0.4)
 | log()
 ```
 
-The filter, pick, and select operations do change the list of output objects to be different from the input. All other operations do pass the list of input objects to the output, but may change sort order or add attribute values of the spatial objects.
+The filter, pick, select, slice, and produce operations do change the list of output objects to be different from the input. All other operations do pass the list of input objects to the output, but may change sort order of or add attribute values to the spatial objects.
 
 | Op | Syntax | Examples |
 | -------- | ------- | -------- | 
-| __filter__  | `filter(`_attribute conditions_`)` | `filter(id == 'wall1'); filter(width > 0.5 AND height < 2.4); filter(type == 'furniture'); filter(thin AND volume > 0.4)` |
+| __deduce__  | `deduce(`_relation categories_`)` | `deduce(topology); deduce(connectivity); deduce(visibility)` |
+| __filter__  | `filter(`_attribute conditions_`)` | `filter(id == 'wall1'); filter(width > 0.5 AND height < 2.4); filter(supertype == 'furniture'); filter(thin AND volume > 0.4)` |
 | __pick__  | `pick(`_relation conditions_`)` | `pick(near); pick(ahead AND smaller); pick(near AND (left OR right))` |
 | __select__  | `select(`_relation ? attribute conditions_`)` | `select(ontop ? id == 'table1'); select(on ? type == 'floor'); select(ahead AND smaller ? footprint < 0.5)` |
-| __log__  | `log(base 3D `_relations_`)` | `log(); log(base); log(3D); log(near right); log(3D near right)` |
-| __deduce__  | `deduce(`_relation categories_`)` | `deduce(topology); deduce(connectivity); deduce(visibility)` |
 | __sort__  | `sort(`_metric attribute_`)` | `sort(length); sort(volume); sort(width <); sort(width >)` |
 | __sort__  | `sort(`_relation attribute_`)` | `sort(near.delta); sort(frontside.angle); sort(near.delta <);` |
+| __slice__  | `slice(`_range_`)` | `slice(1); slice(2..3); slice(-1); slice(-3..-1); slice(1..-2)` |
 | __map__  | `map(`_attribute assignment_`)` | `map(weight = volume * 140.0)` |
 | __calc__  | `calc(`_variable assignment_`)` | `calc(cnt = objects.@count); calc(maxvol = objects.volume@max; median = objects.volume@median)` |
 | __produce__  | `produce(`_connectivity relations_` : `_type wxdxh_`) | `produce(in : room); produce(wall by wall on floor : corner 0.2x0.2x0.2)` |
+| __log__  | `log(base 3D `_relations_`)` | `log(); log(base); log(3D); log(near right); log(3D near right)` |
 
 
+## Setup Operation `deduce()`
 
-## Logging Operation log()
+Specify the relation categories to be deduced by the spatial reasoner.
+Call `deduce(...)` at the beginning of the inference pipeline, e.g., `deduce(visibility)` or `deduce(topology connectivity comparability)`.
+When `deduce(...)` is not called, only the topology category is setup by default.
+
+Spatial relation categories that can be set in `deduce(...)` are:
+- topology
+- connectivity (= contacts)
+- sectoriality (= sectors)
+- comparability
+- similarity
+- visibility
+- geography
+
+See the [spatial relation categories](Relations.md) and the corresponding grouping of spatial predicates.
+
+
+## Logging Operation `log()`
 
 Log files are used for debug purposes and are saved per default in the Downloads folder.
 
@@ -166,24 +185,6 @@ graph TD;
     table -- on --> floor
 ```
 
-## Setup Operation deduce()
-
-Specify the relation categories to be deduced by the spatial reasoner.
-Call `deduce(...)` at the beginning of the inference pipeline, e.g., `deduce(visibility)` or `deduce(topology connectivity comparability)`.
-When `deduce(...)` is not called, only the topology category is setup by default.
-
-Spatial relation categories that can be set in `deduce(...)` are:
-- topology
-- connectivity (= contacts)
-- sectoriality (= sectors)
-- comparability
-- similarity
-- visibility
-- geography
-
-See the [spatial relation categories](Relations.md) and the corresponding grouping of spatial predicates.
-
-
 ## Spatial Reference Systems
 
 The interpretation of some predicates of spatial relations are depending on the frame of reference. E.g., predicates such as left, right, in front, and at back have different meaning in different reference systems. Additionally, in English language the semantic of spatial predicates is sometimes vague and it is hardly possible to distinquish between terms and their synonyms (e.g., over, above, ontop). Therefore, the meaning of all spatial predicates used in the Spatial Reasoner library are clearly specified. Although the ordinary meaning of the terms has been taken into consideration, the specification in the Spatial Reasoner library might not corrspond with its daily use in spoken English language.
@@ -208,17 +209,17 @@ SpatialReasoner has its own local adjustment that should be set upfront.
 ```swift
 class SpatialAdjustment {
     // Max deviations
-    var maxgap:Float = 0.05 // max distance of deviation in all directions in meters
-    var maxangle:Float = 0.05 * .pi // max delta of yaw orientation in radiants in both directions
+    var maxGap:Float = 0.05 // max distance of deviation in all directions in meters
+    var maxAngleDelta:Float = 0.05 * .pi // max delta of yaw orientation in both directions in radiants 
     // Sector size
     var sectorSchema:SectorSchema = .nearby
-    var sectorFactor:Float = 1.0 // sectorFactor is multiplying the result of claculation schema
-    var sectorLimit:Float = 2.5 // sectorLimit is maximal length
+    var sectorFactor:Float = 1.0 // multiplying result of claculation schema
+    var sectorLimit:Float = 2.5 // maximal length
     var fixSectorLenght:Float = 0.25
     var wideSectorLenght:Float = 10.0
     // Vicinity
-    var nearbyFactor:Float = 1.0 // nearbyFactor is multiplying radius sum of object and subject (relative to size) as max distance
-    var nearbyLimit:Float = 2.5 // nearbyLimit is maximal absolute distance
+    var nearbyFactor:Float = 1.0 //multiplying radius sum of object and subject (relative to size) as max distance
+    var nearbyLimit:Float = 2.5 // maximal absolute distance
     // Proportions
     var longRatio:Float = 4.0 // one dimension is factor larger than both others
     var thinRatio:Float = 10.0 // one dimension is 1/factor smaller than both others
@@ -265,28 +266,58 @@ See detailed description of all [spatial relations](Relations.md).
 
 ## Use Cases
 
-### Spatial Queries
+### Queries using Object Attributes 
+
 
 Select a spatial object by its identifiier, e.g.:
 ```
 filter(id = 'id1234')
 ```
 
-Select spatial objects by their attributes only, e.g.:
+Select spatial objects by type attributes, e.g.:
 ```
-filter(footprint > 0.5 && supertype == 'furniture')
-| sort(length)
+filter(supertype == 'furniture' AND (type == 'chair' OR type == 'table'))
 ```
 
-Select spatial objects by their attributes and their arrangement, e.g.:
+Select spatial objects by boolean attributes, e.g.:
+```
+filter(virtual AND NOT moving)
+```
+
+Select a spatial object by non-spatial attributes, e.g.:
+```
+filter(label == 'table' AND confidence.label > 0.7)
+```
+
+### Spatial Queries
+
+Select spatial objects by their spatial attributes, e.g.:
+```
+filter(footprint > 0.5 && height > 1.5)
+```
+
+Pick spatial objects by their spatial relations, e.g.:
+```
+pick(near AND (left OR behind))
+```
+
+Select spatial objects by their attributes and their relations, e.g.:
 ```
 filter(height < 0.6 && height > 0.25 && width < 1.3 && length > 1.8)
-| select(beside ? type == 'wall')
+| select(beside ? type == 'Wall')
+| sort(volume)
+```
+
+Get nearest spatial object from observer:
+```
+filter(id == 'observer') 
+| pick(disjoint) 
+| sort(disjoint.delta <)
+| slice(1)
 ```
 
 ### Object Classification
-
-Classify spatial objects by their attributes only, e.g.:
+Classify spatial objects by their attributes, e.g.:
 ```
 filter(height < 0.6 && height > 0.25 && width > 1.5 && length > 1.8)
 | map(type = 'double bed'; supertype = 'furniture'; confidence = 0.5)
