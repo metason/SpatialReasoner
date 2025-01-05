@@ -89,10 +89,10 @@ To enable the derivation of visibility relations, call `deduce(visibility)` at t
  
 | Predicate | Relation  | Specification | Visual Sample |
 | --- | ---- | ---- | -------- | 
-| `infront` | subj is __in front__ of obj | <ul><li>is in front</li><li>valid in ECS</li><li>delta = center distance</li></ul>  | ![infront](images/infront.png) |
-| `atrear` | subj is __at rear__ of obj | <ul><li>is at rear</li><li>valid in ECS</li><li>delta = center distance</li></ul> | ![atrear](images/atrear.png) |
-| `seenright` | subj is __seen right__ of obj | <ul><li>is seen right</li><li>valid in ECS</li><li>delta = center distance</li></ul> |  ![seenright](images/seenright.png) |
-| `seenleft` | subj is __seen left__ of obj | <ul><li>is seen left</li><li>valid in ECS</li><li>delta = center distance</li></ul> | ![seenleft](images/seenleft.png) |
+| `infront` | subj is __in front__ of obj | <ul><li>is seen in front of</li><li>valid in ECS</li><li>delta = center distance</li></ul>  | ![infront](images/infront.png) |
+| `atrear` | subj is __at rear__ of obj | <ul><li>is seen at rear of</li><li>valid in ECS</li><li>delta = center distance</li></ul> | ![atrear](images/atrear.png) |
+| `seenright` | subj is __seen right__ of obj | <ul><li>is seen right of</li><li>valid in ECS</li><li>delta = center distance</li></ul> |  ![seenright](images/seenright.png) |
+| `seenleft` | subj is __seen left__ of obj | <ul><li>is seen left of</li><li>valid in ECS</li><li>delta = center distance</li></ul> | ![seenleft](images/seenleft.png) |
 | `elevenoclock` | subj is at __eleven'o'clock__ | <ul><li>is seen at eleven'o'clock by ego</li><li>valid in ECS</li><li>delta = center distance</li</ul> | ![elevenoclock](images/elevenoclock.png) |
 | `twooclock` | subj is at __two'o'clock__ | <ul><li>is seen at two'o'clock by ego</li><li>valid in ECS</li><li>delta = center distance</li</ul> | ![twooclock](images/twooclock.png) |
 | `eightoclock`<br>`nineoclock`<br>`tenoclock`<br>`twelveoclock`<br>`oneoclock`<br>`threeoclock`<br>`fouroclock` | dito | <ul><li>dito</li></ul> |

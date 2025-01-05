@@ -77,7 +77,7 @@ The spatial inference pipeline is defined as text specification. The pipeline is
 - __select__: select objects having spatial relations with others
 - __sort__: sort objects by metric attributes or by spatial relations
 - __slice__: choose a subsection of spatial objects from the input  
-- __map__: calculate values of (new) object attributes
+- __map__: calculate values of object attributes
 - __calc__: calculate global variables in fact base
 - __produce__: create new spatial objects relative to relations and add to fact base
 - __log__: log the current status of the inference pipeline
@@ -95,15 +95,15 @@ The filter, pick, select, slice, and produce operations do change the list of ou
 
 | Op | Syntax | Examples |
 | -------- | ------- | -------- | 
-| __deduce__  | `deduce(`_relation categories_`)` | `deduce(topology); deduce(connectivity); deduce(visibility)` |
+| __deduce__  | `deduce(`_relation categories_`)` | `deduce(topology); deduce(connectivity); deduce(visibility); deduce(topology similarity)` |
 | __filter__  | `filter(`_attribute conditions_`)` | `filter(id == 'wall1'); filter(width > 0.5 AND height < 2.4); filter(supertype == 'furniture'); filter(thin AND volume > 0.4)` |
 | __pick__  | `pick(`_relation conditions_`)` | `pick(near); pick(ahead AND smaller); pick(near AND (left OR right))` |
 | __select__  | `select(`_relation ? attribute conditions_`)` | `select(ontop ? id == 'table1'); select(on ? type == 'floor'); select(ahead AND smaller ? footprint < 0.5)` |
 | __sort__  | `sort(`_metric attribute_`)` | `sort(length); sort(volume); sort(width <); sort(width >)` |
 | __sort__  | `sort(`_relation attribute_`)` | `sort(near.delta); sort(frontside.angle); sort(near.delta <);` |
 | __slice__  | `slice(`_range_`)` | `slice(1); slice(2..3); slice(-1); slice(-3..-1); slice(1..-2)` |
-| __map__  | `map(`_attribute assignment_`)` | `map(weight = volume * 140.0)` |
-| __calc__  | `calc(`_variable assignment_`)` | `calc(cnt = objects.@count); calc(maxvol = objects.volume@max; median = objects.volume@median)` |
+| __map__  | `map(`_attribute assignment_`)` | `map(weight = volume * 140.0); map(type = 'bed'; supertype = 'furniture';` |
+| __calc__  | `calc(`_variable assignment_`)` | `calc(cnt = count(objects); calc(maxvol = max(objects.volume); median = median(objects.height))` |
 | __produce__  | `produce(`_connectivity relations_` : `_type wxdxh_`) | `produce(in : room); produce(wall by wall on floor : corner 0.2x0.2x0.2)` |
 | __log__  | `log(base 3D `_relations_`)` | `log(); log(base); log(3D); log(near right); log(3D near right)` |
 
@@ -124,6 +124,13 @@ Spatial relation categories that can be set in `deduce(...)` are:
 - geography
 
 See the [spatial relation categories](Relations.md) and the corresponding grouping of spatial predicates.
+
+## Calculation Operation`calc()`  
+
+Function calls: `average(), sum(), count(), median(), mode(), stddev(), min(), max()`
+
+## Logging Operation `map()`
+
 
 
 ## Logging Operation `log()`
@@ -187,7 +194,7 @@ graph TD;
 
 ## Spatial Reference Systems
 
-The interpretation of some predicates of spatial relations are depending on the frame of reference. E.g., predicates such as left, right, in front, and at back have different meaning in different reference systems. Additionally, in English language the semantic of spatial predicates is sometimes vague and it is hardly possible to distinquish between terms and their synonyms (e.g., over, above, ontop). Therefore, the meaning of all spatial predicates used in the Spatial Reasoner library are clearly specified. Although the ordinary meaning of the terms has been taken into consideration, the specification in the Spatial Reasoner library might not corrspond with its daily use in spoken English language.
+The interpretation of some predicates of spatial relations are depending on the frame of reference. E.g., predicates such as left, right, in front, and at back have different meaning in different reference systems. Additionally, in English language the semantic of spatial predicates is sometimes vague and it is hardly possible to distinquish between terms and their synonyms (e.g., over, above, ontop). Therefore, the meaning of all spatial predicates used in the Spatial Reasoner library are clearly specified. Although the ordinary meaning of the terms has been taken into consideration, the specification in the Spatial Reasoner library might not correspond with its daily use in spoken English language.
 
 
 The interpretation of spatial predicates and their corresponding relations are only valid in specifc reference systems:
@@ -232,7 +239,7 @@ Calculation schema to determine sector size for extruding area to partition spac
 public enum SectorSchema {
     case fixed // use specified fix lenght for extruding area
     case dimension // use same dimension as object multiplied with factor
-    case perimeter // use area perimeter multiplied with factor
+    case perimeter // use base perimeter multiplied with factor
     case area // use area multiplied with factor
     case nearby // use nearby settings for extruding
     case wide // use fix wide
