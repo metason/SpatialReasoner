@@ -2,6 +2,8 @@
 
 > _A flexible 3D Spatial Reasoning library_
 
+__Content__: [Features](#features), [Usage](#usage), [Motivation](#motivation), [Syntax](#syntax-of-spatial-inference-pipeline), [Reference Systems](#spatial-reference_systems), [Spatial Objects](#spatial-objects), [Adjustment](#spatial-adjustment), [BBox Sectors](bbox-sectors), [Spatial Relations](#spatial-relations), [Use Cases](#use-cases)
+
 ## Features
 
 * __3D first__: designed from ground up for 3D (not a 2D/GIS extension)
@@ -45,7 +47,7 @@ let sr = SpatialReasoner()
 sr.load([obj1, obj2, obj3])
 let pipeline = "filter(volume > 0.4) | pick(left AND above) | log()"
 if sr.run(pipeline) {
-    // access list of SpatialObject resulted from processed pipeline
+    // result of processed pipeline as list of SpatialObject 
     let result = sr.result()  
     ...
 }
@@ -64,9 +66,9 @@ tbd
 
 ## Motivation
 
-This library deals with representing and reasoning about the topology of spatial 3D objects using derived attributes and deduced relations, such as the adjacency between or the topological arrangement of spatial objects. Spatial reasoning is the ability to conceptualize the three-dimensional relationships of objects in space and to evaluate spatial conditions in an indoor or outdoor context. Reasoning in the Spatial Reasoner library is executed as a succession of inference operations in a pipeline which takes spatial attributes of and spatial relations between objects into consideration. 
+This library deals with representing and reasoning about the topology of spatial 3D objects using derived attributes and deduced relations, such as the adjacency between or the topological arrangement and assembly of spatial objects. Spatial reasoning is the ability to conceptualize the three-dimensional relationships of objects in space and to evaluate spatial conditions in a specific context such as indoor or outdoor environments. Reasoning in the Spatial Reasoner library is executed as a succession of inference operations in a pipeline which takes spatial attributes of and spatial relations between objects into consideration. 
 
-Spatial fuzziness affects information retrieval in space. Object detection in state-of-the-art computer vision, machine learning, and Augmented Reality toolkits results in detected objects that vary their locations and do change and improve over time their orientations and boundaries in space. The object description is usually fuzzy and imprecise, yet some non-trivial conclusion can anyhow be deduced. The geometric confidence typically improves over time. Additionally by taking spatial domain knowledge into account, semantic interpretation and therefore overall confidence can be improved. It is the goal of the Spatial Reasoner library to improve object detection with domain knowledge using spatial semantic and three-dimensional conditions.
+Spatial fuzziness affects information retrieval in space. Object detection in state-of-the-art computer vision, machine learning, and Augmented Reality toolkits results in detected objects that vary their locations and do change and improve over time their orientations and boundaries in space. The object description is usually fuzzy and imprecise, yet some non-trivial conclusion can anyhow be deduced. The geometric confidence typically improves over time. Additionally, by taking spatial domain knowledge into account, semantic interpretation and therefore overall confidence can be improved. It is the goal of the Spatial Reasoner library to improve object detection with domain knowledge using spatial semantic and three-dimensional conditions.
 
 ## Syntax of Spatial Inference Pipeline
 
@@ -76,10 +78,10 @@ The spatial inference pipeline is defined as text specification. The pipeline is
 - __pick__: pick objects along their spatial relations
 - __select__: select objects having spatial relations with others
 - __sort__: sort objects by metric attributes or by spatial relations
-- __slice__: choose a subsection of spatial objects from the input  
-- __map__: calculate values of object attributes
+- __slice__: choose a subsection of spatial objects from the input list 
 - __calc__: calculate global variables in fact base
-- __produce__: create new spatial objects relative to relations and add to fact base
+- __map__: calculate values of object attributes
+- __produce__: create new spatial objects relative to relations
 - __log__: log the current status of the inference pipeline
 
 The inference operations within the pipeline are separated by "|". An inference operation follows the principle of _input - process - output_. Input and output data are list of spatial objects. The data flows from left to right along the pipeline so that the output of the former becomes the input of the next operation. The pipeline starts with all spatial objects of the fact base as input to the first operation.
@@ -102,13 +104,13 @@ The filter, pick, select, slice, and produce operations do change the list of ou
 | __sort__  | `sort(`_metric attribute_`)` | `sort(length); sort(volume); sort(width <); sort(width >)` |
 | __sort__  | `sort(`_relation attribute_`)` | `sort(near.delta); sort(frontside.angle); sort(near.delta <);` |
 | __slice__  | `slice(`_range_`)` | `slice(1); slice(2..3); slice(-1); slice(-3..-1); slice(1..-2)` |
-| __map__  | `map(`_attribute assignment_`)` | `map(weight = volume * 140.0); map(type = 'bed'; supertype = 'furniture';` |
 | __calc__  | `calc(`_variable assignment_`)` | `calc(cnt = count(objects); calc(maxvol = max(objects.volume); median = median(objects.height))` |
+| __map__  | `map(`_attribute assignment_`)` | `map(weight = volume * 140.0); map(type = 'bed'; supertype = 'furniture';` |
 | __produce__  | `produce(`_connectivity relations_` : `_type wxdxh_`) | `produce(in : room); produce(wall by wall on floor : corner 0.2x0.2x0.2)` |
 | __log__  | `log(base 3D `_relations_`)` | `log(); log(base); log(3D); log(near right); log(3D near right)` |
 
 
-## Setup Operation `deduce()`
+### `deduce()` Operation
 
 Specify the relation categories to be deduced by the spatial reasoner.
 Call `deduce(...)` at the beginning of the inference pipeline, e.g., `deduce(visibility)` or `deduce(topology connectivity comparability)`.
@@ -116,8 +118,8 @@ When `deduce(...)` is not called, only the topology category is setup by default
 
 Spatial relation categories that can be set in `deduce(...)` are:
 - topology
-- connectivity (= contacts)
-- sectoriality (= sectors)
+- connectivity (having contact)
+- sectoriality (being in sector)
 - comparability
 - similarity
 - visibility
@@ -125,15 +127,33 @@ Spatial relation categories that can be set in `deduce(...)` are:
 
 See the [spatial relation categories](Relations.md) and the corresponding grouping of spatial predicates.
 
-## Calculation Operation`calc()`  
+### `filter()` Operation
+
+### `pick()` Operation 
+
+### `select()` Operation
+
+### `sort()` Operation
+
+### `sort()` Operation
+
+### `slice()` Operation 
+
+### `calc()` Operation
+
+Calculate global attributes 
 
 Function calls: `average(), sum(), count(), median(), mode(), stddev(), min(), max()`
 
-## Logging Operation `map()`
+### `map()` Operation
 
+Calculate local object attributes. 
 
+### `produce()` Operation
 
-## Logging Operation `log()`
+Create new spatial objects relative to relations and add to fact base
+
+### `log()` Operation
 
 Log files are used for debug purposes and are saved per default in the Downloads folder.
 
@@ -203,7 +223,7 @@ The interpretation of spatial predicates and their corresponding relations are o
 - __Egocentric Coordinate System (ECS)__: spatial relations are encoded relative to the position and view direction of an observer
 - __Geodetic Coordinate System (GCS)__: spatial relations are encoded relative to earth's projected latitude (north/south) and longitude (east/west)
 
-## Spatial Object
+## Spatial Objects
 
 tbd
 
@@ -276,9 +296,9 @@ See detailed description of all [spatial relations](Relations.md).
 ### Queries using Object Attributes 
 
 
-Select a spatial object by its identifiier, e.g.:
+Select a spatial object by its unique identifiier, e.g.:
 ```
-filter(id = 'id1234')
+filter(id == 'id1234')
 ```
 
 Select spatial objects by type attributes, e.g.:
@@ -291,7 +311,7 @@ Select spatial objects by boolean attributes, e.g.:
 filter(virtual AND NOT moving)
 ```
 
-Select a spatial object by non-spatial attributes, e.g.:
+Select spatial objects by non-spatial attributes, e.g.:
 ```
 filter(label == 'table' AND confidence.label > 0.7)
 ```
@@ -330,9 +350,13 @@ filter(height < 0.6 && height > 0.25 && width > 1.5 && length > 1.8)
 | map(type = 'double bed'; supertype = 'furniture'; confidence = 0.5)
 ```
 
-Classify spatial objects by their attributes and their arrangement, e.g.:
+Classify spatial objects by their attributes and their topological arrangement, e.g.:
 ```
 filter(height > 1.5 && width > 1.0 && depth > 0.4)
 | select(backside ? type == 'wall')
 | map(type = 'cabinet'; supertype = 'furniture'; confidence = 0.75)
 ```
+
+## License
+
+Released under the [Creative Commons CC0 License](LICENSE).

@@ -6,6 +6,16 @@ Spatial relations are described by spatial predicates - keywords that indicate t
 
 The spatial objects in the visual samples are represented as boxes (bounding box of the object) and their label indicates their front side. 
 
+__Spatial Relation Categories__
+
+- [Topology](#topology): [Proximity](#proximity), [Directionality](#directionality), [Adjacency](#adjacency), [Orientation](#orientation), [Assembly](#assembly)
+- [Connectivity](#connectivity)
+- [Visibility](#visibility)
+- [Sectoriality](#sectoriality)
+- [Comparability](#comparability)
+- [Similarity](#similarity)
+- [Geography](#geography)
+
 ## Topology
 
 To enable the derivation of topology relations, call `deduce(topology)` at the beginning of the pipeline or set `deduce.topology = true` of the spatial reasoner.
@@ -45,7 +55,7 @@ To enable the derivation of topology relations, call `deduce(topology)` at the b
 | `beneath` | subj is __beneath__ obj | <ul><li>center of subject is in `.u` sector</li><li>is near</li><li>is not overlapping</li><li>min distance < max gap</li><li>valid in WCS, OCS, ECS</li><li>delta = min distance</li></ul> | ![beneath](images/beneath.png) |
 
 
-### Orientations
+### Orientation
 
 | Predicate | Relation  | Specification | Visual Sample |
 | --- | ---- | ---- | -------- | 
@@ -58,7 +68,7 @@ To enable the derivation of topology relations, call `deduce(topology)` at the b
 | `opposite` | subj is __opposite__ to obj | <ul><li>are facing each other</li><li>angle diff < max angle ±180°</li><li>valid in OCS</li><li>delta = center distance</li></ul> | ![opposite](images/opposite.png) |
 
 
-### Arrangements
+### Assembly
 
 | Predicate | Relation  | Specification | Visual Sample |
 | --- | ---- | ---- | -------- | 
