@@ -2,7 +2,7 @@
 
 > _A flexible 3D Spatial Reasoning library_
 
-__Content__: [Features](#features), [Usage](#usage), [Motivation](#motivation), [Syntax](#syntax-of-spatial-inference-pipeline), [Reference Systems](#spatial-reference_systems), [Spatial Objects](#spatial-objects), [Adjustment](#spatial-adjustment), [BBox Sectors](bbox-sectors), [Spatial Relations](#spatial-relations), [Use Cases](#use-cases)
+__Content__: [Features](#features), [Usage](#usage), [Motivation](#motivation), [Inference Syntax](#syntax-of-spatial-inference-pipeline), [Reference Systems](#spatial-reference_systems), [Spatial Objects](#spatial-objects), [Adjustment](#spatial-adjustment), [BBox Sectors](bbox-sectors), [Spatial Relations](#spatial-relations), [Use Cases](#use-cases)
 
 ## Features
 
