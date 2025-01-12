@@ -243,7 +243,6 @@ class SpatialAdjustment {
     var sectorFactor:Float = 1.0 // multiplying result of claculation schema
     var sectorLimit:Float = 2.5 // maximal length
     var fixSectorLenght:Float = 0.25
-    var wideSectorLenght:Float = 10.0
     // Vicinity
     var nearbyFactor:Float = 1.0 //multiplying radius sum of object and subject (relative to size) as max distance
     var nearbyLimit:Float = 2.5 // maximal absolute distance
@@ -253,16 +252,27 @@ class SpatialAdjustment {
 }
 ```
 
+Calculation schema to determine nearby radius of objects's bounding box.
+
+```swift
+public enum NearbySchema {
+    case fixed // use nearbyFactor as fix nearby radius
+    case circle // use base circle radius of bbox multiplied with nearbyFactor
+    case sphere // use sphere radius of bbox multiplied with nearbyFactor
+    case perimeter // use base perimeter multiplied with nearbyFactor
+    case area // use area multiplied with nearbyFactor
+}
+```
+
 Calculation schema to determine sector size for extruding area to partition space along objects's bounding box (see next chapter).
 
 ```swift
 public enum SectorSchema {
-    case fixed // use specified fix lenght for extruding area
+    case fixed // use sectorFactor for extruding area
     case dimension // use same dimension as object multiplied with factor
     case perimeter // use base perimeter multiplied with factor
     case area // use area multiplied with factor
     case nearby // use nearby settings for extruding
-    case wide // use fix wide
 }
 ```
 
