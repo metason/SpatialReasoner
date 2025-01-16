@@ -32,12 +32,12 @@ To enable the derivation of topology relations, call `deduce(topology)` at the b
 
 | Predicate | Relation  | Specification | Visual Sample |
 | --- | ---- | ---- | -------- | 
-| `left` | subj is __left__ of obj | <ul><li>center of subject is in `.l` sector</li><li>may overlap</li><li>no distance condition</li><li>valid in OCS</li><li>delta = center distance</li></ul>  | ![left](images/left.png) |
-| `right` | subj is __right__ of obj | <ul><li>center of subject is in `.r` sector</li><li>may overlap</li><li>no distance condition</li><li>valid in OCS</li><li>delta = center distance</li></ul> | ![right](images/right.png) |
-| `ahead` | subj is __ahead__ of obj | <ul><li>center of subject is in `.a` sector</li><li>may overlap</li><li>no distance condition</li><li>valid in OCS</li><li>delta = center distance</li></ul> |  ![ahead](images/ahead.png) |
-| `behind` | subj is __behind__ obj | <ul><li>center of subject is in `.b` sector</li><li>may overlap</li><li>no distance condition</li><li>valid in OCS</li><li>delta = center distance</li></ul> | ![behind](images/behind.png) |
-| `above`<br>`over` | subj is __above__ obj<br>subj is __over__ obj |<ul><li>center of subject is in `.o` sector</li><li>may overlap</li><li>no distance condition</li><li>valid in WCS, OCS, ECS</li><li>delta = center distance</li></ul> |  ![above](images/above.png) |
-| `below`<br>`under` | subj is __below__ obj<br>subj is __under__ obj | <ul><li>center of subject is in `.u` sector</li><li>may overlap</li><li>no distance condition</li><li>valid in WCS, OCS, ECS</li><li>delta = center distance</li></ul> | ![below](images/below.png) |
+| `left` | subj is __left__ of obj | <ul><li>center of subject is left from object</li><li>may overlap</li><li>no distance condition</li><li>valid in OCS</li><li>delta = center distance</li></ul>  | ![left](images/left.png) |
+| `right` | subj is __right__ of obj | <ul><li>center of subject is right from object</li><li>may overlap</li><li>no distance condition</li><li>valid in OCS</li><li>delta = center distance</li></ul> | ![right](images/right.png) |
+| `ahead` | subj is __ahead__ of obj | <ul><li>center of subject is ahead of object</li><li>may overlap</li><li>no distance condition</li><li>valid in OCS</li><li>delta = center distance</li></ul> |  ![ahead](images/ahead.png) |
+| `behind` | subj is __behind__ obj | <ul><li>center of subject is behind object</li><li>may overlap</li><li>no distance condition</li><li>valid in OCS</li><li>delta = center distance</li></ul> | ![behind](images/behind.png) |
+| `above`<br>`over` | subj is __above__ obj<br>subj is __over__ obj |<ul><li>center of subject is above object</li><li>may overlap</li><li>no distance condition</li><li>valid in WCS, OCS, ECS</li><li>delta = center distance</li></ul> |  ![above](images/above.png) |
+| `below`<br>`under` | subj is __below__ obj<br>subj is __under__ obj | <ul><li>center of subject is below object</li><li>may overlap</li><li>no distance condition</li><li>valid in WCS, OCS, ECS</li><li>delta = center distance</li></ul> | ![below](images/below.png) |
 
 
 ### Adjacency
@@ -110,7 +110,7 @@ To enable the derivation of visibility relations, call `deduce(visibility)` at t
 
 ## Sectoriality
 
-To enable the derivation of sectoriality relations, call `deduce(sectoriality)` at the beginning of the pipeline or set `deduce.sectoriality = true` of the spatial reasoner.
+To enable the derivation of sectoriality relations, call `deduce(sectoriality)` at the beginning of the pipeline or set `deduce.sectoriality = true` of the spatial reasoner. 
 
 | Predicate | Relation  | Specification | Visual Sample |
 | --- | ---- | ---- | -------- | 
@@ -118,6 +118,7 @@ To enable the derivation of sectoriality relations, call `deduce(sectoriality)` 
 | `br` | subj is in sector __br__ of obj | <ul><li>center of subj is in sector `br` </li><li>is behind right</li><li>valid in OCS</li><li>delta = center distance</li></ul>  | ![in_br](images/in_br.png) |
 | `bru` | subj is in sector __bru__ of obj | <ul><li>center of subj is in sector `bru` </li><li>is behind right under</li><li>valid in OCS</li><li>delta = center distance</li></ul>  | ![in_bru](images/in_bru.png) |
 
+See detailed description of all available [BBox sectors](Sectors.md) that are also available as predicates.
 
 ## Comparability
 

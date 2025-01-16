@@ -21,7 +21,7 @@ __Content__: [Features](#features), [Usage](#usage), [Motivation](#motivation), 
   * [__SRswift__](https://github.com/metason/SRswift) library in __Swift__ for iOS, macOS and visionOS
   * [__SRpy__](https://github.com/metason/SRpy) library in __Python__ (work in progress)
   * __SRmono__ / SRdotnet / SRunity / SRcsharp? library in __C#__ for Unity (work in progress)
-  * __SRjs__ library in __JavaScript__ (not yet planned)
+  * __SRjs__ library in __JavaScript__ (not yet in planning)
 
 ## Usage
 
@@ -78,7 +78,7 @@ The spatial inference pipeline is defined as text specification. The pipeline is
 - __pick__: pick objects along their spatial relations
 - __select__: select objects having spatial relations with others
 - __sort__: sort objects by metric attributes or by spatial relations
-- __slice__: choose a subsection of spatial objects from the input list 
+- __slice__: choose a subsection of spatial objects 
 - __calc__: calculate global variables in fact base
 - __map__: calculate values of object attributes
 - __produce__: create new spatial objects relative to relations
