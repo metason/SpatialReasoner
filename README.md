@@ -73,6 +73,7 @@ Spatial fuzziness affects information retrieval in space. Object detection in st
 ## Syntax of Spatial Inference Pipeline
 
 The spatial inference pipeline is defined as text specification. The pipeline is a linear sequence of inference operations which cover:
+- __adjust__: optional setup to adjust nearby, sector, and max deviation settings
 - __deduce__: optional setup to specify relation categories to be deduced
 - __filter__: filter objects by matching spatial attributes
 - __pick__: pick objects along their spatial relations
@@ -82,6 +83,7 @@ The spatial inference pipeline is defined as text specification. The pipeline is
 - __calc__: calculate global variables in fact base
 - __map__: calculate values of object attributes
 - __produce__: create new spatial objects relative to relations
+- __reload__: reload all spatial objects again
 - __log__: log the current status of the inference pipeline
 
 The inference operations within the pipeline are separated by "|". An inference operation follows the principle of _input - process - output_. Input and output data are list of spatial objects. The data flows from left to right along the pipeline so that the output of the former becomes the input of the next operation. The pipeline starts with all spatial objects of the fact base as input to the first operation.
@@ -97,18 +99,43 @@ The filter, pick, select, slice, and produce operations do change the list of ou
 
 | Op | Syntax | Examples |
 | -------- | ------- | -------- | 
+| __adjust__  | `adjust(`_settings_`)` | `adjust(max gap 0.05); adjust(sector fixed 1.5); adjust(nearby dimension 2.0); adjust(nearby limit 4.0)` |
 | __deduce__  | `deduce(`_relation categories_`)` | `deduce(topology); deduce(connectivity); deduce(visibility); deduce(topology similarity)` |
 | __filter__  | `filter(`_attribute conditions_`)` | `filter(id == 'wall1'); filter(width > 0.5 AND height < 2.4); filter(supertype == 'furniture'); filter(thin AND volume > 0.4)` |
 | __pick__  | `pick(`_relation conditions_`)` | `pick(near); pick(ahead AND smaller); pick(near AND (left OR right))` |
-| __select__  | `select(`_relation ? attribute conditions_`)` | `select(ontop ? id == 'table1'); select(on ? type == 'floor'); select(ahead AND smaller ? footprint < 0.5)` |
+| __select__  | `select(`_relation ? attribute conditions_`)` | `select(opposite); select(ontop ? id == 'table1'); select(on ? type == 'floor'); select(ahead AND smaller ? footprint < 0.5)` |
 | __sort__  | `sort(`_metric attribute_`)` | `sort(length); sort(volume); sort(width <); sort(width >)` |
 | __sort__  | `sort(`_relation attribute_`)` | `sort(near.delta); sort(frontside.angle); sort(near.delta <);` |
 | __slice__  | `slice(`_range_`)` | `slice(1); slice(2..3); slice(-1); slice(-3..-1); slice(1..-2)` |
-| __calc__  | `calc(`_variable assignment_`)` | `calc(cnt = count(objects); calc(maxvol = max(objects.volume); median = median(objects.height))` |
-| __map__  | `map(`_attribute assignment_`)` | `map(weight = volume * 140.0); map(type = 'bed'; supertype = 'furniture';` |
-| __produce__  | `produce(`_connectivity relations_` : `_type wxdxh_`) | `produce(in : room); produce(wall by wall on floor : corner 0.2x0.2x0.2)` |
+| __calc__  | `calc(`_variable assignments_`)` | `calc(cnt = count(objects); calc(maxvol = max(objects.volume); median = median(objects.height))` |
+| __map__  | `map(`_attribute assignments_`)` | `map(weight = volume * 140.0); map(type = 'bed'; supertype = 'furniture';` |
+| __produce__  | `produce(`_relation_ : _attribute assignments_`)` | `produce(aggregate : type = 'room'); produce(by : label = 'corner'; h = 0.02)` |
+| __reload__  | `reload()` | `reload()` |
 | __log__  | `log(base 3D `_relations_`)` | `log(); log(base); log(3D); log(near right); log(3D near right)` |
 
+### `adjust()` Operation
+
+Adjust settings of the spatial reasoner to fit the actual context, environment and dominant object size. Call `adjust(...)` at the beginning of the inference pipeline. By setting a calculation schema, the corrsponding factor value can optionally be specified as well. 
+
+```
+adjust(max gap 0.02)      // set max deviation
+adjust(max angle 0.1)     // set max angle delta
+adjust(nearby fixed)      // set nearby calc schema to .fixed
+adjust(nearby fixed 1.2)  // set nearby calc schema and nearby factor 
+adjust(nearby circle)     // set nearby calc schema to .circle
+adjust(nearby sphere 2)   // set nearby calc schema to .sphere
+adjust(nearby perimeter)  // set nearby calc schema to .perimeter
+adjust(nearby areat)      // set nearby calc schema to .area
+adjust(sector fixed)      // set sector calc schema to .fixed
+adjust(sector dimension)  // set nearby calc schema to .dimension
+adjust(sector perimeter)  // set nearby calc schema to .perimeter
+adjust(sector area 2)     // set nearby calc schema to .area
+adjust(sector nearby)     // set nearby calc schema to .nearby
+adjust(long ratio 4.0)    // set long ratio
+adjust(thin ratio 10.0)   // set thin ratio
+```
+
+If `adjust(...)` is not called, the default values are used. See [Spatial Adjustment](#spatial-adjustment) for more details. 
 
 ### `deduce()` Operation
 
@@ -117,13 +144,13 @@ Call `deduce(...)` at the beginning of the inference pipeline, e.g., `deduce(vis
 When `deduce(...)` is not called, only the topology category is setup by default.
 
 Spatial relation categories that can be set in `deduce(...)` are:
-- topology
-- connectivity (having contact)
-- sectoriality (being in sector)
-- comparability
-- similarity
-- visibility
-- geography
+- [topology](Relations.md#topology) (including [proximity](Relations.md#proximity), [directionality](Relations.md#directionality), [adjacency](Relations.md#adjacency), [orientation](Relations.md#orientation), and [assembly](Relations.md#assembly))
+- [connectivity](Relations.md#connectivity) (having contact)
+- [sectoriality](Relations.md#sectoriality) (being in sector)
+- [comparability](Relations.md#comparability)
+- [similarity](Relations.md#similarity)
+- [visibility](Relations.md#visibility) (seen from observer)
+- [geography](Relations.md#geography)
 
 See the [spatial relation categories](Relations.md) and the corresponding grouping of spatial predicates.
 
@@ -133,9 +160,9 @@ See the [spatial relation categories](Relations.md) and the corresponding groupi
 
 ### `select()` Operation
 
-### `sort()` Operation
+### `sort()` by Attributes Operation
 
-### `sort()` Operation
+### `sort()` by Relations Operation
 
 ### `slice()` Operation 
 
@@ -152,6 +179,10 @@ Calculate local object attributes.
 ### `produce()` Operation
 
 Create new spatial objects relative to relations and add to fact base
+
+### `reload()` Operation
+
+Reload all spatial objects into the pipeline, also the new prduced ones.
 
 ### `log()` Operation
 
@@ -182,9 +213,8 @@ graph LR;
     obj -- left --> subj
     obj -- seenright --> subj
     ego -- left --> subj
-    subj -- right --> obj
     subj -- seenleft --> obj
-    subj -- right --> ego
+    ego -- right --> obj
     obj -- right --> ego
 ```
 
@@ -231,7 +261,7 @@ tbd
 
 The spatial reasoner can be adjusted to fit the actual context, environment and dominant object size.
 Set adjustment parameters before executing a inference pipeline or before calling the relate() method.
-SpatialReasoner has its own local adjustment that should be set upfront.
+SpatialReasoner has its own local adjustment that should be set upfront programmatically. Otherwise use the `ajust()` operation to set the adjustment parameters.
 
 ```swift
 class SpatialAdjustment {

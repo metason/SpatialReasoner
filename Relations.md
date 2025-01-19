@@ -39,7 +39,6 @@ To enable the derivation of topology relations, call `deduce(topology)` at the b
 | `above`<br>`over` | subj is __above__ obj<br>subj is __over__ obj |<ul><li>center of subject is above object</li><li>may overlap</li><li>no distance condition</li><li>valid in WCS, OCS, ECS</li><li>delta = center distance</li></ul> |  ![above](images/above.png) |
 | `below`<br>`under` | subj is __below__ obj<br>subj is __under__ obj | <ul><li>center of subject is below object</li><li>may overlap</li><li>no distance condition</li><li>valid in WCS, OCS, ECS</li><li>delta = center distance</li></ul> | ![below](images/below.png) |
 
-
 ### Adjacency
 
 | Predicate | Relation  | Specification | Visual Sample |
