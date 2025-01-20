@@ -428,7 +428,7 @@ filter(type == 'wall')
 
 ## Implementation
 
-The design of the Spatial Reasoner Syntax has been first implemented and validated in [SRswift](https://github.com/metason/SRswift) using the Swift programming language by [Philipp Ackermann](philipp@metason.net). Feel free to take this implementation as reference to implement the Spatial Reasoner Syntax in another programming language. 
+The design of the Spatial Reasoner Syntax has been first implemented and validated in [SRswift](https://github.com/metason/SRswift) using the Swift programming language by [Philipp Ackermann](mailto:philipp@metason.net?subject=Spatial%20Reasoner). Feel free to take this implementation as reference to implement the Spatial Reasoner Syntax in another programming language. 
 
 Please consider the following hints:
 - It is a clear intention that the textual specification of the spatial inference pipeline is cross-platform, so that all confirming to the Spatial Reasoner Syntax can run on any SR implementation.
