@@ -82,8 +82,8 @@ The spatial inference pipeline is defined as textual specification. The pipeline
 - __slice__: choose a subsection of spatial objects 
 - __calc__: calculate global variables in fact base
 - __map__: calculate values of object attributes
-- __produce__: create new spatial objects driven by their ∆†relations
-- __reload__: reload all spatial objects again
+- __produce__: create new spatial objects driven by their relations
+- __reload__: reload all spatial objects of fact base as new input
 - __log__: log the current status of the inference pipeline
 
 The inference operations within the pipeline are separated by "|". An inference operation follows the principle of _input - process - output_. Input and output data are list of spatial objects. The data flows from left to right along the pipeline so that the output of the former becomes the input of the next operation. The pipeline starts with all spatial objects of the fact base as input to the first operation.
@@ -95,7 +95,7 @@ filter(volume > 0.4)
 | log()
 ```
 
-The filter, pick, select, slice, and produce operations do change the list of output objects to be different from the input. All other operations do pass the list of input objects to the output, but may change sort order of or add attribute values to the spatial objects.
+The filter, pick, select, slice, produce and reload operations do change the list of output objects to be different from the input. All other operations do pass the list of input objects to the output, but may change sort order of or add attribute values to the spatial objects.
 
 | Op | Syntax | Examples |
 | -------- | ------- | -------- | 
@@ -109,7 +109,7 @@ The filter, pick, select, slice, and produce operations do change the list of ou
 | __slice__  | `slice(`_range_`)` | `slice(1); slice(2..3); slice(-1); slice(-3..-1); slice(1..-2)` |
 | __calc__  | `calc(`_variable assignments_`)` | `calc(cnt = count(objects); calc(maxvol = max(objects.volume); median = median(objects.height))` |
 | __map__  | `map(`_attribute assignments_`)` | `map(weight = volume * 140.0); map(type = 'bed'; supertype = 'furniture';` |
-| __produce__  | `produce(`_relation_ : _attribute assignments_`)` | `produce(aggregate : type = 'room'); produce(by : label = 'corner'; h = 0.02)` |
+| __produce__  | `produce(`_relation_ : _attribute assignments_`)` | `produce(group : type = 'room'); produce(by : label = 'corner'; h = 0.02)` |
 | __reload__  | `reload()` | `reload()` |
 | __log__  | `log(base 3D `_relations_`)` | `log(); log(base); log(3D); log(near right); log(3D near right)` |
 
@@ -118,21 +118,21 @@ The filter, pick, select, slice, and produce operations do change the list of ou
 Adjust settings of the spatial reasoner to fit the actual context, environment and dominant object size. Call `adjust(...)` at the beginning of the inference pipeline. By setting a calculation schema, the corrsponding factor value can optionally be specified as well. 
 
 ```
-adjust(max gap 0.02)      // set max deviation
-adjust(max angle 0.1)     // set max angle delta
-adjust(nearby fixed)      // set nearby calc schema to .fixed
-adjust(nearby fixed 1.2)  // set nearby calc schema and nearby factor 
-adjust(nearby circle)     // set nearby calc schema to .circle
-adjust(nearby sphere 2)   // set nearby calc schema to .sphere
-adjust(nearby perimeter)  // set nearby calc schema to .perimeter
+adjust(max gap 0.02)     // set max deviation
+adjust(max angle 0.1)    // set max angle delta
+adjust(nearby fixed)     // set nearby calc schema to .fixed
+adjust(nearby fixed 1.2) // set nearby calc schema and nearby factor 
+adjust(nearby circle)    // set nearby calc schema to .circle
+adjust(nearby sphere 2)  // set nearby calc schema to .sphere
+adjust(nearby perimeter) // set nearby calc schema to .perimeter
 adjust(nearby area)      // set nearby calc schema to .area
-adjust(sector fixed)      // set sector calc schema to .fixed
-adjust(sector dimension)  // set nearby calc schema to .dimension
-adjust(sector perimeter)  // set nearby calc schema to .perimeter
-adjust(sector area 2)     // set nearby calc schema to .area
-adjust(sector nearby)     // set nearby calc schema to .nearby
-adjust(long ratio 4.0)    // set long ratio
-adjust(thin ratio 10.0)   // set thin ratio
+adjust(sector fixed)     // set sector calc schema to .fixed
+adjust(sector dimension) // set nearby calc schema to .dimension
+adjust(sector perimeter) // set nearby calc schema to .perimeter
+adjust(sector area 2)    // set nearby calc schema to .area
+adjust(sector nearby)    // set nearby calc schema to .nearby
+adjust(long ratio 4.0)   // set long ratio
+adjust(thin ratio 10.0)  // set thin ratio
 ```
 
 If `adjust(...)` is not called, the default values are used. See [Spatial Adjustment](#spatial-adjustment) for more details. 
@@ -178,7 +178,7 @@ Calculate local object attributes.
 
 ### `produce()` Operation
 
-Create new spatial objects relative to relations and add them to fact base. Optionally change attributes of the copy. The `id` is set automatically. When generated objects already exist (identifiied with their automatically generated `id`), then they will be updated and not created again. Change the `id`in case of enforcing a new object creation.   
+Create new spatial objects relative to relations and add them to fact base. Optionally change attributes of the new instances. The `id` is set automatically. When generated objects already exist (identified with their automatically generated `id`), then they will be updated and not created again. Change the `id`in case of enforcing a new object creation.   
 
 ```
 produce(on : ...)    // create object at footprint face
@@ -408,16 +408,16 @@ filter(height > 1.5 && width > 1.0 && depth > 0.4)
 
 ### Production Rules
 
-Create a copy of a spatial object, e.g.:
+Create a dublicate of a spatial object, e.g.:
 ```
 filter(id == '1234')
-| produce(duplicate : label = 'copy of 1234'; y = 2.0)
+| produce(copy : label = 'copy of 1234'; y = 2.0)
 ```
 
 Agregate spatial objects by creating a group covering all children's bbox. E.g., create a room object by grouping the existing walls:
 ```
 filter(type == 'wall')
-| produce(aggregate : label = 'room')
+| produce(group : label = 'room')
 ```
 
 Generate objects at the position where they are connected (at connectivity relations) . E.g., create a spatial object at the corner of each touching wall:
@@ -425,6 +425,22 @@ Generate objects at the position where they are connected (at connectivity relat
 filter(type == 'wall')
 | produce(by : label = 'corner'; h = 0.02)
 ```
+
+## Implementation
+
+The design of the Spatial Reasoner Syntax has been first implemented and validated in [SRswift](https://github.com/metason/SRswift) using the Swift programming language by [Philipp Ackermann](philipp@metason.net). Feel free to take this implementation as reference to implement the Spatial Reasoner Syntax in another programming language. 
+
+Please consider the following hints:
+- It is a clear intention that the textual specification of the spatial inference pipeline is cross-platform, so that all confirming to the Spatial Reasoner Syntax can run on any SR implementation.
+- Make it transparent when only a subset of the Spatial Reasoner Syntax is covered by your impelementation.
+- The Swift programming language is strongly typed which forces SRswift to manage two seperate instances of the fact base in parallel and in sync: 1) as list of objects in `var objects:[SpatialObject]`, and 2) as a list of key-value dictionaries in `var base:Dictionary<String, Any>`. The dictionary representation is needed to provide read/write access to the predicate evaluater and expression interpreter.
+- If you implement a Spatial Reasoner in a programming language that is not strongly typed (e.g., Python or JavaScript), do avoid a duplicate representation of the fact base.
+- The trickiest part of implementing another SR library might be the interpretation of predicates and expressions. A predicate is a logical statement that evaluates to a Boolean value (true or false) and is used in SR to evaluate conditions of attributes and existance of relations. An expression does perform operations or calculations and is used in SR for attribute evaluation and assignments. Analyze `SpatialInference.swift` to elaborate how to solve predicates and expressions in your implementation. 
+- The interpretation of the Spatial Reasoner Syntax should be independent of left-handed or right-handed 3D coordinate system. The SRswift implementation is internally using a right-handed coordinate system. Take special care in translating the SRswift reference implementation if the underlying coordinate system of the 3D toolkit of your implementation is different. 
+- SRswift includes extensive test cases. It is a good idea to also validate your own implementation with automatic tests.
+- Some test cases are "misused" to generate visualizations that are included in this documentation. These test cases (named *Vis) do not have to be covered in your tests. 
+
+If you plan to release your implementation as Open Source, please feel free to contact [Philipp](philipp@metason.net) to get your SR library listed under [features](#features) in this document. Ideas for improvements are also welcome.
 
 ## License
 
