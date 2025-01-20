@@ -435,12 +435,12 @@ Please consider the following hints:
 - Make it transparent when only a subset of the Spatial Reasoner Syntax is covered by your impelementation.
 - The Swift programming language is strongly typed which forces SRswift to manage two seperate instances of the fact base in parallel and in sync: 1) as list of objects in `var objects:[SpatialObject]`, and 2) as a list of key-value dictionaries in `var base:Dictionary<String, Any>`. The dictionary representation is needed to provide read/write access to the predicate evaluater and expression interpreter.
 - If you implement a Spatial Reasoner in a programming language that is not strongly typed (e.g., Python or JavaScript), do avoid a duplicate representation of the fact base.
-- The trickiest part of implementing another SR library might be the interpretation of predicates and expressions. A predicate is a logical statement that evaluates to a Boolean value (true or false) and is used in SR to evaluate conditions of attributes and existance of relations. An expression does perform operations or calculations and is used in SR for attribute evaluation and assignments. Analyze `SpatialInference.swift` to elaborate how to solve predicates and expressions in your implementation. 
+- The trickiest part of implementing another SR library might be the interpretation of predicates and expressions. A predicate is a logical statement that evaluates to a Boolean value (true or false) and is used in SR to evaluate conditions of attributes and existance of relations. An expression does perform operations or calculations and is used in SR for attribute evaluation and assignments. Analyze in an early stage `SpatialInference.swift` to elaborate how to solve predicates and expressions in your implementation. 
 - The interpretation of the Spatial Reasoner Syntax should be independent of left-handed or right-handed 3D coordinate system. The SRswift implementation is internally using a right-handed coordinate system. Take special care in translating the SRswift reference implementation if the underlying coordinate system of the 3D toolkit of your implementation is different. 
 - SRswift includes extensive test cases. It is a good idea to also validate your own implementation with automatic tests.
 - Some test cases are "misused" to generate visualizations that are included in this documentation. These test cases (named *Vis) do not have to be covered in your tests. 
 
-If you plan to release your implementation as Open Source, please feel free to contact [Philipp](philipp@metason.net) to get your SR library listed under [features](#features) in this document. Ideas for improvements are also welcome.
+If you plan to release your implementation as Open Source, please feel free to contact [Philipp](mailto:philipp@metason.net?subject=Spatial%20Reasoner) to get your SR library listed under [features](#features) in this document. Ideas for improvements are also welcome.
 
 ## License
 
