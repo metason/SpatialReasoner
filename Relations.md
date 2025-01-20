@@ -164,7 +164,7 @@ To enable the derivation of similarity relations, call `deduce(similarity)` at t
 
 To enable the derivation of geography relations, call `deduce(geography)` at the beginning of the pipeline or set `deduce.geography = true` of the spatial reasoner.
 
-The geographic direction in WCS include: `north, south, east, west, northwest, northeast, southwest, southeast`. A sample geographic relations: 
+The geographic direction in WCS include: `north, south, east, west, northwest, northeast, southwest, southeast`.
 
 | Predicate | Relation  | Specification |
 | --- | ---- | ---- |

@@ -29,7 +29,7 @@ The main process of the Spatial Reasoner library consists of the following seque
 - match 3D items of your application to spatial objects in fact base  
 - derive spatial attributes (done automatically)
 - deduce spatial relations (done automatically, configurable)
-- run pipeline of inference operations (defined as text)
+- run pipeline of inference operations (defined as textual specification)
 - access result (on demand repeat with updated fact base)
 
 <details open>
@@ -72,7 +72,7 @@ Spatial fuzziness affects information retrieval in space. Object detection in st
 
 ## Syntax of Spatial Inference Pipeline
 
-The spatial inference pipeline is defined as text specification. The pipeline is a linear sequence of inference operations which cover:
+The spatial inference pipeline is defined as textual specification. The pipeline is a linear sequence of inference operations which cover:
 - __adjust__: optional setup to adjust nearby, sector, and max deviation settings
 - __deduce__: optional setup to specify relation categories to be deduced
 - __filter__: filter objects by matching spatial attributes
@@ -82,7 +82,7 @@ The spatial inference pipeline is defined as text specification. The pipeline is
 - __slice__: choose a subsection of spatial objects 
 - __calc__: calculate global variables in fact base
 - __map__: calculate values of object attributes
-- __produce__: create new spatial objects relative to relations
+- __produce__: create new spatial objects driven by their ∆†relations
 - __reload__: reload all spatial objects again
 - __log__: log the current status of the inference pipeline
 
@@ -125,7 +125,7 @@ adjust(nearby fixed 1.2)  // set nearby calc schema and nearby factor
 adjust(nearby circle)     // set nearby calc schema to .circle
 adjust(nearby sphere 2)   // set nearby calc schema to .sphere
 adjust(nearby perimeter)  // set nearby calc schema to .perimeter
-adjust(nearby areat)      // set nearby calc schema to .area
+adjust(nearby area)      // set nearby calc schema to .area
 adjust(sector fixed)      // set sector calc schema to .fixed
 adjust(sector dimension)  // set nearby calc schema to .dimension
 adjust(sector perimeter)  // set nearby calc schema to .perimeter
@@ -178,11 +178,19 @@ Calculate local object attributes.
 
 ### `produce()` Operation
 
-Create new spatial objects relative to relations and add to fact base
+Create new spatial objects relative to relations and add them to fact base. Optionally change attributes of the copy. The `id` is set automatically. When generated objects already exist (identifiied with their automatically generated `id`), then they will be updated and not created again. Change the `id`in case of enforcing a new object creation.   
+
+```
+produce(on : ...)    // create object at footprint face
+produce(by : ...)    // create object at touching edge
+produce(at : ...)    // create object at meeting face
+produce(copy : ...)  // create a copy
+produce(group : ...) // create a group object containing all input objects, aligned with largest input object 
+```
 
 ### `reload()` Operation
 
-Reload all spatial objects into the pipeline, also the new prduced ones.
+Reload all spatial objects of the fact base into the pipeline, also the new prduced ones.
 
 ### `log()` Operation
 
@@ -272,9 +280,9 @@ class SpatialAdjustment {
     var sectorSchema:SectorSchema = .nearby
     var sectorFactor:Float = 1.0 // multiplying result of claculation schema
     var sectorLimit:Float = 2.5 // maximal length
-    var fixSectorLenght:Float = 0.25
     // Vicinity
-    var nearbyFactor:Float = 1.0 //multiplying radius sum of object and subject (relative to size) as max distance
+    var nearbySchema:NearbySchema = .circle
+    var nearbyFactor:Float = 2.0 //multiplying radius sum of object and subject (relative to size) as max distance
     var nearbyLimit:Float = 2.5 // maximal absolute distance
     // Proportions
     var longRatio:Float = 4.0 // one dimension is factor larger than both others
@@ -384,6 +392,7 @@ filter(id == 'observer')
 ```
 
 ### Object Classification
+
 Classify spatial objects by their attributes, e.g.:
 ```
 filter(height < 0.6 && height > 0.25 && width > 1.5 && length > 1.8)
@@ -395,6 +404,26 @@ Classify spatial objects by their attributes and their topological arrangement, 
 filter(height > 1.5 && width > 1.0 && depth > 0.4)
 | select(backside ? type == 'wall')
 | map(type = 'cabinet'; supertype = 'furniture'; confidence = 0.75)
+```
+
+### Production Rules
+
+Create a copy of a spatial object, e.g.:
+```
+filter(id == '1234')
+| produce(duplicate : label = 'copy of 1234'; y = 2.0)
+```
+
+Agregate spatial objects by creating a group covering all children's bbox. E.g., create a room object by grouping the existing walls:
+```
+filter(type == 'wall')
+| produce(aggregate : label = 'room')
+```
+
+Generate objects at the position where they are connected (at connectivity relations) . E.g., create a spatial object at the corner of each touching wall:
+```
+filter(type == 'wall')
+| produce(by : label = 'corner'; h = 0.02)
 ```
 
 ## License
