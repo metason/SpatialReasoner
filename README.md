@@ -6,18 +6,18 @@ __Content__: [Features](#features), [Usage](#usage), [Motivation](#motivation), 
 
 ## Features
 
-* __3D first__: designed from ground up for 3D (not a 2D/GIS extension)
+* __XR-focused__: reasoning on detected, _real_ and generated, _virtual_ 3D objects
 * __Small__: easy to integrate with existing Computer Vision, 3D, VR, XR and AR toolkits
 * __Powerful__: inferencing on 3D objects and their spatial relations
 * __Extensive__: 100+ spatial predicates and corresponding relations 
 * __Comprehensible__: simple yet powerful inference pipeline in textual specification
 * __Appropriate__: handles fuzzyness and confidence of spatial situations
-* __Flexible__: use for 3D queries, object classification, spatial rule engines, semantic processing in 3D, voice interaction in space, with spatial-related LLM or with Large World Models (LWM), ...
+* __Flexible__: use Spatial Reasoner Syntax for 3D queries, object classification, spatial rule engines, semantic processing in 3D, voice interaction in space, with spatial-related LLM or with Large World Models (LWM), ...
 * __Technology-agnostic__: run on various technology platforms
-  * use in mobile, desktop, Web and server projects
-  * portable inference language
+  * use spatial reasoning in mobile, desktop, Web and server projects
+  * Spatial Reasoner Syntax as portable inference language
   * independent of left-handed or right-handed 3D coordinate system
-* __Cross-platform__: library available in various programming languages
+* __Cross-platform__: Spatial Reasoner library available in various programming languages
   * [__SRswift__](https://github.com/metason/SRswift) library in __Swift__ for iOS, macOS and visionOS
   * [__SRpy__](https://github.com/metason/SRpy) library in __Python__ (work in progress)
   * __SRmono__ / SRdotnet / SRunity / SRcsharp? library in __C#__ for Unity (work in progress)
