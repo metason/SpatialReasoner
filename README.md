@@ -68,6 +68,15 @@ tbd
 
 The Spatial Reasoner library deals with representing and reasoning about the topology of spatial 3D objects using derived attributes and deduced relations, such as the adjacency between or the topological arrangement and assembly of spatial objects. Spatial reasoning is the ability to conceptualize the three-dimensional relationships of objects in space and to evaluate spatial conditions in a specific context such as indoor or outdoor environments. Reasoning in the Spatial Reasoner library is executed as a succession of inference operations in a pipeline which takes spatial attributes of and spatial relations between objects into consideration. 
 
+Example of a 3D inference pipeline:
+```
+deduce(topology)
+| filter(id == 'ego') 
+| pick(disjoint) 
+| filter(volume > 0.5 AND NOT moving) 
+| sort(disjoint.delta <)
+```
+
 Spatial fuzziness affects information retrieval in space. Object detection in state-of-the-art computer vision, machine learning, and Augmented Reality toolkits results in detected objects that vary their locations and do change and improve over time their orientations and boundaries in space. The object description is usually fuzzy and imprecise, yet some non-trivial conclusion can anyhow be deduced. The geometric confidence typically improves over time. Additionally, by taking spatial domain knowledge into account, semantic interpretation and therefore overall confidence can be improved. It is the goal of the Spatial Reasoner library to improve object detection with domain knowledge using spatial semantic and three-dimensional conditions.
 
 ## Spatial Objects
@@ -257,23 +266,94 @@ filter(long AND (visible OR length > 1.5))
 
 ### `pick()` Operation 
 
+Pick objects along their spatial relations with the
+`pick(`_relation conditions_`)` operation. 
+
+Examples:
+```
+pick(near)
+pick(ahead AND smaller)
+pick(near AND (left OR right))
+```
+
 ### `select()` Operation
+
+Select objects that have spatial relations with other objects using the `select(`_relation ? attribute conditions_`)` operation.  Attribute conditions are optional and will filter the referenced object. You can read the select() operation similar to a SQL-SELECT as "SELECT object WHERE ...".
+
+Examples:
+```
+select(opposite)
+select(ontop ? label == 'table')
+select(on ? type == 'floor')
+select(ahead AND smaller ? footprint < 0.5)
+```
 
 ### `sort()` by Attributes Operation
 
+Sort objects by metric attributes with the  `sort(`_metric attribute_`)` operation.
+
+ Examples:
+ ```
+ sort(length)
+ sort(volume)
+ sort(width <) // ascending
+ sort(width >) // descending
+ ```
+
 ### `sort()` by Relations Operation
+
+Sort objects by spatial relations with the `sort(`_relation attribute_`)` operation.
+
+Examples:
+```
+sort(near.delta)
+sort(frontside.angle)
+sort(near.delta <)  // ascending
+sort(near.delta >)  // descending
+```
 
 ### `slice()` Operation 
 
+Choose a subsection of spatial objects with the `slice(`_range_`)` operation.
+
+Examples:
+```
+slice(1)
+slice(2..3)
+slice(-1)
+slice(-3..-1)
+slice(1..-2)
+``` 
+
 ### `calc()` Operation
 
-Calculate global attributes 
+Calculate global variables in fact base with the
+`calc(`_variable assignments_`)` operation.
 
-Function calls: `average(), sum(), count(), median(), mode(), stddev(), min(), max()`
+Examples:
+```
+calc(cnt = count(objects)
+calc(maxvol = max(objects.volume)
+calc(median = median(objects.footprint)
+calc(vol = objects[0].volume; avgh = average(objects.height))
+```
+
+The calculated variables are accessible as `data.`_key_, e.g., in `filter(height > data.avgh)`.
+
+
+Available function calls: `average(), sum(), count(), median(), mode(), stddev(), min(), max()`.
+
+
 
 ### `map()` Operation
 
-Calculate local object attributes. 
+Set or calculate values of local object attributes with the `map(`_attribute assignments_`)` operation. 
+
+```
+map(shape = 'cylindrical')
+map(type = 'bed'; supertype = 'furniture')
+map(weight = volume * 140.0)
+```
 
 ### `produce()` Operation
 
