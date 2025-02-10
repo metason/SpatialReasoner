@@ -2,7 +2,7 @@
 
 > _A flexible 3D Spatial Reasoning library_
 
-__Content__: [Features](#features), [Usage](#usage), [Motivation](#motivation), [Inference Syntax](#syntax-of-spatial-inference-pipeline), [Reference Systems](#spatial-reference_systems), [Spatial Objects](#spatial-objects), [Adjustment](#spatial-adjustment), [BBox Sectors](bbox-sectors), [Spatial Relations](#spatial-relations), [Use Cases](#use-cases)
+__Content__: [Features](#features), [Usage](#usage), [Motivation](#motivation), [Spatial Objects](#spatial-objects), [Inference Syntax](#syntax-of-spatial-inference-pipeline), [Reference Systems](#spatial-reference_systems), [Adjustment](#spatial-adjustment), [BBox Sectors](bbox-sectors), [Spatial Relations](#spatial-relations), [Use Cases](#use-cases)
 
 ## Features
 
@@ -13,14 +13,14 @@ __Content__: [Features](#features), [Usage](#usage), [Motivation](#motivation), 
 * __Comprehensible__: simple yet powerful inference pipeline in textual specification
 * __Appropriate__: handles fuzzyness and confidence of spatial situations
 * __Flexible__: use Spatial Reasoner Syntax for 3D queries, object classification, spatial rule engines, semantic processing in 3D, voice interaction in space, with spatial-related LLM or with Large World Models (LWM), ...
-* __Technology-agnostic__: run on various technology platforms
+* __Technology-agnostic__: run inference pipeline on various technology platforms
   * use spatial reasoning in mobile, desktop, Web and server projects
   * Spatial Reasoner Syntax as portable inference language
   * independent of left-handed or right-handed 3D coordinate system
 * __Cross-platform__: Spatial Reasoner library available in various programming languages
   * [__SRswift__](https://github.com/metason/SRswift) library in __Swift__ for iOS, macOS and visionOS
-  * [__SRpy__](https://github.com/metason/SRpy) library in __Python__ (work in progress)
-  * __SRmono__ / SRdotnet / SRunity / SRcsharp? library in __C#__ for Unity (work in progress)
+  * [__SRpy__](https://github.com/metason/SRpy) library in __Python__ 
+  * __SRunity__ library in __C#__ for Unity (work in progress)
   * __SRjs__ library in __JavaScript__ (not yet in planning)
 
 ## Usage
@@ -66,9 +66,84 @@ tbd
 
 ## Motivation
 
-This library deals with representing and reasoning about the topology of spatial 3D objects using derived attributes and deduced relations, such as the adjacency between or the topological arrangement and assembly of spatial objects. Spatial reasoning is the ability to conceptualize the three-dimensional relationships of objects in space and to evaluate spatial conditions in a specific context such as indoor or outdoor environments. Reasoning in the Spatial Reasoner library is executed as a succession of inference operations in a pipeline which takes spatial attributes of and spatial relations between objects into consideration. 
+The Spatial Reasoner library deals with representing and reasoning about the topology of spatial 3D objects using derived attributes and deduced relations, such as the adjacency between or the topological arrangement and assembly of spatial objects. Spatial reasoning is the ability to conceptualize the three-dimensional relationships of objects in space and to evaluate spatial conditions in a specific context such as indoor or outdoor environments. Reasoning in the Spatial Reasoner library is executed as a succession of inference operations in a pipeline which takes spatial attributes of and spatial relations between objects into consideration. 
 
 Spatial fuzziness affects information retrieval in space. Object detection in state-of-the-art computer vision, machine learning, and Augmented Reality toolkits results in detected objects that vary their locations and do change and improve over time their orientations and boundaries in space. The object description is usually fuzzy and imprecise, yet some non-trivial conclusion can anyhow be deduced. The geometric confidence typically improves over time. Additionally, by taking spatial domain knowledge into account, semantic interpretation and therefore overall confidence can be improved. It is the goal of the Spatial Reasoner library to improve object detection with domain knowledge using spatial semantic and three-dimensional conditions.
+
+## Spatial Objects
+
+The spatial reasoner is prepared by loading the fact base with spatial objects. These are either provided by a 3D object detector (e.g. using computer vision, ML, and point cloud processing) or generated virtually in a scene graph. The fact base is loaded with an array of `SpatialObject` instances or by loading JSON data.
+
+A `SpatialObject` is represented by a detected, _real_ or a generated, _virtual_ 3D entity in space by its oriented bounding box (bbox).
+The oriented bounding box is axis-aligned in X and Z directions and has a rotation around the up vector in Y direction at the center. The rotation in the horizontal plane (X-Z plane) is expressed as angle in radiants in counter-clockwise direction (and deduced as yaw in degrees in clockwise direction).
+The position (x, y, z) of a `SpatialObject` is the center of the base area. The extend of the bbox is defined by width, height and depth (w, d, h). The `id` must be unique and should kept the same if updated over time. 
+
+The significant attributes of a `SpatialObject` to be set are: `id, x, y, z, w, h, d, yaw`.
+
+
+### Declared Object Attributes
+
+The following attributes may be set in the preparation phase before loading into the fact base:
+
+```
+{
+  // non-spatial characteristics
+  "id" : "object_1234", // unique identifier
+  "existence" : "real",
+  "cause" : "object_detected",
+  "label" : "",
+  "supertype" : "",
+  "type" : "",
+  // spatial characteristics
+  "position" : [-0.95, 0, 1.5], // center of base area
+  "angle" : 1.5707, // yaw angle in radiants
+  "width" : 0.4,
+  "height" : 0.5,
+  "depth" : 0.3,
+  "shape" : "unknown",
+  "look" : "",
+  "visible" : true,
+  "focused" : false,
+  "velocity" : [0, 0, 0],
+  "confidence" : {
+    "pose" : 0,
+    "look" : 0,
+    "dimension" : 0,
+    "label" : 0
+  }
+}
+```
+
+### Deduced Object Attributes
+
+The following attributes will be automatically deduced from the declared attributes:
+
+```
+{
+  "center" : [-0.95, 0.25, 1.5], // center of object
+  "yaw" : 90, // yaw angle in degrees
+  "footprint" : 0.12,
+  "frontface" : 0.2,
+  "sideface" : 0.15,
+  "surface" : 0.94,
+  "volume" : 0.06,
+  "perimeter" : 1.4,
+  "baseradius" : 0.25,
+  "radius" : 0.3535,
+  "direction" : 0,
+  "length" : 0.5,
+  "conceptual" : false,
+  "thin" : false,
+  "long" : false,
+  "equilateral" : false,
+  "moving" : false,
+  "immobile" : false,
+  "motion" : "unknown",
+  "real" : true,
+  "virtual" : false,
+  "azimuth" : 90
+}
+```
 
 ## Syntax of Spatial Inference Pipeline
 
@@ -99,7 +174,7 @@ The filter, pick, select, slice, produce and reload operations do change the lis
 
 | Op | Syntax | Examples |
 | -------- | ------- | -------- | 
-| __adjust__  | `adjust(`_settings_`)` | `adjust(max gap 0.05); adjust(sector fixed 1.5); adjust(nearby dimension 2.0); adjust(nearby limit 4.0)` |
+| __adjust__  | `adjust(`_settings_`)` | `adjust(max gap 0.05); adjust(sector fixed 1.5); adjust(nearby dimension 2.0); adjust(nearby limit 4.0; max gap 0.1)` |
 | __deduce__  | `deduce(`_relation categories_`)` | `deduce(topology); deduce(connectivity); deduce(visibility); deduce(topology similarity)` |
 | __filter__  | `filter(`_attribute conditions_`)` | `filter(id == 'wall1'); filter(width > 0.5 AND height < 2.4); filter(supertype == 'furniture'); filter(thin AND volume > 0.4)` |
 | __pick__  | `pick(`_relation conditions_`)` | `pick(near); pick(ahead AND smaller); pick(near AND (left OR right))` |
@@ -115,7 +190,8 @@ The filter, pick, select, slice, produce and reload operations do change the lis
 
 ### `adjust()` Operation
 
-Adjust settings of the spatial reasoner to fit the actual context, environment and dominant object size. Call `adjust(...)` at the beginning of the inference pipeline. By setting a calculation schema, the corrsponding factor value can optionally be specified as well. 
+Adjust settings of the spatial reasoner to fit the actual context, environment and dominant object size. Call `adjust(...)` at the beginning of the inference pipeline. 
+By setting a calculation schema, the corrsponding factor value can optionally be specified as well. Multiple settings within an  `adjust(...)` call are separated by `;`. 
 
 ```
 adjust(max gap 0.02)     // set max deviation
@@ -133,6 +209,8 @@ adjust(sector area 2)    // set nearby calc schema to .area
 adjust(sector nearby)    // set nearby calc schema to .nearby
 adjust(long ratio 4.0)   // set long ratio
 adjust(thin ratio 10.0)  // set thin ratio
+adjust(max gap 0.05; sector dimension; thin ratio 10.0)  
+
 ```
 
 If `adjust(...)` is not called, the default values are used. See [Spatial Adjustment](#spatial-adjustment) for more details. 
@@ -155,6 +233,27 @@ Spatial relation categories that can be set in `deduce(...)` are:
 See the [spatial relation categories](Relations.md) and the corresponding grouping of spatial predicates.
 
 ### `filter()` Operation
+
+Filter spatial objects by their [declared](#declared-object-attributes) and [deduced](#deduced-object-attributes) attributes with the `filter(`_attribute conditions_`)` operation. Attribute conditions are expressions supporting value comparisons (`==, !=, >, >=, <, <=`), string comparison operators (`BEGINSWITH, CONTAINS, ENDSWITH, LIKE, MATCHES`) and boolean compounds (`AND, OR, NOT`).
+
+Examples:
+```
+filter(id == 'ego')
+filter(label == 'wall')
+filter(label == 'wall' AND confidence.label > 0.7)
+filter(supertype == 'furniture')
+filter(width > 0.5 AND height < 2.4)
+filter(volume < 1.5)
+```
+
+Conditions with Boolean attributes (`true, false`) may omit the comparison, such as:
+
+```
+filter(real)
+filter(virtual AND NOT moving)
+filter(thin AND volume > 0.4)
+filter(long AND (visible OR length > 1.5))
+```
 
 ### `pick()` Operation 
 
@@ -190,7 +289,7 @@ produce(group : ...) // create a group object containing all input objects, alig
 
 ### `reload()` Operation
 
-Reload all spatial objects of the fact base into the pipeline, also the new prduced ones.
+Reload all spatial objects of the fact base into the pipeline, also the new produced ones.
 
 ### `log()` Operation
 
@@ -261,9 +360,6 @@ The interpretation of spatial predicates and their corresponding relations are o
 - __Egocentric Coordinate System (ECS)__: spatial relations are encoded relative to the position and view direction of an observer
 - __Geodetic Coordinate System (GCS)__: spatial relations are encoded relative to earth's projected latitude (north/south) and longitude (east/west)
 
-## Spatial Objects
-
-tbd
 
 ## Spatial Adjustment
 
