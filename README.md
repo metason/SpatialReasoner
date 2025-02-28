@@ -20,7 +20,7 @@ __Content__: [Features](#features), [Usage](#usage), [Motivation](#motivation), 
 * __Cross-platform__: Spatial Reasoner library available in various programming languages
   * [__SRswift__](https://github.com/metason/SRswift) library in __Swift__ for iOS, macOS and visionOS
   * [__SRpy__](https://github.com/metason/SRpy) library in __Python__ 
-  * __SRunity__ library in __C#__ for Unity (work in progress)
+  * [__SRcsharp__](https://github.com/metason/SRcsharp) library in __C#__ with bindings for Unity
   * __SRjs__ library in __JavaScript__ (not yet in planning)
 
 ## Usage
@@ -84,11 +84,18 @@ Spatial fuzziness affects information retrieval in space. Object detection in st
 The spatial reasoner is prepared by loading the fact base with spatial objects. These are either provided by a 3D object detector (e.g. using computer vision, ML, and point cloud processing) or generated virtually in a scene graph. The fact base is loaded with an array of `SpatialObject` instances or by loading JSON data.
 
 A `SpatialObject` is represented by a detected, _real_ or a generated, _virtual_ 3D entity in space by its oriented bounding box (bbox).
-The oriented bounding box is axis-aligned in X and Z directions and has a rotation around the up vector in Y direction at the center. The rotation in the horizontal plane (X-Z plane) is expressed as angle in radiants in counter-clockwise direction (and deduced as yaw in degrees in clockwise direction).
+The oriented bounding box is axis-aligned to the horizontal ground plane and rotated around the centered up vector. 
+The rotation in the horizontal plane is expressed as angle in radiants in counter-clockwise direction (and deduced as yaw in degrees in clockwise direction).
 The position (x, y, z) of a `SpatialObject` is the center of the base area. The extend of the bbox is defined by width, height and depth (w, d, h). The `id` must be unique and should kept the same if updated over time. 
 
 The significant attributes of a `SpatialObject` to be set are: `id, x, y, z, w, h, d, yaw`.
 
+The object’s position and rotation around its vertical axis
+may differ depending on the orientation of the underlying
+left-handed or right-handed coordinate system. The concrete
+implementation of a Spatial Reasoner library abstracts such
+differences but requires the user to adopt a consistent reference
+frame for accurate inference when loading the fact base with spatial objects.
 
 ### Declared Object Attributes
 
@@ -184,16 +191,16 @@ The filter, pick, select, slice, produce and reload operations do change the lis
 | Op | Syntax | Examples |
 | -------- | ------- | -------- | 
 | __adjust__  | `adjust(`_settings_`)` | `adjust(max gap 0.05); adjust(sector fixed 1.5); adjust(nearby dimension 2.0); adjust(nearby limit 4.0; max gap 0.1)` |
-| __deduce__  | `deduce(`_relation categories_`)` | `deduce(topology); deduce(connectivity); deduce(visibility); deduce(topology similarity)` |
-| __filter__  | `filter(`_attribute conditions_`)` | `filter(id == 'wall1'); filter(width > 0.5 AND height < 2.4); filter(supertype == 'furniture'); filter(thin AND volume > 0.4)` |
-| __pick__  | `pick(`_relation conditions_`)` | `pick(near); pick(ahead AND smaller); pick(near AND (left OR right))` |
-| __select__  | `select(`_relation ? attribute conditions_`)` | `select(opposite); select(ontop ? id == 'table1'); select(on ? type == 'floor'); select(ahead AND smaller ? footprint < 0.5)` |
-| __sort__  | `sort(`_metric attribute_`)` | `sort(length); sort(volume); sort(width <); sort(width >)` |
-| __sort__  | `sort(`_relation attribute_`)` | `sort(near.delta); sort(frontside.angle); sort(near.delta <);` |
+| __deduce__  | `deduce(`_relation-categories_`)` | `deduce(topology); deduce(connectivity); deduce(visibility); deduce(topology similarity)` |
+| __filter__  | `filter(`_attribute-conditions_`)` | `filter(id == 'wall1'); filter(width > 0.5 AND height < 2.4); filter(supertype == 'furniture'); filter(thin AND volume > 0.4)` |
+| __pick__  | `pick(`_relation-conditions_`)` | `pick(near); pick(ahead AND smaller); pick(near AND (left OR right))` |
+| __select__  | `select(`_relation ? attribute-conditions_`)` | `select(opposite); select(ontop ? id == 'table1'); select(on ? type == 'floor'); select(ahead AND smaller ? footprint < 0.5)` |
+| __sort__  | `sort(`_object-attribute_ [_comparator_]`)` | `sort(length); sort(volume); sort(width <); sort(width >)` |
+| __sort__  | `sort(`_relation-attribute_ [_comparator_ _steps_]`)` | `sort(near.delta); sort(frontside.angle); sort(near.delta <); sort(disjoint.delta > 2)` |
 | __slice__  | `slice(`_range_`)` | `slice(1); slice(2..3); slice(-1); slice(-3..-1); slice(1..-2)` |
-| __calc__  | `calc(`_variable assignments_`)` | `calc(cnt = count(objects); calc(maxvol = max(objects.volume); median = median(objects.height))` |
-| __map__  | `map(`_attribute assignments_`)` | `map(weight = volume * 140.0); map(type = 'bed'; supertype = 'furniture';` |
-| __produce__  | `produce(`_relation_ : _attribute assignments_`)` | `produce(group : type = 'room'); produce(by : label = 'corner'; h = 0.02)` |
+| __calc__  | `calc(`_variable-assignments_`)` | `calc(cnt = count(objects); calc(maxvol = max(objects.volume); median = median(objects.height))` |
+| __map__  | `map(`_attribute-assignments_`)` | `map(weight = volume * 140.0); map(type = 'bed'; supertype = 'furniture';` |
+| __produce__  | `produce(`_relation_ : _attribute-assignments_`)` | `produce(group : type = 'room'); produce(by : label = 'corner'; h = 0.02)` |
 | __reload__  | `reload()` | `reload()` |
 | __log__  | `log(base 3D `_relations_`)` | `log(); log(base); log(3D); log(near right); log(3D near right)` |
 
@@ -219,7 +226,6 @@ adjust(sector nearby)    // set nearby calc schema to .nearby
 adjust(long ratio 4.0)   // set long ratio
 adjust(thin ratio 10.0)  // set thin ratio
 adjust(max gap 0.05; sector dimension; thin ratio 10.0)  
-
 ```
 
 If `adjust(...)` is not called, the default values are used. See [Spatial Adjustment](#spatial-adjustment) for more details. 
@@ -517,7 +523,7 @@ See detailed description of all [spatial relations](Relations.md).
 
 ## Use Cases
 
-### Queries using Object Attributes 
+### Property Filters 
 
 
 Select a spatial object by its unique identifiier, e.g.:
@@ -525,17 +531,17 @@ Select a spatial object by its unique identifiier, e.g.:
 filter(id == 'id1234')
 ```
 
-Select spatial objects by type attributes, e.g.:
+Filter spatial objects by type attributes, e.g.:
 ```
 filter(supertype == 'furniture' AND (type == 'chair' OR type == 'table'))
 ```
 
-Select spatial objects by boolean attributes, e.g.:
+Filter spatial objects by boolean attributes, e.g.:
 ```
 filter(virtual AND NOT moving)
 ```
 
-Select spatial objects by non-spatial attributes, e.g.:
+Filter spatial objects by non-spatial attributes, e.g.:
 ```
 filter(label == 'table' AND confidence.label > 0.7)
 ```
@@ -566,6 +572,18 @@ filter(id == 'observer')
 | sort(disjoint.delta <)
 | slice(1)
 ```
+
+Get second left spatial object of type "picture" seen from observer:
+```
+deduce(topology)
+| filter(id == 'ego') 
+| pick(ahead AND left AND disjoint) 
+| filter(type == 'picture') 
+| sort(disjoint.delta > 2)
+| slice(2)
+```
+
+The sort() operation is backtracing 2 steps to take as input the 'egp' object to compare the relations between 'ego' object and filtered objects with type 'picture'.
 
 ### Object Classification
 
@@ -612,7 +630,7 @@ Please consider the following hints:
 - The Swift programming language is strongly typed which forces SRswift to manage two seperate instances of the fact base in parallel and in sync: 1) as list of objects in `var objects:[SpatialObject]`, and 2) as a list of key-value dictionaries in `var base:Dictionary<String, Any>`. The dictionary representation is needed to provide read/write access to the predicate evaluater and expression interpreter.
 - If you implement a Spatial Reasoner in a programming language that is not strongly typed (e.g., Python or JavaScript), do avoid a duplicate representation of the fact base.
 - The trickiest part of implementing another SR library might be the interpretation of predicates and expressions. A predicate is a logical statement that evaluates to a Boolean value (true or false) and is used in SR to evaluate conditions of attributes and existance of relations. An expression does perform operations or calculations and is used in SR for attribute evaluation and assignments. Analyze in an early stage `SpatialInference.swift` to elaborate how to solve predicates and expressions in your implementation. 
-- The interpretation of the Spatial Reasoner Syntax should be independent of left-handed or right-handed 3D coordinate system. The SRswift implementation is internally using a right-handed coordinate system. Take special care in translating the SRswift reference implementation if the underlying coordinate system of the 3D toolkit of your implementation is different. 
+- The interpretation of the Spatial Reasoner Syntax should be independent from the orientation of the left-handed or right-handed 3D coordinate system. The SRswift implementation is internally using a right-handed coordinate system. Take special care in translating the SRswift reference implementation if the underlying coordinate system of the 3D toolkit of your implementation is different. 
 - SRswift includes extensive test cases. It is a good idea to also validate your own implementation with automatic tests.
 - Some test cases are "misused" to generate visualizations that are included in this documentation. These test cases (named *Vis) do not have to be covered in your tests. 
 
