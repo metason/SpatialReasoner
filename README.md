@@ -20,7 +20,7 @@ __Content__: [Features](#features), [Usage](#usage), [Motivation](#motivation), 
 * __Cross-platform__: Spatial Reasoner library available in various programming languages
   * [__SRswift__](https://github.com/metason/SRswift) library in __Swift__ for iOS, macOS and visionOS
   * [__SRpy__](https://github.com/metason/SRpy) library in __Python__ 
-  * [__SRcsharp__](https://github.com/metason/SRcsharp) library in __C#__ with bindings for Unity
+  * [__SRcsharp__](https://github.com/NicolasLoth/SRcsharp) library in __C#__ with bindings for Unity in [__SRunity__](https://github.com/NicolasLoth/SRunity)
   * __SRjs__ library in __JavaScript__ (not yet in planning)
 
 ## Usage
