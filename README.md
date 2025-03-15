@@ -175,6 +175,7 @@ The spatial inference pipeline is defined as textual specification. The pipeline
 - __map__: calculate values of object attributes
 - __produce__: create new spatial objects driven by their relations
 - __reload__: reload all spatial objects of fact base as new input
+- __halt__: stop processing the inference pipeline (for debug purposes)
 - __log__: log the current status of the inference pipeline
 
 The inference operations within the pipeline are separated by "|". An inference operation follows the principle of _input - process - output_. Input and output data are list of spatial objects. The data flows from left to right along the pipeline so that the output of the former becomes the input of the next operation. The pipeline starts with all spatial objects of the fact base as input to the first operation.
@@ -202,6 +203,7 @@ The filter, pick, select, slice, produce and reload operations do change the lis
 | __map__  | `map(`_attribute-assignments_`)` | `map(weight = volume * 140.0); map(type = 'bed'; supertype = 'furniture';` |
 | __produce__  | `produce(`_relation_ : _attribute-assignments_`)` | `produce(group : type = 'room'); produce(by : label = 'corner'; h = 0.02)` |
 | __reload__  | `reload()` | `reload()` |
+| __halt__  | `halt()` | `halt()` |
 | __log__  | `log(base 3D `_relations_`)` | `log(); log(base); log(3D); log(near right); log(3D near right)` |
 
 ### `adjust()` Operation
@@ -376,6 +378,10 @@ produce(group : ...) // create a group object containing all input objects, alig
 ### `reload()` Operation
 
 Reload all spatial objects of the fact base into the pipeline, also the new produced ones.
+
+### `halt()` Operation
+
+Stops further processing of the inference pipeline. Used for debug purposes: add the `halt()` operation at any position in the pipeline without the need of deleting following operations.
 
 ### `log()` Operation
 
