@@ -108,7 +108,6 @@ The following attributes may be set in the preparation phase before loading into
   "existence" : "real",
   "cause" : "object_detected",
   "label" : "",
-  "supertype" : "",
   "type" : "",
   // spatial characteristics
   "position" : [-0.95, 0, 1.5], // center of base area
@@ -167,6 +166,7 @@ The spatial inference pipeline is defined as textual specification. The pipeline
 - __adjust__: optional setup to adjust nearby, sector, and max deviation settings
 - __deduce__: optional setup to specify relation categories to be deduced
 - __filter__: filter objects by matching spatial attributes
+- __isa__: filter objects that belong to a type in a class hierarchy (taxonomy)
 - __pick__: pick objects along their spatial relations
 - __select__: select objects having spatial relations with others
 - __sort__: sort objects by metric attributes or by spatial relations
@@ -174,7 +174,7 @@ The spatial inference pipeline is defined as textual specification. The pipeline
 - __calc__: calculate global variables in fact base
 - __map__: calculate values of object attributes
 - __produce__: create new spatial objects driven by their relations
-- __reload__: reload all spatial objects of fact base as new input
+- __reload__: reload and output all spatial objects of fact base
 - __halt__: stop processing the inference pipeline (for debug purposes)
 - __log__: log the current status of the inference pipeline
 
@@ -193,14 +193,15 @@ The filter, pick, select, slice, produce and reload operations do change the lis
 | -------- | ------- | -------- | 
 | __adjust__  | `adjust(`_settings_`)` | `adjust(max gap 0.05); adjust(sector fixed 1.5); adjust(nearby dimension 2.0); adjust(nearby limit 4.0; max gap 0.1)` |
 | __deduce__  | `deduce(`_relation-categories_`)` | `deduce(topology); deduce(connectivity); deduce(visibility); deduce(topology similarity)` |
-| __filter__  | `filter(`_attribute-conditions_`)` | `filter(id == 'wall1'); filter(width > 0.5 AND height < 2.4); filter(supertype == 'furniture'); filter(thin AND volume > 0.4)` |
+| __filter__  | `filter(`_attribute-conditions_`)` | `filter(id == 'wall1'); filter(width > 0.5 AND height < 2.4); filter(type == 'furniture'); filter(thin AND volume > 0.4)` |
+| __isa__  | `isa(`_class type_`)` | `isa('Bed'); isa(Furniture); isa(Computer OR Monitor)` |
 | __pick__  | `pick(`_relation-conditions_`)` | `pick(near); pick(ahead AND smaller); pick(near AND (left OR right))` |
 | __select__  | `select(`_relation ? attribute-conditions_`)` | `select(opposite); select(ontop ? id == 'table1'); select(on ? type == 'floor'); select(ahead AND smaller ? footprint < 0.5)` |
 | __sort__  | `sort(`_object-attribute_ [_comparator_]`)` | `sort(length); sort(volume); sort(width <); sort(width >)` |
 | __sort__  | `sort(`_relation-attribute_ [_comparator_ _steps_]`)` | `sort(near.delta); sort(frontside.angle); sort(near.delta <); sort(disjoint.delta > 2)` |
 | __slice__  | `slice(`_range_`)` | `slice(1); slice(2..3); slice(-1); slice(-3..-1); slice(1..-2)` |
 | __calc__  | `calc(`_variable-assignments_`)` | `calc(cnt = count(objects); calc(maxvol = max(objects.volume); median = median(objects.height))` |
-| __map__  | `map(`_attribute-assignments_`)` | `map(weight = volume * 140.0); map(type = 'bed'; supertype = 'furniture';` |
+| __map__  | `map(`_attribute-assignments_`)` | `map(weight = volume * 140.0); map(type = 'bed'` |
 | __produce__  | `produce(`_relation_ : _attribute-assignments_`)` | `produce(group : type = 'room'); produce(by : label = 'corner'; h = 0.02)` |
 | __reload__  | `reload()` | `reload()` |
 | __halt__  | `halt()` | `halt()` |
@@ -258,7 +259,7 @@ Examples:
 filter(id == 'ego')
 filter(label == 'wall')
 filter(label == 'wall' AND confidence.label > 0.7)
-filter(supertype == 'furniture')
+filter(type == 'furniture')
 filter(width > 0.5 AND height < 2.4)
 filter(volume < 1.5)
 ```
@@ -271,6 +272,37 @@ filter(virtual AND NOT moving)
 filter(thin AND volume > 0.4)
 filter(long AND (visible OR length > 1.5))
 ```
+
+### `isa()` Operation 
+
+Filter objects that belong to a type in a class hierarchy (taxonomy) using
+`isa(`_class type_`)` operation. 
+
+Examples:
+```
+isa(Bed)
+isa('Bed')
+isa(Furniture)
+isa(furniture)
+isa(Computer OR Monitor)
+isa(dining table OR desk OR workbench)
+```
+
+To determine the entity class of a spatial object, primary its type attribute and secondary its label attribute is used. From the determined class the isa operator checks for correspondance with the type name along the class hierachy in the loaded taxonomy. The type names are compared case-insensitive and string quotes are opional. Therefore `isa('furniture')` is equal to `isa(furniture)` and is equal to `isa(Furniture)`. The check for correspondance is considering the label of the class as well as optionally specified synonyms. Combine multiple type checks with `OR`. 
+
+Before using the `ìsa()` operator, you have to load a domain-specific taxonomy as XML file in the OWL/RDF format: 
+
+```swift
+// load specific taxonomy in OWL/RDF format as XML file
+let url = URL(string: "https://service.metason.net/ar/onto/test.owl") 
+SpatialTaxonomy.load(from: url)
+
+// initialize reasoner and run pipeline
+let sr = SpatialReasoner()
+...
+```
+
+Get details on [how to create a domain-specific taxonomy](Taxonomy) and supported features of the OWL/RDF ontology.
 
 ### `pick()` Operation 
 
@@ -359,7 +391,7 @@ Set or calculate values of local object attributes with the `map(`_attribute ass
 
 ```
 map(shape = 'cylindrical')
-map(type = 'bed'; supertype = 'furniture')
+map(type = 'bed')
 map(weight = volume * 140.0)
 ```
 
@@ -539,7 +571,7 @@ filter(id == 'id1234')
 
 Filter spatial objects by type attributes, e.g.:
 ```
-filter(supertype == 'furniture' AND (type == 'chair' OR type == 'table'))
+filter(type == 'chair' OR type == 'table')
 ```
 
 Filter spatial objects by boolean attributes, e.g.:
@@ -596,14 +628,14 @@ The sort() operation is backtracing 2 steps to take as input the 'egp' object to
 Classify spatial objects by their attributes, e.g.:
 ```
 filter(height < 0.6 && height > 0.25 && width > 1.5 && length > 1.8)
-| map(type = 'double bed'; supertype = 'furniture'; confidence = 0.5)
+| map(type = 'double bed'; type = 'furniture'; confidence = 0.5)
 ```
 
 Classify spatial objects by their attributes and their topological arrangement, e.g.:
 ```
 filter(height > 1.5 && width > 1.0 && depth > 0.4)
 | select(backside ? type == 'wall')
-| map(type = 'cabinet'; supertype = 'furniture'; confidence = 0.75)
+| map(type = 'cabinet'; type = 'furniture'; confidence = 0.75)
 ```
 
 ### Production Rules

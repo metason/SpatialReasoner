@@ -1,0 +1,232 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="urn:webprotege:ontology:f2ae01f9-c988-4437-9e8c-871972109496#"
+     xml:base="urn:webprotege:ontology:f2ae01f9-c988-4437-9e8c-871972109496"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+    <owl:Ontology rdf:about="urn:webprotege:ontology:f2ae01f9-c988-4437-9e8c-871972109496"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#altLabel -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2004/02/skos/core#altLabel"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://test.org/ontology/Bed -->
+
+    <owl:Class rdf:about="http://test.org/ontology/Bed">
+        <rdfs:subClassOf rdf:resource="http://test.org/ontology/Furniture"/>
+        <rdfs:label xml:lang="en">Bed</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://test.org/ontology/BuildingElement -->
+
+    <owl:Class rdf:about="http://test.org/ontology/BuildingElement">
+        <rdfs:label xml:lang="en">Building</rdfs:label>
+        <skos:altLabel xml:lang="en">building element</skos:altLabel>
+    </owl:Class>
+    
+
+
+    <!-- http://test.org/ontology/Ceiling -->
+
+    <owl:Class rdf:about="http://test.org/ontology/Ceiling">
+        <rdfs:subClassOf rdf:resource="http://test.org/ontology/BuildingElement"/>
+        <rdfs:label xml:lang="en">Ceiling</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://test.org/ontology/Chair -->
+
+    <owl:Class rdf:about="http://test.org/ontology/Chair">
+        <rdfs:subClassOf rdf:resource="http://test.org/ontology/Furniture"/>
+        <rdfs:label xml:lang="en">Chair</rdfs:label>
+        <skos:altLabel xml:lang="en">seat</skos:altLabel>
+    </owl:Class>
+    
+
+
+    <!-- http://test.org/ontology/Door -->
+
+    <owl:Class rdf:about="http://test.org/ontology/Door">
+        <rdfs:subClassOf rdf:resource="http://test.org/ontology/BuildingElement"/>
+        <rdfs:label xml:lang="en">Door</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://test.org/ontology/Floor -->
+
+    <owl:Class rdf:about="http://test.org/ontology/Floor">
+        <rdfs:subClassOf rdf:resource="http://test.org/ontology/BuildingElement"/>
+        <rdfs:label xml:lang="en">Floor</rdfs:label>
+        <skos:altLabel xml:lang="en">base</skos:altLabel>
+        <skos:altLabel xml:lang="en">ground</skos:altLabel>
+    </owl:Class>
+    
+
+
+    <!-- http://test.org/ontology/Furniture -->
+
+    <owl:Class rdf:about="http://test.org/ontology/Furniture">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:label xml:lang="en">Furniture</rdfs:label>
+        <rdfs:seeAlso rdf:resource="https://conceptnet.io/c/en/furniture"/>
+    </owl:Class>
+    
+
+
+    <!-- http://test.org/ontology/Table -->
+
+    <owl:Class rdf:about="http://test.org/ontology/Table">
+        <rdfs:subClassOf rdf:resource="http://test.org/ontology/Furniture"/>
+        <rdfs:label xml:lang="en">Table</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://test.org/ontology/Wall -->
+
+    <owl:Class rdf:about="http://test.org/ontology/Wall">
+        <rdfs:subClassOf rdf:resource="http://test.org/ontology/BuildingElement"/>
+        <rdfs:label xml:lang="en">Wall</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://test.org/ontology/Window -->
+
+    <owl:Class rdf:about="http://test.org/ontology/Window">
+        <rdfs:subClassOf rdf:resource="http://test.org/ontology/BuildingElement"/>
+        <rdfs:label xml:lang="en">Window</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://test.org/ontology/Computer -->
+
+    <owl:Class rdf:about="http://test.org/ontology/Computer">
+        <rdfs:subClassOf rdf:resource="http://test.org/ontology/Equipment"/>
+        <rdfs:label xml:lang="en">Computer</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://test.org/ontology/ConferenceTable -->
+
+    <owl:Class rdf:about="http://test.org/ontology/ConferenceTable">
+        <rdfs:subClassOf rdf:resource="http://test.org/ontology/Table"/>
+        <rdfs:label xml:lang="en">Conference Table</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://test.org/ontology/Desk -->
+
+    <owl:Class rdf:about="http://test.org/ontology/Desk">
+        <rdfs:subClassOf rdf:resource="http://test.org/ontology/Table"/>
+        <rdfs:label xml:lang="en">Desk</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://test.org/ontology/DiningTable -->
+
+    <owl:Class rdf:about="http://test.org/ontology/DiningTable">
+        <rdfs:subClassOf rdf:resource="http://test.org/ontology/Table"/>
+        <rdfs:label xml:lang="en">Dining Table</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://test.org/ontology/DoubleBed -->
+
+    <owl:Class rdf:about="http://test.org/ontology/DoubleBed">
+        <rdfs:subClassOf rdf:resource="http://test.org/ontology/Bed"/>
+        <rdfs:label xml:lang="en">Double Bed</rdfs:label>
+        <skos:altLabel xml:lang="en">full bed</skos:altLabel>
+    </owl:Class>
+    
+
+
+    <!-- http://test.org/ontology/Equipment -->
+
+    <owl:Class rdf:about="http://test.org/ontology/Equipment">
+        <rdfs:comment xml:lang="en">items for a particular purpose</rdfs:comment>
+        <rdfs:label xml:lang="en">Equipment</rdfs:label>
+        <rdfs:seeAlso rdf:resource="https://en.wikipedia.org/wiki/Equipment"/>
+        <skos:altLabel xml:lang="en">apparatus</skos:altLabel>
+        <skos:altLabel xml:lang="en">tool</skos:altLabel>
+    </owl:Class>
+    
+
+
+    <!-- http://test.org/ontology/Monitor -->
+
+    <owl:Class rdf:about="http://test.org/ontology/Monitor">
+        <rdfs:subClassOf rdf:resource="http://test.org/ontology/Equipment"/>
+        <rdfs:label xml:lang="en">Monitor</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://test.org/ontology/SingleBed -->
+
+    <owl:Class rdf:about="http://test.org/ontology/SingleBed">
+        <rdfs:subClassOf rdf:resource="http://test.org/ontology/Bed"/>
+        <rdfs:label xml:lang="en">Single Bed</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://test.org/ontology/Television -->
+
+    <owl:Class rdf:about="http://test.org/ontology/Television">
+        <rdfs:subClassOf rdf:resource="http://test.org/ontology/Equipment"/>
+        <rdfs:label xml:lang="en">Television</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://test.org/ontology/Workbench -->
+
+    <owl:Class rdf:about="http://test.org/ontology/Workbench">
+        <rdfs:subClassOf rdf:resource="http://test.org/ontology/Table"/>
+        <rdfs:label xml:lang="en">Workbench</rdfs:label>
+    </owl:Class>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.13) https://github.com/owlcs/owlapi -->
+
