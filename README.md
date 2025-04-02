@@ -2,7 +2,7 @@
 
 > _A flexible 3D Spatial Reasoning library_
 
-__Content__: [Features](#features), [Usage](#usage), [Motivation](#motivation), [Spatial Objects](#spatial-objects), [Inference Syntax](#syntax-of-spatial-inference-pipeline), [Reference Systems](#spatial-reference_systems), [Adjustment](#spatial-adjustment), [BBox Sectors](bbox-sectors), [Spatial Relations](#spatial-relations), [Use Cases](#use-cases)
+__Content__: [Features](#features), [Usage](#usage), [Motivation](#motivation), [Spatial Objects](#spatial-objects), [Inference Syntax](#syntax-of-spatial-inference-pipeline), [Reference Systems](#spatial-reference_systems), [Adjustment](#spatial-adjustment), [BBox Sectors](bbox-sectors), [Spatial Relations](#spatial-relations), [Taxonomy](#spatial-taxonomy), [Use Cases](#use-cases), [Paper](#paper), [Implementation](#implementation), [License](#license)
 
 ## Features
 
@@ -19,9 +19,9 @@ __Content__: [Features](#features), [Usage](#usage), [Motivation](#motivation), 
   * independent of left-handed or right-handed 3D coordinate system
 * __Cross-platform__: Spatial Reasoner library available in various programming languages
   * [__SRswift__](https://github.com/metason/SRswift) library in __Swift__ for iOS, macOS and visionOS
-  * [__SRpy__](https://github.com/metason/SRpy) library in __Python__ 
+  * [__SRpy__](https://github.com/metason/SRpy) library in __Python__ for server-side processing
   * [__SRcsharp__](https://github.com/NicolasLoth/SRcsharp) library in __C#__ with bindings for Unity in [__SRunity__](https://github.com/NicolasLoth/SRunity)
-  * __SRjs__ library in __JavaScript__ (not yet in planning)
+  * __SRjs__ library in __JavaScript__ (not yet started)
 
 ## Usage
 
@@ -56,12 +56,30 @@ if sr.run(pipeline) {
 
 <details>
 <summary>Python</summary>
-tbd
+
+```python
+# map detected or created 3D entities to SpatialObject instances
+obj1 = SpatialObject( "1", position=Vector3(-1.5, 1.2, 0), width=0.1, height=1.0, depth=0.1)
+obj2 = SpatialObject( "2", position=Vector3(0, 0, 0), width=0.8, height=1.0, depth=0.6)
+obj3 = SpatialObject( "3", position=Vector3(0, 0, 1.6), width=0.8, height=0.8, depth=0.8)
+obj3.angle = .pi/2.0
+ 
+# initialize reasoner and run pipeline
+sr = SpatialReasoner()
+sr.load([obj1, obj2, obj3])
+pipeline = "filter(volume > 0.4) | pick(left AND above) | log()"
+if sr.run(pipeline):
+    # result of processed pipeline as list of SpatialObject
+    result = sr.result()
+```
 </details>
 
 <details>
 <summary>C#</summary>
-tbd
+
+```C#
+
+```
 </details>
 
 ## Motivation
@@ -101,7 +119,7 @@ frame for accurate inference when loading the fact base with spatial objects.
 
 The following attributes may be set in the preparation phase before loading into the fact base:
 
-```
+```json
 {
   // non-spatial characteristics
   "id" : "object_1234", // unique identifier
@@ -133,7 +151,7 @@ The following attributes may be set in the preparation phase before loading into
 
 The following attributes will be automatically deduced from the declared attributes:
 
-```
+```json
 {
   "center" : [-0.95, 0.25, 1.5], // center of object
   "yaw" : 90, // yaw angle in degrees
@@ -536,28 +554,80 @@ public enum SectorSchema {
 
 ## BBox Sectors
 
-Object-centric partitioning of space
+In order to reason about the relative positioning of objects,
+the Spatial Reasoner partitions the space around each reference object into sectors. Conceptually, the bounding box is extended along the three orthogonal axes—left-right, ahead-behind, and over-under—to form a 3 ×3 ×3 grid of 27 sectors.
 
-Different BBox sectors size depending on calculation schema and adjustment settings.
+![on](images/o_u.png) ![lr](images/l_r_a_b.png) ![lo_lu_ro_ru](images/lo_lu_ro_ru.png) ![alo_aro_blo_bro](images/alo_aro_blo_bro.png)
 
+- [Zero Divergency](Sectors.md#zero-divergency) (`i`) for inner/inside sector
+- [Single Divergency](Sectors.md#single-divergency) (`l, r, a, b, o, u`) denotes a
+single principal direction offset (e.g., an object in sector
+`l` is within the left sector of the reference bbox).
+- [Double Divergency](Sectors.md#double-divergency) (`al, ar, bl, br, lo, lu,
+ro, ru, ao, au, bo, bu`) captures a combination
+of two directions (e.g., `ar` means “ahead-right,” `lu`
+means “left-under”).
+- [Triple Divergency](Sectors.md#tripe-divergency) (`alo, aru, blu, bru`, etc.) represents more nuanced positions like “ahead-left-over” or
+“behind-right-under.”
+
+
+Different sector schema options (e.g., fixed, dimension, nearby) and a sector factor can customize the size of each sector region, ensuring it fits the scale of the environment (e.g., large warehouse vs. small indoor room).
 Example of different spatial adjustments and calculation scheme:
 
 ![adjustable sector size](images/sectors.png)
-left image: `.fized`, middle image: `.dimension`, right image: `.nearby`
 
-![on](images/o_u.png) ![lr](images/l_r_a_b.png) ![lo_lu_ro_ru](images/lo_lu_ro_ru.png) ![alo_aro_blo_bro](images/alo_aro_blo_bro.png)
+Left image: `.fized`; middle image: `.dimension`; right image: `.nearby`
 
 See detailed description of all [BBox sectors](Sectors.md).
 
 
 ## Spatial Relations
 
-- Spatial relation: subject - predicate - object
-- Spatial predicates
+Beyond bounding-box geometry, the Spatial Reasoner supports a rich set of qualitative predicates that formalize on a symbolic level how objects relate to each other. Spatial relationships are represented as ___subject - predicate - object___ patterns.
 
-![ontop](images/ontop.png) ![leftside](images/leftside.png) ![orthogonal](images/orthogonal.png) ![seenleft](images/seenleft.png) 
+Spatial predicates are organized in categories:
+
+- [Proximity](Relations.md#proximity): `near, far`
+- [Directionality](Relations.md#directionality ): `left, right, ahead, behind, above, below`
+- [Adjacency](Relations.md#adjacency): `leftside, frontside, beside, ontop`, ...
+- [Orientation](Relations.md#orientation): `aligned, orthogonal, opposite`, ...
+- [Connectivity](Relations.md#connectivity): `on, in, by, at`
+- [Sectoriality](Relations.md#sectoriality): `i, o, u, al, alo`, ... (referring to bbox sectors)
+- [Assembly](Relations.md#assembly): `disjoint, inside, touching, meeting`, ...
+- [Visibility](Relations.md#visibility): `seenleft, infront`, ... (relative to an observer)
+- [Comparability](Relations.md#comparability): `bigger, smaller, longer, shorter`, ...
+- [Similarity](Relations.md#similarity): `samewidth, samevolume, congruent`, ...
+- [Geography](Relations.md#geography): `north, west, south, northeast`, ...
+
+Each predicate has an underlying geometric or semantic
+definition. For instance, near and far rely on distance thresholds defined by the nearby schema, whereas on, in, and
+by infer direct contact or containment taking a max gap
+into consideration. Meanwhile, seenleft and infront consider
+an observer’s viewpoint to relate two objects.
+
+![ontop](images/ontop.png) ![leftside](images/leftside.png) 
+
+Left image: subj is `ontop` of obj; right image: subj is at `leftside` of obj
+
+![orthogonal](images/orthogonal.png) ![seenleft](images/seenleft.png) 
+
+Left image: subj is `orthogonal` to obj; right image: subj is `seenleft` of obj
+
 
 See detailed description of all [spatial relations](Relations.md).
+
+## Spatial Taxonomy
+
+### Spatial Relation Terminology
+
+All spatial predicates with their code, preposition, verb, synonyms, antonym and inverse definitions are specified and are available as terminology in [terms.json](terms.json) as JSON file. These spatial terms build a foundation to integrate the Spatial Reasoner library with LLM, NLP, and TTS. 
+
+### Type System for Spatial Objects
+
+Spatial objects have a `type` attribute which can be embedded into a class hierachy to reflect entity inheritance relations.
+Before using the `ìsa()` operator, you have to load a domain-specific taxonomy into the Spatial Reasoner library. As a base import for an ontology that defines an entity taxonomy, the OWL/RDF format is supported. 
+
+See more details on [spatial taxonomy](Taxonomy.md).
 
 ## Use Cases
 
@@ -658,17 +728,35 @@ filter(type == 'wall')
 | produce(by : label = 'corner'; h = 0.02)
 ```
 
+## Paper
+
+Our paper will be published and presented at [ICVARS 2025](https://www.icvars.org) conference.
+
+A [preprint]() ist available on arXiv.
+
+Please cite our work if you use Spatial Reasoner.
+
+```bibtex
+@article{Hasler2025,
+   author  = {Steven Häsler and Philipp Ackermann},
+   title   = {Spatial Reasoner: A 3D Inference Pipeline for XR Applications},
+   journal = {arXiv:XXX.YYYY},
+   year    = {2025}
+}
+```
+
 ## Implementation
 
 The design of the Spatial Reasoner Syntax has been first implemented and validated in [SRswift](https://github.com/metason/SRswift) using the Swift programming language by [Philipp Ackermann](mailto:philipp@metason.net?subject=Spatial%20Reasoner). Feel free to take this implementation as reference to implement the Spatial Reasoner Syntax in another programming language. 
 
 Please consider the following hints:
-- It is a clear intention that the textual specification of the spatial inference pipeline is cross-platform, so that all confirming to the Spatial Reasoner Syntax can run on any SR implementation.
+- It is a clear intention that the textual specification of the spatial inference pipeline is cross-platform, so that all pipelines confirming to the Spatial Reasoner Syntax can run on any SR implementation.
 - Make it transparent when only a subset of the Spatial Reasoner Syntax is covered by your impelementation.
-- The Swift programming language is strongly typed which forces SRswift to manage two seperate instances of the fact base in parallel and in sync: 1) as list of objects in `var objects:[SpatialObject]`, and 2) as a list of key-value dictionaries in `var base:Dictionary<String, Any>`. The dictionary representation is needed to provide read/write access to the predicate evaluater and expression interpreter.
+- The Swift programming language is strongly typed which forces SRswift to manage two seperate instances of the fact base in parallel and in sync: 1) as list of objects in `var objects:[SpatialObject]`, and 2) as a list of key-value dictionaries in `var base:Dictionary<String, Any>`. The dictionary representation is needed to provide read/write access to the predicate evaluator and expression interpreter.
 - If you implement a Spatial Reasoner in a programming language that is not strongly typed (e.g., Python or JavaScript), do avoid a duplicate representation of the fact base.
 - The trickiest part of implementing another SR library might be the interpretation of predicates and expressions. A predicate is a logical statement that evaluates to a Boolean value (true or false) and is used in SR to evaluate conditions of attributes and existance of relations. An expression does perform operations or calculations and is used in SR for attribute evaluation and assignments. Analyze in an early stage `SpatialInference.swift` to elaborate how to solve predicates and expressions in your implementation. 
 - The interpretation of the Spatial Reasoner Syntax should be independent from the orientation of the left-handed or right-handed 3D coordinate system. The SRswift implementation is internally using a right-handed coordinate system. Take special care in translating the SRswift reference implementation if the underlying coordinate system of the 3D toolkit of your implementation is different. 
+- In SRswift, spatial terms are hard-coded. All terms for spatial relations have been exported and are available in [terms.json](terms.json) so that in other implementations you may import the terms instead of hard-coding them. 
 - SRswift includes extensive test cases. It is a good idea to also validate your own implementation with automatic tests.
 - Some test cases are "misused" to generate visualizations that are included in this documentation. These test cases (named *Vis) do not have to be covered in your tests. 
 

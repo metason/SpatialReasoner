@@ -3,7 +3,7 @@
 Object-centric partitioning of space along the cardinal directions
 of the bounding box (bbox). The 3x3x3 BBox sector matrix leads to 27 object-related boundary sectors.
 
-## No Divergency
+## Zero Divergency
 
 | Sector | Name  | Specification | Visual Sample |
 | --- | ---- | ---- | -------- | 

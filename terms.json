@@ -1,0 +1,1082 @@
+[
+  {
+    "antonym" : "far",
+    "category" : "proximity",
+    "code" : "near",
+    "inverse" : "near",
+    "predicate" : "near",
+    "preposition" : "to",
+    "synonyms" : "close, nearby",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "near",
+    "category" : "proximity",
+    "code" : "far",
+    "inverse" : "far",
+    "predicate" : "far",
+    "preposition" : "from",
+    "synonyms" : "far away",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "right",
+    "category" : "directionality",
+    "code" : "left",
+    "inverse" : "",
+    "predicate" : "left",
+    "preposition" : "of",
+    "synonyms" : "to the left",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "left",
+    "category" : "directionality",
+    "code" : "right",
+    "inverse" : "",
+    "predicate" : "right",
+    "preposition" : "of",
+    "synonyms" : "to the right",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "behind",
+    "category" : "directionality",
+    "code" : "ahead",
+    "inverse" : "behind",
+    "predicate" : "ahead",
+    "preposition" : "of",
+    "synonyms" : "beforehand",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "ahead",
+    "category" : "directionality",
+    "code" : "behind",
+    "inverse" : "ahead",
+    "predicate" : "behind",
+    "preposition" : "",
+    "synonyms" : "after",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "below",
+    "category" : "directionality",
+    "code" : "above",
+    "inverse" : "below",
+    "predicate" : "above",
+    "preposition" : "",
+    "synonyms" : "over",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "above",
+    "category" : "directionality",
+    "code" : "below",
+    "inverse" : "above",
+    "predicate" : "below",
+    "preposition" : "",
+    "synonyms" : "under",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "adjacency",
+    "code" : "ontop",
+    "inverse" : "beneath",
+    "predicate" : "on top",
+    "preposition" : "of",
+    "synonyms" : "at the top, atop",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "adjacency",
+    "code" : "beneath",
+    "inverse" : "on top",
+    "predicate" : "beneath",
+    "preposition" : "",
+    "synonyms" : "underneath",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "adjacency",
+    "code" : "upperside",
+    "inverse" : "at lower side",
+    "predicate" : "at upper side",
+    "preposition" : "of",
+    "synonyms" : "at upperside",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "adjacency",
+    "code" : "lowerside",
+    "inverse" : "at upper side",
+    "predicate" : "at lower side",
+    "preposition" : "of",
+    "synonyms" : "",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "adjacency",
+    "code" : "leftside",
+    "inverse" : "",
+    "predicate" : "at left side",
+    "preposition" : "of",
+    "synonyms" : "at left-hand side",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "adjacency",
+    "code" : "rightside",
+    "inverse" : "",
+    "predicate" : "at right side",
+    "preposition" : "of",
+    "synonyms" : "at right-hand side",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "adjacency",
+    "code" : "frontside",
+    "inverse" : "",
+    "predicate" : "at front side",
+    "preposition" : "of",
+    "synonyms" : "at frontside, at forefront",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "adjacency",
+    "code" : "backside",
+    "inverse" : "",
+    "predicate" : "at back side",
+    "preposition" : "of",
+    "synonyms" : "at backside, at rear side",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "unaligned",
+    "category" : "orientations",
+    "code" : "aligned",
+    "inverse" : "aligned",
+    "predicate" : "aligned",
+    "preposition" : "with",
+    "synonyms" : "parallel",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "orientations",
+    "code" : "orthogonal",
+    "inverse" : "orthogonal",
+    "predicate" : "orthogonal",
+    "preposition" : "to",
+    "synonyms" : "perpendicular",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "orientations",
+    "code" : "opposite",
+    "inverse" : "opposite",
+    "predicate" : "opposite",
+    "preposition" : "to",
+    "synonyms" : "vis-a-vis, face to face",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "outside",
+    "category" : "assembly",
+    "code" : "inside",
+    "inverse" : "containing",
+    "predicate" : "inside",
+    "preposition" : "",
+    "synonyms" : "within",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "assembly",
+    "code" : "containing",
+    "inverse" : "inside",
+    "predicate" : "containing",
+    "preposition" : "",
+    "synonyms" : "contains",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "assembly",
+    "code" : "crossing",
+    "inverse" : "",
+    "predicate" : "crossing",
+    "preposition" : "",
+    "synonyms" : "",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "disjoint",
+    "category" : "assembly",
+    "code" : "overlapping",
+    "inverse" : "overlapping",
+    "predicate" : "overlapping",
+    "preposition" : "",
+    "synonyms" : "intersecting",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "overlapping",
+    "category" : "assembly",
+    "code" : "disjoint",
+    "inverse" : "disjoint",
+    "predicate" : "disjoint",
+    "preposition" : "to",
+    "synonyms" : "",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "assembly",
+    "code" : "touching",
+    "inverse" : "touching",
+    "predicate" : "touching",
+    "preposition" : "",
+    "synonyms" : "",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "orientations",
+    "code" : "frontaligned",
+    "inverse" : "front aligned",
+    "predicate" : "front aligned",
+    "preposition" : "with",
+    "synonyms" : "",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "orientations",
+    "code" : "backaligned",
+    "inverse" : "back aligned",
+    "predicate" : "back aligned",
+    "preposition" : "with",
+    "synonyms" : "",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "orientations",
+    "code" : "leftaligned",
+    "inverse" : "left aligned",
+    "predicate" : "left aligned",
+    "preposition" : "with",
+    "synonyms" : "",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "orientations",
+    "code" : "rightaligned",
+    "inverse" : "right aligned",
+    "predicate" : "right aligned",
+    "preposition" : "with",
+    "synonyms" : "",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "assembly",
+    "code" : "meeting",
+    "inverse" : "meeting",
+    "predicate" : "meeting",
+    "preposition" : "",
+    "synonyms" : "",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "assembly",
+    "code" : "beside",
+    "inverse" : "beside",
+    "predicate" : "beside",
+    "preposition" : "",
+    "synonyms" : "",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "assembly",
+    "code" : "fitting",
+    "inverse" : "exceeding",
+    "predicate" : "fitting",
+    "preposition" : "into",
+    "synonyms" : "",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "assembly",
+    "code" : "exceeding",
+    "inverse" : "fitting",
+    "predicate" : "exceeding",
+    "preposition" : "into",
+    "synonyms" : "",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "connectivity",
+    "code" : "on",
+    "inverse" : "beneath",
+    "predicate" : "on",
+    "preposition" : "",
+    "synonyms" : "",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "connectivity",
+    "code" : "at",
+    "inverse" : "meeting",
+    "predicate" : "at",
+    "preposition" : "",
+    "synonyms" : "",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "connectivity",
+    "code" : "by",
+    "inverse" : "by",
+    "predicate" : "by",
+    "preposition" : "",
+    "synonyms" : "",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "connectivity",
+    "code" : "in",
+    "inverse" : "containing",
+    "predicate" : "in",
+    "preposition" : "",
+    "synonyms" : "",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "similarity",
+    "code" : "samewidth",
+    "inverse" : "same width",
+    "predicate" : "same width",
+    "preposition" : "as",
+    "synonyms" : "similar width",
+    "verb" : "has"
+  },
+  {
+    "antonym" : "",
+    "category" : "similarity",
+    "code" : "sameheight",
+    "inverse" : "same height",
+    "predicate" : "same height",
+    "preposition" : "as",
+    "synonyms" : "similar height",
+    "verb" : "has"
+  },
+  {
+    "antonym" : "",
+    "category" : "similarity",
+    "code" : "samedepth",
+    "inverse" : "same depth",
+    "predicate" : "same depth",
+    "preposition" : "as",
+    "synonyms" : "similar depth",
+    "verb" : "has"
+  },
+  {
+    "antonym" : "",
+    "category" : "similarity",
+    "code" : "samelength",
+    "inverse" : "same length",
+    "predicate" : "same length",
+    "preposition" : "as",
+    "synonyms" : "similar length",
+    "verb" : "has"
+  },
+  {
+    "antonym" : "",
+    "category" : "similarity",
+    "code" : "samefootprint",
+    "inverse" : "same footprint",
+    "predicate" : "same footprint",
+    "preposition" : "as",
+    "synonyms" : "similar base area",
+    "verb" : "has"
+  },
+  {
+    "antonym" : "",
+    "category" : "similarity",
+    "code" : "samefront",
+    "inverse" : "same front face",
+    "predicate" : "same front face",
+    "preposition" : "as",
+    "synonyms" : "similar front face",
+    "verb" : "has"
+  },
+  {
+    "antonym" : "",
+    "category" : "similarity",
+    "code" : "sameside",
+    "inverse" : "same side face",
+    "predicate" : "same side face",
+    "preposition" : "as",
+    "synonyms" : "similar side face",
+    "verb" : "has"
+  },
+  {
+    "antonym" : "",
+    "category" : "similarity",
+    "code" : "samevolume",
+    "inverse" : "same volume",
+    "predicate" : "same volume",
+    "preposition" : "as",
+    "synonyms" : "similar volume",
+    "verb" : "has"
+  },
+  {
+    "antonym" : "",
+    "category" : "similarity",
+    "code" : "sameperimeter",
+    "inverse" : "same perimeter",
+    "predicate" : "same perimeter",
+    "preposition" : "as",
+    "synonyms" : "similar perimeter",
+    "verb" : "has"
+  },
+  {
+    "antonym" : "",
+    "category" : "similarity",
+    "code" : "samesurface",
+    "inverse" : "same surface",
+    "predicate" : "same surface",
+    "preposition" : "as",
+    "synonyms" : "similar surface",
+    "verb" : "has"
+  },
+  {
+    "antonym" : "",
+    "category" : "similarity",
+    "code" : "sameposition",
+    "inverse" : "same position",
+    "predicate" : "same position",
+    "preposition" : "as",
+    "synonyms" : "similar position",
+    "verb" : "has"
+  },
+  {
+    "antonym" : "",
+    "category" : "similarity",
+    "code" : "samecuboid",
+    "inverse" : "same cuboid",
+    "predicate" : "same cuboid",
+    "preposition" : "as",
+    "synonyms" : "similar cuboid",
+    "verb" : "has"
+  },
+  {
+    "antonym" : "",
+    "category" : "similarity",
+    "code" : "samecenter",
+    "inverse" : "same center",
+    "predicate" : "same center",
+    "preposition" : "as",
+    "synonyms" : "similar center",
+    "verb" : "has"
+  },
+  {
+    "antonym" : "",
+    "category" : "similarity",
+    "code" : "sameshape",
+    "inverse" : "same shape",
+    "predicate" : "same shape",
+    "preposition" : "as",
+    "synonyms" : "similar shape",
+    "verb" : "has"
+  },
+  {
+    "antonym" : "",
+    "category" : "similarity",
+    "code" : "congruent",
+    "inverse" : "congruent",
+    "predicate" : "congruent",
+    "preposition" : "as",
+    "synonyms" : "",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "comparability",
+    "code" : "smaller",
+    "inverse" : "bigger",
+    "predicate" : "smaller",
+    "preposition" : "than",
+    "synonyms" : "tinier, minor",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "comparability",
+    "code" : "bigger",
+    "inverse" : "smaller",
+    "predicate" : "bigger",
+    "preposition" : "than",
+    "synonyms" : "larger, major",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "comparability",
+    "code" : "shorter",
+    "inverse" : "longer",
+    "predicate" : "shorter",
+    "preposition" : "than",
+    "synonyms" : "",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "comparability",
+    "code" : "longer",
+    "inverse" : "shorter",
+    "predicate" : "longer",
+    "preposition" : "than",
+    "synonyms" : "",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "comparability",
+    "code" : "taller",
+    "inverse" : "shorter",
+    "predicate" : "taller",
+    "preposition" : "than",
+    "synonyms" : "",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "comparability",
+    "code" : "thinner",
+    "inverse" : "thicker",
+    "predicate" : "thinner",
+    "preposition" : "than",
+    "synonyms" : "slimmer, narrower",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "comparability",
+    "code" : "wider",
+    "inverse" : "thinner",
+    "predicate" : "thicker",
+    "preposition" : "than",
+    "synonyms" : "wider, broader",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "visibility",
+    "code" : "seenleft",
+    "inverse" : "seen right",
+    "predicate" : "seen left",
+    "preposition" : "of",
+    "synonyms" : "visible to the left",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "visibility",
+    "code" : "seenright",
+    "inverse" : "seen left",
+    "predicate" : "seen right",
+    "preposition" : "of",
+    "synonyms" : "visible to the right",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "visibility",
+    "code" : "infront",
+    "inverse" : "at rear",
+    "predicate" : "in front",
+    "preposition" : "of",
+    "synonyms" : "",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "visibility",
+    "code" : "atrear",
+    "inverse" : "in front",
+    "predicate" : "at rear",
+    "preposition" : "of",
+    "synonyms" : "",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "visibility",
+    "code" : "tangible",
+    "inverse" : "",
+    "predicate" : "tangible",
+    "preposition" : "by",
+    "synonyms" : "",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "visibility",
+    "code" : "eightoclock",
+    "inverse" : "",
+    "predicate" : "at eight'o'clock",
+    "preposition" : "from",
+    "synonyms" : "at 8 o'clock",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "visibility",
+    "code" : "nineoclock",
+    "inverse" : "",
+    "predicate" : "at nine'o'clock",
+    "preposition" : "from",
+    "synonyms" : "at 9 o'clock",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "visibility",
+    "code" : "tenoclock",
+    "inverse" : "",
+    "predicate" : "at ten'o'clock",
+    "preposition" : "from",
+    "synonyms" : "at 10 o'clock",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "visibility",
+    "code" : "elevenoclock",
+    "inverse" : "",
+    "predicate" : "at eleven'o'clock",
+    "preposition" : "from",
+    "synonyms" : "at 11 o'clock",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "visibility",
+    "code" : "twelveoclock",
+    "inverse" : "",
+    "predicate" : "at twelve'o'clock",
+    "preposition" : "from",
+    "synonyms" : "at 12 o'clock",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "visibility",
+    "code" : "oneoclock",
+    "inverse" : "",
+    "predicate" : "at one'o'clock",
+    "preposition" : "from",
+    "synonyms" : "at 1 o'clock",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "visibility",
+    "code" : "twooclock",
+    "inverse" : "",
+    "predicate" : "at two'o'clock",
+    "preposition" : "from",
+    "synonyms" : "at 2 o'clock",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "visibility",
+    "code" : "threeoclock",
+    "inverse" : "",
+    "predicate" : "at three'o'clock",
+    "preposition" : "from",
+    "synonyms" : "at 3 o'clock",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "visibility",
+    "code" : "fouroclock",
+    "inverse" : "",
+    "predicate" : "at four'o'clock",
+    "preposition" : "from",
+    "synonyms" : "at 4 o'clock",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "geography",
+    "code" : "north",
+    "inverse" : "south",
+    "predicate" : "north",
+    "preposition" : "of",
+    "synonyms" : "",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "geography",
+    "code" : "northeast",
+    "inverse" : "southwest",
+    "predicate" : "northeast",
+    "preposition" : "of",
+    "synonyms" : "",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "geography",
+    "code" : "east",
+    "inverse" : "west",
+    "predicate" : "east",
+    "preposition" : "of",
+    "synonyms" : "",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "geography",
+    "code" : "southeast",
+    "inverse" : "northwest",
+    "predicate" : "southeast",
+    "preposition" : "of",
+    "synonyms" : "",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "geography",
+    "code" : "south",
+    "inverse" : "north",
+    "predicate" : "south",
+    "preposition" : "of",
+    "synonyms" : "",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "geography",
+    "code" : "southwest",
+    "inverse" : "northeast",
+    "predicate" : "southwest",
+    "preposition" : "of",
+    "synonyms" : "",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "geography",
+    "code" : "west",
+    "inverse" : "east",
+    "predicate" : "west",
+    "preposition" : "of",
+    "synonyms" : "",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "geography",
+    "code" : "northwest",
+    "inverse" : "southeast",
+    "predicate" : "northwest",
+    "preposition" : "of",
+    "synonyms" : "",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "sectors",
+    "code" : "i",
+    "inverse" : "",
+    "predicate" : "in sector i",
+    "preposition" : "of",
+    "synonyms" : "inside, inner",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "sectors",
+    "code" : "a",
+    "inverse" : "",
+    "predicate" : "in sector a",
+    "preposition" : "of",
+    "synonyms" : "ahead",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "sectors",
+    "code" : "b",
+    "inverse" : "",
+    "predicate" : "in sector b",
+    "preposition" : "of",
+    "synonyms" : "behind",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "sectors",
+    "code" : "o",
+    "inverse" : "",
+    "predicate" : "in sector o",
+    "preposition" : "of",
+    "synonyms" : "over",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "sectors",
+    "code" : "u",
+    "inverse" : "",
+    "predicate" : "in sector u",
+    "preposition" : "of",
+    "synonyms" : "under",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "sectors",
+    "code" : "l",
+    "inverse" : "",
+    "predicate" : "in sector l",
+    "preposition" : "of",
+    "synonyms" : "left",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "sectors",
+    "code" : "r",
+    "inverse" : "",
+    "predicate" : "in sector r",
+    "preposition" : "of",
+    "synonyms" : "right",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "sectors",
+    "code" : "al",
+    "inverse" : "",
+    "predicate" : "in sector al",
+    "preposition" : "of",
+    "synonyms" : "ahead-left",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "sectors",
+    "code" : "ar",
+    "inverse" : "",
+    "predicate" : "in sector ar",
+    "preposition" : "of",
+    "synonyms" : "ahead-right",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "sectors",
+    "code" : "bl",
+    "inverse" : "",
+    "predicate" : "in sector bl",
+    "preposition" : "of",
+    "synonyms" : "behind-left",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "sectors",
+    "code" : "br",
+    "inverse" : "",
+    "predicate" : "in sector br",
+    "preposition" : "of",
+    "synonyms" : "behind-right",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "sectors",
+    "code" : "ao",
+    "inverse" : "",
+    "predicate" : "in sector ao",
+    "preposition" : "of",
+    "synonyms" : "ahead-over",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "sectors",
+    "code" : "au",
+    "inverse" : "",
+    "predicate" : "in sector au",
+    "preposition" : "of",
+    "synonyms" : "ahead-under",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "sectors",
+    "code" : "bo",
+    "inverse" : "",
+    "predicate" : "in sector bo",
+    "preposition" : "of",
+    "synonyms" : "behind-over",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "sectors",
+    "code" : "bu",
+    "inverse" : "",
+    "predicate" : "in sector bu",
+    "preposition" : "of",
+    "synonyms" : "behind-under",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "sectors",
+    "code" : "lo",
+    "inverse" : "",
+    "predicate" : "in sector lo",
+    "preposition" : "of",
+    "synonyms" : "left-over",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "sectors",
+    "code" : "lu",
+    "inverse" : "",
+    "predicate" : "in sector lu",
+    "preposition" : "of",
+    "synonyms" : "left-under",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "sectors",
+    "code" : "ro",
+    "inverse" : "",
+    "predicate" : "in sector ro",
+    "preposition" : "of",
+    "synonyms" : "right-over",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "sectors",
+    "code" : "ru",
+    "inverse" : "",
+    "predicate" : "in sector ru",
+    "preposition" : "of",
+    "synonyms" : "right-under",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "sectors",
+    "code" : "alo",
+    "inverse" : "",
+    "predicate" : "in sector alo",
+    "preposition" : "of",
+    "synonyms" : "ahead-left-over",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "sectors",
+    "code" : "aro",
+    "inverse" : "",
+    "predicate" : "in sector aro",
+    "preposition" : "of",
+    "synonyms" : "ahead-right-over",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "sectors",
+    "code" : "blo",
+    "inverse" : "",
+    "predicate" : "in sector blo",
+    "preposition" : "of",
+    "synonyms" : "behind-left-over",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "sectors",
+    "code" : "bro",
+    "inverse" : "",
+    "predicate" : "in sector bro",
+    "preposition" : "of",
+    "synonyms" : "behind-right-over",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "sectors",
+    "code" : "alu",
+    "inverse" : "",
+    "predicate" : "in sector alu",
+    "preposition" : "of",
+    "synonyms" : "ahead-left-under",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "sectors",
+    "code" : "aru",
+    "inverse" : "",
+    "predicate" : "in sector aru",
+    "preposition" : "of",
+    "synonyms" : "ahead-right-under",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "sectors",
+    "code" : "blu",
+    "inverse" : "",
+    "predicate" : "in sector blu",
+    "preposition" : "of",
+    "synonyms" : "behind-left-under",
+    "verb" : "is"
+  },
+  {
+    "antonym" : "",
+    "category" : "sectors",
+    "code" : "bru",
+    "inverse" : "",
+    "predicate" : "in sector bru",
+    "preposition" : "of",
+    "synonyms" : "behind-right-under",
+    "verb" : "is"
+  }
+]
