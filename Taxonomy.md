@@ -53,7 +53,7 @@ The `ìsa(type)` operator checks for correspondance with the name/label of the c
 
 WebProtégé is a cloud-based application that allows users to collaboratively edit OWL ontologies. It is available for free at https://webprotege.stanford.edu. WebProtégé can be used for the definition of a taxonomy that can be imported into Spatial Reasoner. The follwoing two examples have been created with WebProtégé:
 - [test.owl](test.owl)
-- [https://service/metason.net/ar/ontology/archi.owl](https://service/metason.net/ar/ontology/archi.owl)
+- [https://service.metason.net/ar/onto/archi.owl](https://service.metason.net/ar/onto/archi.owl)
 
 
 
