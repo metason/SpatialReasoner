@@ -119,7 +119,7 @@ frame for accurate inference when loading the fact base with spatial objects.
 
 The following attributes may be set in the preparation phase before loading into the fact base:
 
-```json
+```swift
 {
   // non-spatial characteristics
   "id" : "object_1234", // unique identifier
@@ -151,7 +151,7 @@ The following attributes may be set in the preparation phase before loading into
 
 The following attributes will be automatically deduced from the declared attributes:
 
-```json
+```swift
 {
   "center" : [-0.95, 0.25, 1.5], // center of object
   "yaw" : 90, // yaw angle in degrees
@@ -320,7 +320,7 @@ let sr = SpatialReasoner()
 ...
 ```
 
-Get details on [how to create a domain-specific taxonomy](Taxonomy) and supported features of the OWL/RDF ontology.
+Get details on [how to create a domain-specific taxonomy](Taxonomy.md) and supported features of the OWL/RDF ontology.
 
 ### `pick()` Operation 
 
