@@ -239,7 +239,7 @@ adjust(nearby circle)    // set nearby calc schema to .circle
 adjust(nearby sphere 2)  // set nearby calc schema to .sphere
 adjust(nearby perimeter) // set nearby calc schema to .perimeter
 adjust(nearby area)      // set nearby calc schema to .area
-adjust(sector fixed)     // set sector calc schema to .fixed
+adjust(sector fixed 0.5) // set sector calc schema to .fixed
 adjust(sector dimension) // set nearby calc schema to .dimension
 adjust(sector perimeter) // set nearby calc schema to .perimeter
 adjust(sector area 2)    // set nearby calc schema to .area
@@ -423,6 +423,7 @@ produce(by : ...)    // create object at touching edge
 produce(at : ...)    // create object at meeting face
 produce(copy : ...)  // create a copy
 produce(group : ...) // create a group object containing all input objects, aligned with largest input object 
+produce(sector_type : ...)  // create object at bbox sector 
 ```
 
 ### `reload()` Operation
