@@ -216,7 +216,7 @@ The filter, pick, select, slice, produce and reload operations do change the lis
 | __pick__  | `pick(`_relation-conditions_`)` | `pick(near); pick(ahead AND smaller); pick(near AND (left OR right))` |
 | __select__  | `select(`_relation ? attribute-conditions_`)` | `select(opposite); select(ontop ? id == 'table1'); select(on ? type == 'floor'); select(ahead AND smaller ? footprint < 0.5)` |
 | __sort__  | `sort(`_object-attribute_ [_comparator_]`)` | `sort(length); sort(volume); sort(width <); sort(width >)` |
-| __sort__  | `sort(`_relation-attribute_ [_comparator_ _steps_]`)` | `sort(near.delta); sort(frontside.angle); sort(near.delta <); sort(disjoint.delta > 2)` |
+| __sort__  | `sort(`_relation-attribute_ [_comparator_ _steps_]`)` | `sort(near.delta); sort(frontside.angle); sort(near.delta >); sort(disjoint.delta < -2)` |
 | __slice__  | `slice(`_range_`)` | `slice(1); slice(2..3); slice(-1); slice(-3..-1); slice(1..-2)` |
 | __calc__  | `calc(`_variable-assignments_`)` | `calc(cnt = count(objects); calc(maxvol = max(objects.volume); median = median(objects.height))` |
 | __map__  | `map(`_attribute-assignments_`)` | `map(weight = volume * 140.0); map(type = 'bed'` |
@@ -368,7 +368,10 @@ sort(near.delta)
 sort(frontside.angle)
 sort(near.delta <)  // ascending
 sort(near.delta >)  // descending
+sort(near.delta > -2)  // descending and backtracing 2 steps
 ```
+
+The relations for sorting are selected between current and backtraced objects. By default, backtracing goes one step back in the inference pipeline; if necessary, the backtracing steps can be set higher.
 
 ### `slice()` Operation 
 
