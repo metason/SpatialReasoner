@@ -192,6 +192,7 @@ The spatial inference pipeline is defined as textual specification. The pipeline
 - __calc__: calculate global variables in fact base
 - __map__: calculate values of object attributes
 - __produce__: create new spatial objects driven by their relations
+- __backtrace__: output spatial objects of operation some steps back in inference pipeline
 - __reload__: reload and output all spatial objects of fact base
 - __halt__: stop processing the inference pipeline (for debug purposes)
 - __log__: log the current status of the inference pipeline
@@ -221,6 +222,7 @@ The filter, pick, select, slice, produce and reload operations do change the lis
 | __calc__  | `calc(`_variable-assignments_`)` | `calc(cnt = count(objects); calc(maxvol = max(objects.volume); median = median(objects.height))` |
 | __map__  | `map(`_attribute-assignments_`)` | `map(weight = volume * 140.0); map(type = 'bed'` |
 | __produce__  | `produce(`_relation_ : _attribute-assignments_`)` | `produce(group : type = 'room'); produce(by : label = 'corner'; h = 0.02)` |
+| __backtrace__  | `backtrace(`_steps_`)` | `backtrace(-2)` |
 | __reload__  | `reload()` | `reload()` |
 | __halt__  | `halt()` | `halt()` |
 | __log__  | `log(base 3D `_relations_`)` | `log(); log(base); log(3D); log(near right); log(3D near right)` |
@@ -427,6 +429,17 @@ produce(at : ...)    // create object at meeting face
 produce(copy : ...)  // create a copy
 produce(group : ...) // create a group object containing all input objects, aligned with largest input object 
 produce(sector_type : ...)  // create object at bbox sector 
+```
+
+### `backtrace()` Operation
+
+Output spatial objects of the input of the operation some steps back in the inference pipeline. In case steps are not set, backtracing goes by default one step back in the inference pipeline. The sign of the step number has no effect.
+
+```
+backtrace(-1)  // backtrace one step
+backtrace(1)   // same as backtrace(-1)
+backtrace()    // same as backtrace(-1), default value is -1
+backtrace(-3)  // goes back 3 steps to take input as its output
 ```
 
 ### `reload()` Operation
