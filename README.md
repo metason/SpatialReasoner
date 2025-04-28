@@ -749,16 +749,17 @@ filter(type == 'wall')
 
 Our paper will be published and presented at [ICVARS 2025](https://www.icvars.org) conference.
 
-A [preprint]() ist available on arXiv.
+A [preprint](http://arxiv.org/abs/2504.18380) is available on arXiv.
 
 Please cite our work if you use Spatial Reasoner.
 
 ```bibtex
-@article{Hasler2025,
+@inproceedings{SR25,
    author  = {Steven Häsler and Philipp Ackermann},
    title   = {Spatial Reasoner: A 3D Inference Pipeline for XR Applications},
-   journal = {arXiv:XXX.YYYY},
-   year    = {2025}
+   year    = {2025}.
+   series = {ICVARS '25},
+   publisher = {Association for Computing Machinery}
 }
 ```
 
@@ -782,3 +783,7 @@ If you plan to release your implementation as Open Source, please feel free to c
 ## License
 
 Released under the [Creative Commons CC0 License](LICENSE).
+
+## Contact
+
+Philipp Ackermann, philipp@metason.net
