@@ -210,22 +210,22 @@ The filter, pick, select, slice, produce and reload operations do change the lis
 
 | Op | Syntax | Examples |
 | -------- | ------- | -------- | 
-| __adjust__  | `adjust(`_settings_`)` | `adjust(max gap 0.05); adjust(sector fixed 1.5); adjust(nearby dimension 2.0); adjust(nearby limit 4.0; max gap 0.1)` |
-| __deduce__  | `deduce(`_relation-categories_`)` | `deduce(topology); deduce(connectivity); deduce(visibility); deduce(topology similarity)` |
-| __filter__  | `filter(`_attribute-conditions_`)` | `filter(id == 'wall1'); filter(width > 0.5 AND height < 2.4); filter(type == 'furniture'); filter(thin AND volume > 0.4)` |
-| __isa__  | `isa(`_class type_`)` | `isa('Bed'); isa(Furniture); isa(Computer OR Monitor)` |
-| __pick__  | `pick(`_relation-conditions_`)` | `pick(near); pick(ahead AND smaller); pick(near AND (left OR right))` |
-| __select__  | `select(`_relation ? attribute-conditions_`)` | `select(opposite); select(ontop ? id == 'table1'); select(on ? type == 'floor'); select(ahead AND smaller ? footprint < 0.5)` |
-| __sort__  | `sort(`_object-attribute_ [_comparator_]`)` | `sort(length); sort(volume); sort(width <); sort(width >)` |
-| __sort__  | `sort(`_relation-attribute_ [_comparator_ _steps_]`)` | `sort(near.delta); sort(frontside.angle); sort(near.delta >); sort(disjoint.delta < -2)` |
-| __slice__  | `slice(`_range_`)` | `slice(1); slice(2..3); slice(-1); slice(-3..-1); slice(1..-2)` |
-| __calc__  | `calc(`_variable-assignments_`)` | `calc(cnt = count(objects); calc(maxvol = max(objects.volume); median = median(objects.height))` |
-| __map__  | `map(`_attribute-assignments_`)` | `map(weight = volume * 140.0); map(type = 'bed'` |
-| __produce__  | `produce(`_relation_ : _attribute-assignments_`)` | `produce(group : type = 'room'); produce(by : label = 'corner'; h = 0.02)` |
-| __backtrace__  | `backtrace(`_steps_`)` | `backtrace(-2)` |
-| __reload__  | `reload()` | `reload()` |
-| __halt__  | `halt()` | `halt()` |
-| __log__  | `log(base 3D `_relations_`)` | `log(); log(base); log(3D); log(near right); log(3D near right)` |
+| [__adjust__](#adjust-operation)  | `adjust(`_settings_`)` | `adjust(max gap 0.05); adjust(sector fixed 1.5); adjust(nearby dimension 2.0); adjust(nearby limit 4.0; max gap 0.1)` |
+| [__deduce__](#deduce-operation)  | `deduce(`_relation-categories_`)` | `deduce(topology); deduce(connectivity); deduce(visibility); deduce(topology similarity)` |
+| [__filter__](#filter-operation)  | `filter(`_attribute-conditions_`)` | `filter(id == 'wall1'); filter(width > 0.5 AND height < 2.4); filter(type == 'furniture'); filter(thin AND volume > 0.4)` |
+| [__isa__](#isa-operation)  | `isa(`_class type_`)` | `isa('Bed'); isa(Furniture); isa(Computer OR Monitor)` |
+| [__pick__](#pick-operation)  | `pick(`_relation-conditions_`)` | `pick(near); pick(ahead AND smaller); pick(near AND (left OR right))` |
+| [__select__](#select-operation)  | `select(`_relation ? attribute-conditions_`)` | `select(opposite); select(ontop ? id == 'table1'); select(on ? type == 'floor'); select(ahead AND smaller ? footprint < 0.5)` |
+| [__sort__](#sort-by-attributes-operation)  | `sort(`_object-attribute_ [_comparator_]`)` | `sort(length); sort(volume); sort(width <); sort(width >)` |
+| [__sort__](#sort-by-relations-operation)  | `sort(`_relation-attribute_ [_comparator_ _steps_]`)` | `sort(near.delta); sort(frontside.angle); sort(near.delta >); sort(disjoint.delta < -2)` |
+| [__slice__](#slice-operation)  | `slice(`_range_`)` | `slice(1); slice(2..3); slice(-1); slice(-3..-1); slice(1..-2)` |
+| [__calc__](#calc-operation)  | `calc(`_variable-assignments_`)` | `calc(cnt = count(objects); calc(maxvol = max(objects.volume); median = median(objects.height))` |
+| [__map__](#map-operation)  | `map(`_attribute-assignments_`)` | `map(weight = volume * 140.0); map(type = 'bed'` |
+| [__produce__](#produce-operation)  | `produce(`_relation_ : _attribute-assignments_`)` | `produce(group : type = 'room'); produce(by : label = 'corner'; h = 0.02)` |
+| [__backtrace__](#backtrace-operation)  | `backtrace(`_steps_`)` | `backtrace(-2)` |
+| [__reload__](#reload-operation)  | `reload()` | `reload()` |
+| [__halt__](#halt-operation)  | `halt()` | `halt()` |
+| [__log__](#log-operation)  | `log(base 3D `_relations_`)` | `log(); log(base); log(3D); log(near right); log(3D near right)` |
 
 ### `adjust()` Operation
 
