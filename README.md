@@ -338,7 +338,8 @@ pick(near AND (left OR right))
 
 ### `select()` Operation
 
-Select objects that have spatial relations with other objects using the `select(`_relation ? attribute conditions_`)` operation.  Attribute conditions are optional and will filter the referenced object. You can read the select() operation similar to a SQL-SELECT as "SELECT object WHERE ...".
+Select objects that have spatial relations with other objects using the `select(`_relation ? attribute conditions_`)` operation.  Attribute conditions are optional and will filter the referenced object. You can read the select() operation analog to a SQL-SELECT as "SELECT object WHERE ...". 
+It can be read as "SELECT spatial objects WHERE spatial relation exists with other spatial objects [that fulfill the attribute conditions]". 
 
 Examples:
 ```
@@ -346,6 +347,15 @@ select(opposite)
 select(ontop ? label == 'table')
 select(on ? type == 'floor')
 select(ahead AND smaller ? footprint < 0.5)
+```
+
+With the NOT statement, the select() operator selects only spatial objects without the specified spatial relation. With the ALL statement, the select() operator selects only spatial objects that have the specified spatial relationship with all other objects. If NOT or ALL is missing, it is interpreted as ANY (can but does not have to be specified).
+
+Examples:
+```
+select(opposite) // = select(ANY opposite)
+select(NOT opposite)
+select(ALL opposite)
 ```
 
 ### `sort()` by Attributes Operation
