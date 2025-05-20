@@ -1,6 +1,6 @@
 # Spatial Reasoner
 
-> _A flexible 3D Spatial Reasoning library_
+> _A flexible 3D Spatial Reasoning framework_
 
 __Content__: [Features](#features), [Usage](#usage), [Motivation](#motivation), [Spatial Objects](#spatial-objects), [Inference Syntax](#syntax-of-spatial-inference-pipeline), [Reference Systems](#spatial-reference_systems), [Adjustment](#spatial-adjustment), [BBox Sectors](bbox-sectors), [Spatial Relations](#spatial-relations), [Taxonomy](#spatial-taxonomy), [Use Cases](#use-cases), [Paper](#paper), [Implementation](#implementation), [License](#license)
 
@@ -17,7 +17,7 @@ __Content__: [Features](#features), [Usage](#usage), [Motivation](#motivation), 
   * use spatial reasoning in mobile, desktop, Web and server projects
   * Spatial Reasoner Syntax as portable inference language
   * independent of left-handed or right-handed 3D coordinate system
-* __Cross-platform__: Spatial Reasoner library available in various programming languages
+* __Cross-platform__: Spatial Reasoner libraries available in various programming languages
   * [__SRswift__](https://github.com/metason/SRswift) library in __Swift__ for iOS, macOS and visionOS
   * [__SRpy__](https://github.com/metason/SRpy) library in __Python__ for server-side processing
   * [__SRcsharp__](https://github.com/NicolasLoth/SRcsharp) library in __C#__ with bindings for Unity in [__SRunity__](https://github.com/NicolasLoth/SRunity)
@@ -25,7 +25,7 @@ __Content__: [Features](#features), [Usage](#usage), [Motivation](#motivation), 
 
 ## Usage
 
-The main process of the Spatial Reasoner library consists of the following sequence: 
+The main process of the Spatial Reasoner framework consists of the following sequence: 
 - match 3D items of your application to spatial objects in fact base  
 - derive spatial attributes (done automatically)
 - deduce spatial relations (done automatically, configurable)
@@ -84,7 +84,7 @@ if sr.run(pipeline):
 
 ## Motivation
 
-The Spatial Reasoner library deals with representing and reasoning about the topology of spatial 3D objects using derived attributes and deduced relations, such as the adjacency between or the topological arrangement and assembly of spatial objects. Spatial reasoning is the ability to conceptualize the three-dimensional relationships of objects in space and to evaluate spatial conditions in a specific context such as indoor or outdoor environments. Reasoning in the Spatial Reasoner library is executed as a succession of inference operations in a pipeline which takes spatial attributes of and spatial relations between objects into consideration. 
+The Spatial Reasoner framework deals with representing and reasoning about the topology of spatial 3D objects using derived attributes and deduced relations, such as the adjacency between or the topological arrangement and assembly of spatial objects. Spatial reasoning is the ability to conceptualize the three-dimensional relationships of objects in space and to evaluate spatial conditions in a specific context such as indoor or outdoor environments. Reasoning in the Spatial Reasoner library is executed as a succession of inference operations in a pipeline which takes spatial attributes of and spatial relations between objects into consideration. 
 
 Example of a 3D inference pipeline:
 ```
@@ -95,7 +95,7 @@ deduce(topology)
 | sort(disjoint.delta <)
 ```
 
-Spatial fuzziness affects information retrieval in space. Object detection in state-of-the-art computer vision, machine learning, and Augmented Reality toolkits results in detected objects that vary their locations and do change and improve over time their orientations and boundaries in space. The object description is usually fuzzy and imprecise, yet some non-trivial conclusion can anyhow be deduced. The geometric confidence typically improves over time. Additionally, by taking spatial domain knowledge into account, semantic interpretation and therefore overall confidence can be improved. It is the goal of the Spatial Reasoner library to improve object detection with domain knowledge using spatial semantic and three-dimensional conditions.
+Spatial fuzziness affects information retrieval in space. Object detection in state-of-the-art computer vision, machine learning, and Augmented Reality toolkits results in detected objects that vary their locations and do change and improve over time their orientations and boundaries in space. The object description is usually fuzzy and imprecise, yet some non-trivial conclusion can anyhow be deduced. The geometric confidence typically improves over time. Additionally, by taking spatial domain knowledge into account, semantic interpretation and therefore overall confidence can be improved. It is the goal of the Spatial Reasoner libraries to improve object detection with domain knowledge using spatial semantic and three-dimensional conditions.
 
 ## Spatial Objects
 
@@ -520,7 +520,7 @@ graph TD;
 
 ## Spatial Reference Systems
 
-The interpretation of some predicates of spatial relations are depending on the frame of reference. E.g., predicates such as left, right, in front, and at back have different meaning in different reference systems. Additionally, in English language the semantic of spatial predicates is sometimes vague and it is hardly possible to distinquish between terms and their synonyms (e.g., over, above, ontop). Therefore, the meaning of all spatial predicates used in the Spatial Reasoner library are clearly specified. Although the ordinary meaning of the terms has been taken into consideration, the specification in the Spatial Reasoner library might not correspond with its daily use in spoken English language.
+The interpretation of some predicates of spatial relations are depending on the frame of reference. E.g., predicates such as left, right, in front, and at back have different meaning in different reference systems. Additionally, in English language the semantic of spatial predicates is sometimes vague and it is hardly possible to distinquish between terms and their synonyms (e.g., over, above, ontop). Therefore, the meaning of all spatial predicates used in the Spatial Reasoner framework are clearly specified. Although the ordinary meaning of the terms has been taken into consideration, the specification in the Spatial Reasoner framework might not correspond with its daily use in spoken English language.
 
 
 The interpretation of spatial predicates and their corresponding relations are only valid in specifc reference systems:
@@ -647,7 +647,7 @@ See detailed description of all [spatial relations](Relations.md).
 
 ### Spatial Relation Terminology
 
-All spatial predicates with their code, preposition, verb, synonyms, antonym and inverse definitions are specified and are available as terminology in [terms.json](terms.json) as JSON file. These spatial terms build a foundation to integrate the Spatial Reasoner library with LLM, NLP, and TTS. 
+All spatial predicates with their code, preposition, verb, synonyms, antonym and inverse definitions are specified and are available as terminology in [terms.json](terms.json) as JSON file. These spatial terms build a foundation to integrate the Spatial Reasoner framework with LLM, NLP, and TTS. 
 
 ### Type System for Spatial Objects
 

@@ -2,7 +2,7 @@
 
 ## Spatial Relation Terminology
 
-All spatial predicates with their code, verbal predicate, preposition, verb, synonyms, antonym and inverse definitions are specified and are available as terminology in [terms.json](terms.json) as JSON file. These spatial terms build a foundation to integrate the Spatial Reasoner library with LLM, NLP, and TTS. 
+All spatial predicates with their code, verbal predicate, preposition, verb, synonyms, antonym and inverse definitions are specified and are available as terminology in [terms.json](terms.json) as JSON file. These spatial terms build a foundation to integrate the Spatial Reasoner framework with LLM, NLP, and TTS. 
 
 ```json
 {
