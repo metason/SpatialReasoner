@@ -2,7 +2,7 @@
 
 > _A flexible 3D Spatial Reasoning framework_
 
-__Content__: [Features](#features), [Usage](#usage), [Motivation](#motivation), [Spatial Objects](#spatial-objects), [Inference Syntax](#syntax-of-spatial-inference-pipeline), [Reference Systems](#spatial-reference_systems), [Adjustment](#spatial-adjustment), [BBox Sectors](bbox-sectors), [Spatial Relations](#spatial-relations), [Taxonomy](#spatial-taxonomy), [Use Cases](#use-cases), [Paper](#paper), [Implementation](#implementation), [License](#license)
+__Content__: [Features](#features), [Usage](#usage), [Motivation](#motivation), [Spatial Objects](#spatial-objects), [Inference Syntax](#syntax-of-spatial-inference-pipeline), [Reference Systems](#spatial-reference_systems), [Adjustment](#spatial-adjustment), [BBox Sectors](#bbox-sectors), [Spatial Relations](#spatial-relations), [Taxonomy](#spatial-taxonomy), [Use Cases](#use-cases), [Paper](#paper), [Implementation](#implementation), [License](#license)
 
 ## Features
 
@@ -37,9 +37,9 @@ The main process of the Spatial Reasoner framework consists of the following seq
 
 ```swift
 // map detected or created 3D entities to SpatialObject instances
-let obj1 = SpatialObject(id: "1", position: .init(x: -1.5, y: 1.2, z: 0), width: 0.1, height: 1.0, depth: 0.1)
-let obj2 = SpatialObject(id: "2", position: .init(x: 0, y: 0, z: 0), width: 0.8, height: 1.0, depth: 0.6)
-let obj3 = SpatialObject(id: "3", position: .init(x: 0, y: 0, z: 1.6), width: 0.8, height: 0.8, depth: 0.8)
+let obj1 = SpatialObject(id: "1", x:-1.5, y:1.2, z:0, w:0.1, h:1, d:0.1)
+let obj2 = SpatialObject(id: "2", x:0, y:0, z:0, w:0.8, h:1, d:0.6)
+let obj3 = SpatialObject(id: "3", x:0, y:0, z:1, w:0.8, h:0.8, d:0.8)
 obj3.angle = .pi/2.0
 
 // initialize reasoner and run pipeline
@@ -765,10 +765,10 @@ Please cite our work if you use Spatial Reasoner.
 
 ```bibtex
 @inproceedings{SR25,
-  author    = {Steven Häsler and Philipp Ackermann},
   title     = {Spatial Reasoner: A 3D Inference Pipeline for XR Applications},
-  year      = {2025}.
-  series    = {ICVARS '25},
+  author    = {Steven Häsler and Philipp Ackermann},
+  booktitle = {Proceedings of the ICVARS `25},
+  year      = {2025},
   publisher = {Association for Computing Machinery}
 }
 ```
