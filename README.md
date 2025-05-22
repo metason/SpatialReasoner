@@ -147,9 +147,9 @@ The following attributes may be set in the preparation phase before loading into
 }
 ```
 
-### Deduced Object Attributes
+### Derived Object Attributes
 
-The following attributes will be automatically deduced from the declared attributes:
+The following attributes will be automatically derived from the declared attributes:
 
 ```swift
 {
@@ -215,7 +215,7 @@ The filter, pick, select, slice, produce and reload operations do change the lis
 | [__filter__](#filter-operation)  | `filter(`_attribute-conditions_`)` | `filter(id == 'wall1'); filter(width > 0.5 AND height < 2.4); filter(type == 'furniture'); filter(thin AND volume > 0.4)` |
 | [__isa__](#isa-operation)  | `isa(`_class-type_`)` | `isa('Bed'); isa(Furniture); isa(Computer OR Monitor)` |
 | [__pick__](#pick-operation)  | `pick(`_relation-conditions_`)` | `pick(near); pick(ahead AND smaller); pick(near AND (left OR right))` |
-| [__select__](#select-operation)  | `select(`_relation ? attribute-conditions_`)` | `select(opposite); select(ontop ? id == 'table1'); select(on ? type == 'floor'); select(ahead AND smaller ? footprint < 0.5)` |
+| [__select__](#select-operation)  | `select(`_relation-conditions ? attribute-conditions_`)` | `select(opposite); select(ontop ? id == 'table1'); select(on ? type == 'floor'); select(ahead AND smaller ? footprint < 0.5)` |
 | [__sort__](#sort-by-attributes-operation)  | `sort(`_object-attribute_ [_comparator_]`)` | `sort(length); sort(volume); sort(width <); sort(width >)` |
 | [__sort__](#sort-by-relations-operation)  | `sort(`_relation-attribute_ [_comparator_ _steps_]`)` | `sort(near.delta); sort(frontside.angle); sort(near.delta >); sort(disjoint.delta < -2)` |
 | [__slice__](#slice-operation)  | `slice(`_range_`)` | `slice(1); slice(2..3); slice(-1); slice(-3..-1); slice(1..-2)` |

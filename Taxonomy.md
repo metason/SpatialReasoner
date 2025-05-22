@@ -47,7 +47,7 @@ The OWL import into Spatial Reasoner considers the following associations:
 - reference URL: `rdfs:seeAlso`
 - synonym: `skos:altLabel`
 
-The `ìsa(type)` operator checks for correspondance with the name/label of the class as well as optionally specified synonyms along the class hierachy in the loaded taxonomy.
+The `ìsa(type)` operator checks for correspondence with the name and label of the class as well as optionally specified synonyms along the class hierarchy in the loaded taxonomy.
 
 ### WebProtégé OWL Editor
 
