@@ -191,7 +191,7 @@ The spatial inference pipeline is defined as textual specification. The pipeline
 - __slice__: choose a subsection of spatial objects 
 - __calc__: calculate global variables in fact base
 - __map__: calculate values of object attributes
-- __produce__: create new spatial objects driven by their relations
+- __produce__: create new spatial objects by a contextual specification
 - __backtrace__: output spatial objects of operation some steps back in inference pipeline
 - __reload__: reload and output all spatial objects of fact base
 - __halt__: stop processing the inference pipeline (for debug purposes)
@@ -213,15 +213,15 @@ The filter, pick, select, slice, produce and reload operations do change the lis
 | [__adjust__](#adjust-operation)  | `adjust(`_settings_`)` | `adjust(max gap 0.05); adjust(sector fixed 1.5); adjust(nearby dimension 2.0); adjust(nearby limit 4.0; max gap 0.1)` |
 | [__deduce__](#deduce-operation)  | `deduce(`_relation-categories_`)` | `deduce(topology); deduce(connectivity); deduce(visibility); deduce(topology similarity)` |
 | [__filter__](#filter-operation)  | `filter(`_attribute-conditions_`)` | `filter(id == 'wall1'); filter(width > 0.5 AND height < 2.4); filter(type == 'furniture'); filter(thin AND volume > 0.4)` |
-| [__isa__](#isa-operation)  | `isa(`_class type_`)` | `isa('Bed'); isa(Furniture); isa(Computer OR Monitor)` |
+| [__isa__](#isa-operation)  | `isa(`_class-type_`)` | `isa('Bed'); isa(Furniture); isa(Computer OR Monitor)` |
 | [__pick__](#pick-operation)  | `pick(`_relation-conditions_`)` | `pick(near); pick(ahead AND smaller); pick(near AND (left OR right))` |
 | [__select__](#select-operation)  | `select(`_relation ? attribute-conditions_`)` | `select(opposite); select(ontop ? id == 'table1'); select(on ? type == 'floor'); select(ahead AND smaller ? footprint < 0.5)` |
 | [__sort__](#sort-by-attributes-operation)  | `sort(`_object-attribute_ [_comparator_]`)` | `sort(length); sort(volume); sort(width <); sort(width >)` |
 | [__sort__](#sort-by-relations-operation)  | `sort(`_relation-attribute_ [_comparator_ _steps_]`)` | `sort(near.delta); sort(frontside.angle); sort(near.delta >); sort(disjoint.delta < -2)` |
 | [__slice__](#slice-operation)  | `slice(`_range_`)` | `slice(1); slice(2..3); slice(-1); slice(-3..-1); slice(1..-2)` |
 | [__calc__](#calc-operation)  | `calc(`_variable-assignments_`)` | `calc(cnt = count(objects); calc(maxvol = max(objects.volume); median = median(objects.height))` |
-| [__map__](#map-operation)  | `map(`_attribute-assignments_`)` | `map(weight = volume * 140.0); map(type = 'bed'` |
-| [__produce__](#produce-operation)  | `produce(`_relation_ : _attribute-assignments_`)` | `produce(group : type = 'room'); produce(by : label = 'corner'; h = 0.02)` |
+| [__map__](#map-operation)  | `map(`_attribute-assignments_`)` | `map(weight = volume * 140.0); map(type = 'double bed')` |
+| [__produce__](#produce-operation)  | `produce(`_specification_ : _attribute-assignments_`)` | `produce(group : type = 'room'); produce(by : label = 'corner'; h = 0.02)` |
 | [__backtrace__](#backtrace-operation)  | `backtrace(`_steps_`)` | `backtrace(-2)` |
 | [__reload__](#reload-operation)  | `reload()` | `reload()` |
 | [__halt__](#halt-operation)  | `halt()` | `halt()` |
@@ -430,7 +430,7 @@ map(weight = volume * 140.0)
 
 ### `produce()` Operation
 
-Create new spatial objects relative to relations and add them to fact base. Optionally change attributes of the new instances. The `id` is set automatically. When generated objects already exist (identified with their automatically generated `id`), then they will be updated and not created again. Change the `id`in case of enforcing a new object creation.   
+Create new spatial objects according to a contextual specification and add them to fact base. Optionally change attributes of the new instances. The new  `id` is set automatically by concatenatiog the specification with the `id` of the input object separated with a colon (`spec:id`). When generated objects already exist (identified with their automatically generated `spec:id`), then they will be updated and not created again. Change the `id`in case of enforcing a new object creation.   
 
 ```
 produce(on : ...)    // create object at footprint face
