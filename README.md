@@ -784,11 +784,13 @@ Please cite our work if you use Spatial Reasoner.
 
 ```bibtex
 @inproceedings{SR25,
-  title     = {Spatial Reasoner: A 3D Inference Pipeline for XR Applications},
-  author    = {Steven Häsler and Philipp Ackermann},
-  booktitle = {Proceedings of the ICVARS `25},
-  year      = {2025},
-  publisher = {Association for Computing Machinery}
+  author={Hasler, Steven and Ackermann, Philipp},
+  booktitle={2025 International Conference on Intelligent Computing and Virtual & Augmented Reality Simulations (ICVARS)}, 
+  title={Spatial Reasoner: A 3D Inference Pipeline for XR Applications}, 
+  pages={121-130},
+  year={2025},
+  publisher = {Association for Computing Machinery},
+  doi={10.1109/ICVARS66454.2025.11198690}
 }
 ```
 
