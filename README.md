@@ -737,7 +737,7 @@ deduce(topology)
 | slice(2)
 ```
 
-The sort() operation is backtracing 2 steps to take as input the 'egp' object to compare the relations between 'ego' object and filtered objects with type 'picture'.
+The sort() operation is backtracing 2 steps to take as input the 'ego' object to compare the relations between 'ego' object and filtered objects with type 'picture'.
 
 ### Object Classification
 
